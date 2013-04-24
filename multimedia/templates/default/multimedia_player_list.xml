@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="<{$smarty.const._CHARSET}>"?>
+<{strip}>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+	<trackList>
+		<track>
+			<title><{$action.item.item_name}></title>
+			<creator><{$action.item.insert_user_name}></creator>
+			<location><{$smarty.const.BASE_URL}><{$smarty.const.INDEX_FILE_NAME}><{$action.item.item_path|smarty:nodefaults}></location>
+			<duration><{$action.item.duration}></duration>
+			<info>http://www.netcommons.org</info>
+			<image><{$smarty.const.BASE_URL}><{$smarty.const.INDEX_FILE_NAME}>?action=multimedia_view_main_item_thumbnail&item_id=<{$action.item.item_id}></image>
+			<annotation><{$action.item.item_description}></annotation>
+		</track>
+		<{if $action.list}>
+			<{foreach from=$action.list key=key item=video}>
+				<track>
+					<title><{$video.item_name}></title>
+					<creator><{$video.insert_user_name}></creator>
+					<location><{$smarty.const.BASE_URL}><{$smarty.const.INDEX_FILE_NAME}><{$video.item_path|smarty:nodefaults}></location>
+					<duration><{$video.duration}></duration>
+					<info>http://www.netcommons.org</info>
+					<image><{$smarty.const.BASE_URL}><{$smarty.const.INDEX_FILE_NAME}>?action=multimedia_view_main_item_thumbnail&item_id=<{$video.item_id}></image>
+					<annotation><{$video.item_description}></annotation>
+				</track>
+			<{/foreach}>
+		<{/if}>
+	</trackList>
+</playlist>
+<{/strip}>

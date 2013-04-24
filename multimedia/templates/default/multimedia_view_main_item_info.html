@@ -1,0 +1,28 @@
+<{strip}>
+<div id="multimedia_item_info_<{$item.item_id}><{$id}>" class="multimedia_item_main_content">
+	<div class="<{if $from == 'search'}> multimedia_search_long_title <{else}> multimedia_item_short_title multimedia_normal_title bold <{/if}>">
+		<a id="multimedia_item_link_<{$item.item_id}><{$id}>" class="multimedia_video_link" href="#" onclick="multimediaCls['<{$id}>'].showItem(event, <{$item.item_id}>); return false;">
+			<{$item.item_name}>
+		</a>
+	</div>
+	<{if $from == "search"}>
+		<div class="multimedia_item_short_description">
+			<{$item.item_description}>
+		</div>
+	<{/if}>
+	<div id="multimedia_video_facets<{$id}>" class="multimedia_video_facets">
+		<span id="multimedia_item_poster<{$id}>" class="<{if $from == 'search'}> multimedia_span_search_padding <{else}> multimedia_span multimedia_normal_title <{/if}>">
+			<{$lang.multimedia_item_poster_title|smarty:nodefaults}>
+			<a href="#" title="<{if $smarty.session._login_id == ''}><{$lang.multimedia_upload_user_title|sprintf:$item.insert_user_name}><{else}><{$lang._user_title|sprintf:$item.insert_user_name}><{/if}>" class="syslink" onclick="commonCls.showUserDetail(event, '<{$item.insert_user_id}>');return false;">
+				<{$lang.multimedia_item_poster|sprintf:$item.insert_user_name}>
+			</a>
+		</span>
+		<span id="multimedia_play_count_<{$item.item_id}><{$id}>" class="<{if $from == 'search'}> multimedia_span_search_padding <{else}> multimedia_span multimedia_normal_title <{/if}>">
+			<{$lang.multimedia_play_count_title|sprintf:$item.item_play_count}>
+		</span>
+		<span id="multimedia_vote_count_<{$item.item_id}><{$id}>" class="<{if $from == 'search'}> multimedia_span_search_padding <{else}> multimedia_span  multimedia_normal_title <{/if}>">
+			<{$lang.multimedia_vote_count_title|sprintf:$item.item_vote_count}>
+		</span>
+	</div>
+</div>
+<{/strip}>

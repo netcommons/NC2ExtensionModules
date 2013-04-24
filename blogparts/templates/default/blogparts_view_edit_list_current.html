@@ -1,0 +1,7 @@
+<{strip}>
+<{* Blogparts一覧（カレント）用テンプレート *}>
+<label for="blogparts_current<{$blogparts.parts_id}><{$id}>">
+	<{* blogparts.jsのchangeCurrentカレントでカレントのpartsを変更する *}>
+	<input id="blogparts_current<{$blogparts.parts_id}><{$id}>" type="radio" name="current" onclick="blogpartsCls['<{$id}>'].changeCurrent(<{$blogparts.parts_id}>);" />
+</label>
+<{/strip}>

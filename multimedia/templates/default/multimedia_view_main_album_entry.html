@@ -1,0 +1,101 @@
+<{strip}>
+<form id="multimedia_album_form<{$id}>" action="#" target="multimedia_jacket<{$id}>" enctype="multipart/form-data" onsubmit="return false;">
+	<input type="hidden" name="multimedia_id" />
+	<input type="hidden" name="album_id" />
+	<div class="outerdiv">
+		<table id="multimedia_album_entry<{$id}>" class="outer" border=0 cellspacing=0 summary="<{$lang.album_entry|smarty:nodefaults}>">
+			<tr class="row">
+				<th class="nowrap" scope="row">
+					<label for="multimedia_album_name<{$id}>">
+						<{$lang.multimedia_album_name|smarty:nodefaults}>
+					</label>
+				</th>
+				<td>
+					<input id="multimedia_album_name<{$id}>" class="text" type="text" name="album_name" />
+				</td>
+			</tr>
+			<tr class="row">
+				<th class="nowrap" scope="row">
+					<label for="multimedia_album_jacket<{$id}>">
+						<{$lang.multimedia_album_jacket|smarty:nodefaults}>
+					</label>
+				</th>
+				<td>
+					<div class="multimedia_album_jacket">
+						<{include file = "multimedia_view_main_album_jacket.html"}>
+					</div>
+					<div class="multimedia_album_jacket_sample">
+						<{foreach item=albumJacketSample from=$action.albumJacketSamples name=albumJacketSample}>
+							<a href="#" onclick="multimediaCls['<{$id}>'].selectJacket('<{$smarty.const.MULTIMEDIA_SAMPLR_JACKET_DIR|cat:$albumJacketSample|get_modules_image}>', '<{$action.album_obj.album_id}>');return false;" >
+								<img class="multimedia_album_jacket_sample" src="<{$smarty.const.MULTIMEDIA_SAMPLR_JACKET_DIR|cat:$albumJacketSample|get_modules_image}>" title="<{$albumJacketSample}>" alt="<{$albumJacketSample}>" />
+							</a>
+						<{/foreach}>
+					</div>
+					<br class="float-clear" />
+					<div class="align-right">
+						<{$lang.multimedia_album_jacket_custom|smarty:nodefaults}>
+						<input type="file" name="album_jacket_custom" />
+						<input class="lined_btn btn-width" type="button" value="<{$lang.multimedia_upload|smarty:nodefaults}>" onclick="multimediaCls['<{$id}>'].uploadJacket();return false;" />
+					</div>
+					<input type="hidden" name="album_jacket" />
+					<input type="hidden" name="upload_id" />
+				</td>
+			</tr>
+			<tr class="row">
+				<th class="nowrap" scope="row">
+					<label for="multimedia_album_description<{$id}>">
+						<{$lang.multimedia_album_description|smarty:nodefaults}>
+					</label>
+				</th>
+				<td>
+		 			<textarea id="multimedia_album_description<{$id}>" class="multimedia_album_description" name="album_description"><{$action.album_obj.album_description}></textarea>
+				</td>
+			</tr>
+			<tr class="row">
+				<th class="nowrap" scope="row">
+					<{$lang.multimedia_public_flag|smarty:nodefaults}>
+				</th>
+				<td>
+					<label for="multimedia_public_flag_on<{$id}>">
+						<input id="multimedia_public_flag_on<{$id}>" type="radio" name="public_flag" value="<{$smarty.const._ON}>" />
+						<{$lang.multimedia_public_flag_on|smarty:nodefaults}>
+					</label>
+					<label for="multimedia_public_flag_off<{$id}>">
+						<input id="multimedia_public_flag_off<{$id}>" type="radio" name="public_flag" value="<{$smarty.const._OFF}>" />
+						<{$lang.multimedia_public_flag_off|smarty:nodefaults}>
+					</label>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="btn-bottom">
+		<input class="btn-width lined_btn" name="regist" type="button" value="<{$lang._regist|smarty:nodefaults}>" onclick="multimediaCls['<{$id}>'].enterAlbum(<{$block_id}>);return false;" />
+		<input class="btn-width lined_btn" name="cancel" type="button" value="<{$lang._cancel|smarty:nodefaults}>" onclick="commonCls.removeBlock('<{$id}>'); return false;" />
+	</div>
+</form>
+<{include file="../multimedia_script.html"}>
+<script class="nc_script" type="text/javascript">
+	var multimediaForm = $("multimedia_album_form<{$id}>");
+	multimediaForm["multimedia_id"].value = "<{$action.multimedia_obj.multimedia_id}>";
+	multimediaForm["album_id"].value = "<{$action.album_obj.album_id}>";
+
+	<{if !empty($action.album_obj.album_id|smarty:nodefaults)}>
+		multimediaForm["album_name"].value = "<{$action.album_obj.album_name|smarty:nodefaults|escape:"javascript"}>";
+	<{else}>
+		multimediaForm["album_name"].value = "<{$lang.multimedia_album_new_name|sprintf:$action.album_number}>";
+	<{/if}>
+
+	multimediaForm["upload_id"].value = "<{$action.album_obj.upload_id}>";
+	multimediaForm["album_jacket"].value = "<{$action.album_obj.album_jacket|smarty:nodefaults|escape:"javascript"}>";
+	multimediaForm["album_description"].value = "<{$action.album_obj.album_description|smarty:nodefaults|escape:"javascript"}>";
+
+	<{if $action.album_obj.public_flag == _ON}>
+		$("multimedia_public_flag_on<{$id}>").checked = true;
+	<{else}>
+		$("multimedia_public_flag_off<{$id}>").checked = true;
+	<{/if}>
+
+	commonCls.focus("<{$id}>");
+	multimediaForm = null;
+</script>
+<{/strip}>

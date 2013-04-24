@@ -1,0 +1,14 @@
+<{strip}>
+<{* 一覧（管理列）用テンプレート *}>
+<a href="#" class="syslink" title="<{$lang._edit_title|smarty:nodefaults|sprintf:$faq.faq_name}>" onclick="commonCls.sendView('<{$id}>', {action:'faq_view_edit_modify', faq_id:<{$faq.faq_id}>}); return false;">
+	<{$lang._edit|smarty:nodefaults}>
+</a>
+<{$lang._separator|smarty:nodefaults}>
+<a href="#" class="syslink" title="<{$lang.faq_category_edit|smarty:nodefaults}>" onclick="commonCls.sendView('<{$id}>', {action:'faq_view_edit_category', faq_id:<{$faq.faq_id}>}); return false;">
+	<{$lang.faq_category_edit|smarty:nodefaults}>
+</a>
+<{$lang._separator|smarty:nodefaults}>
+<a href="#" class="syslink" title="<{$lang._del_title|smarty:nodefaults|sprintf:$faq.faq_name}>" onclick="faqCls['<{$id}>'].delFaq('<{$faq.faq_id}>', '<{$lang._del_confirm|sprintf:"`$faq.faq_name`"|smarty:nodefaults|escape:"javascript"|escape:"html"}>'); return false;">
+	<{$lang._delete|smarty:nodefaults}>
+</a>
+<{/strip}>

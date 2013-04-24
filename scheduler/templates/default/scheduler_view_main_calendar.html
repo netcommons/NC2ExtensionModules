@@ -1,0 +1,119 @@
+<{strip}>
+<{* スケジュールカレンダ登録画面 *}>
+<div class="scheduler_calendar_frame">
+
+	<div class="scheduler_calendar_head">
+		<a class="link scheduler_change_month" href="#" onclick="schedulerCls['<{$id}>'].changeMonth('<{$action.calendarStart-1}>', '<{$action.schedule.schedule_id}>');return false;" onmouseover="commonCls.imgChange(this, '<{"last.gif"|get_modules_image}>','<{"last_hover.gif"|get_modules_image}>');" onmouseout="commonCls.imgChange(this, '<{"last_hover.gif"|get_modules_image}>', '<{"last.gif"|get_modules_image}>');">
+			<img class="icon" src="<{"last.gif"|get_modules_image}>" alt="<{$lang.scheduler_last_month}>" title="<{$lang.scheduler_last_month}>" />
+		</a>
+
+		<span class="scheduler_calendar_month">
+			<{$action.calendarDate|date_format:"%m"}>
+		</span>
+
+		<a class="link scheduler_change_month" href="#" onclick="schedulerCls['<{$id}>'].changeMonth('<{$action.calendarEnd+1}>', '<{$action.schedule.schedule_id}>');return false;" onmouseover="commonCls.imgChange(this, '<{"next.gif"|get_modules_image}>','<{"next_hover.gif"|get_modules_image}>');"  onmouseout="commonCls.imgChange(this, '<{"next_hover.gif"|get_modules_image}>', '<{"next.gif"|get_modules_image}>');">
+			<img class="icon" src="<{"next.gif"|get_modules_image}>" alt="<{$lang.scheduler_next_month}>" title="<{$lang.scheduler_next_month}>" />
+		</a>
+	</div>
+
+	<div class="scheduler_calendar_explan">
+		<{$lang.scheduler_calendar_explan|smarty:nodefaults}>
+	</div>
+
+	<div class="scheduler_calendar_day_of_week_header">
+		<div class="scheduler_calendar_day_of_week scheduler_sunday">
+			<{$action.dayOfWeeks[0]}>
+		</div>
+		<div class="scheduler_calendar_day_of_week scheduler_weekday">
+			<{$action.dayOfWeeks[1]}>
+		</div>
+		<div class="scheduler_calendar_day_of_week scheduler_weekday">
+			<{$action.dayOfWeeks[2]}>
+		</div>
+		<div class="scheduler_calendar_day_of_week scheduler_weekday">
+			<{$action.dayOfWeeks[3]}>
+		</div>
+		<div class="scheduler_calendar_day_of_week scheduler_weekday">
+			<{$action.dayOfWeeks[4]}>
+		</div>
+		<div class="scheduler_calendar_day_of_week scheduler_weekday">
+			<{$action.dayOfWeeks[5]}>
+		</div>
+		<div class="scheduler_calendar_day_of_week scheduler_saturday">
+			<{$action.dayOfWeeks[6]}>
+		</div>
+		<br class="float-clear" />
+	</div>
+
+	<{section name=timestamp loop=$action.calendarEnd start=$action.calendarStart step=86400}>
+		<{assign var="timestamp" value=$smarty.section.timestamp.index}>
+		<{assign var="date" value=$timestamp|date_format:"%Y%m%d"}>
+
+		<{if date('m', $timestamp) != date('m', $action.calendarDate)}>
+			<{assign var="day_class" value="scheduler_other_month"}>
+		<{elseif in_array(date('Ymd', $timestamp), $action.holidays)}>
+			<{assign var="day_class" value="scheduler_holiday"}>
+		<{elseif date('w', $timestamp)== 0}>
+			<{assign var="day_class" value="scheduler_sunday"}>
+		<{elseif date('w', $timestamp) == 6}>
+			<{assign var="day_class" value="scheduler_saturday"}>
+		<{else}>
+			<{assign var="day_class" value="scheduler_weekday"}>
+		<{/if}>
+
+		<div class="scheduler_calendar_date">
+			<input type="hidden" name="date_id" disabled="disabled" />
+			<input type="hidden" name="allday_flag" value="<{$smarty.const._ON}>" disabled="disabled" />
+			<input type="hidden" name="calendarStartDate" value="<{$date}>" disabled="disabled" />
+			<a id="scheduler_calendar<{$date}><{$id}>" class="scheduler_calendar_day <{$day_class}>" onclick="schedulerCls['<{$id}>'].selectCalendarAllDate(this.parentNode);return false;">
+				<{$timestamp|date_format:"%e"}>
+			</a>
+			<div class="scheduler_calendar_separate_day">
+				<a id="scheduler_calendar<{$date}><{$smarty.const.SCHEDULER_CALENDAR_MORNING_START}><{$id}>" class="scheduler_calendar_morning" href="#" onclick="schedulerCls['<{$id}>'].selectCalendarSeparate(this);return false;">
+					<input name="date_id" type="hidden" disabled="disabled" />
+					<input type="hidden" name="allday_flag" value="<{$smarty.const._OFF}>" disabled="disabled" />
+					<input type="hidden" name="calendarStartDate" value="<{$date}><{$smarty.const.SCHEDULER_CALENDAR_MORNING_START}>" disabled="disabled" />
+					<span>
+						<{$lang.scheduler_calendar_morning|smarty:nodefaults}>
+					</span>
+				</a>
+				<a id="scheduler_calendar<{$date}><{$smarty.const.SCHEDULER_CALENDAR_AFTERNOON_START}><{$id}>" class="scheduler_calendar_afternoon" href="#" onclick="schedulerCls['<{$id}>'].selectCalendarSeparate(this);return false;">
+					<input name="date_id" type="hidden" disabled="disabled" />
+					<input type="hidden" name="allday_flag" value="<{$smarty.const._OFF}>" disabled="disabled" />
+					<input type="hidden" name="calendarStartDate" value="<{$date}><{$smarty.const.SCHEDULER_CALENDAR_AFTERNOON_START}>" disabled="disabled" />
+					<span>
+						<{$lang.scheduler_calendar_afternoon|smarty:nodefaults}>
+					</span>
+				</a>
+				<a id="scheduler_calendar<{$date}><{$smarty.const.SCHEDULER_CALENDAR_EVENING_START}><{$id}>" class="scheduler_calendar_evening" href="#" onclick="schedulerCls['<{$id}>'].selectCalendarSeparate(this);return false;">
+					<input name="date_id" type="hidden" disabled="disabled" />
+					<input type="hidden" name="allday_flag" value="<{$smarty.const._OFF}>" disabled="disabled" />
+					<input type="hidden" name="calendarStartDate" value="<{$date}><{$smarty.const.SCHEDULER_CALENDAR_EVENING_START}>" disabled="disabled" />
+					<span>
+						<{$lang.scheduler_calendar_evening|smarty:nodefaults}>
+					</span>
+				</a>
+				<br class="float-clear" />
+			</div>
+		</div>
+	<{/section}>
+	<br class="float-clear" />
+</div>
+
+<div class="scheduler_date_input">
+<a href="#" onclick="schedulerCls['<{$id}>'].showInputDate(<{$smarty.const.SCHEDULER_ENTRY_INPUT}>);return false;">
+		<{$lang.scheduler_date_input|smarty:nodefaults}>
+	</a>
+	<br />
+	<span class="note">
+		<{$lang.scheduler_date_input_note}>
+	</span>
+</div>
+
+<{include file="../scheduler_script.html"}>
+<script class="nc_script" type="text/javascript">
+	<{foreach from=$action.sessionCalendars|smarty:nodefaults item=sessionCalendar key=calendarStartDate}>
+		schedulerCls["<{$id}>"].initializeCalendar($("scheduler_calendar<{$calendarStartDate}><{$id}>"), "<{$sessionCalendar.date_id}>");
+	<{/foreach}>
+</script>
+<{/strip}>

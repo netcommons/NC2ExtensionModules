@@ -1,0 +1,69 @@
+<{strip}>
+<{* Blogparts一覧用テンプレート *}>
+<form action="#">
+	<div class="top_description">
+		<{$lang._list_desc|smarty:nodefaults|sprintf:$lang.blogparts_blogparts|smarty:nodefaults}>
+		<br />
+		<{$lang.blogparts_desc|smarty:nodefaults}>
+	</div>
+
+	<table class="grid_header" summary="<{$lang.blogparts_list_summary|smarty:nodefaults}>">
+		<tr>
+			<th class="grid_change_disp" scope="col">
+			</th>
+			<{* _sort_[列名]で押したときにその列名でソートしたものを表示に使う *}>
+			<th class="_sort_parts_name grid_name" scope="col">
+				<{$lang.blogparts_name|smarty:nodefaults}>
+			</th>
+			<th class="_sort_insert_user_name grid_creator" scope="col">
+				<{$lang._creator|smarty:nodefaults}>
+			</th>
+			<th class="_sort_insert_time grid_create_date" scope="col">
+				<{$lang._create_date|smarty:nodefaults}>
+			</th>
+			<th class="grid_manage">
+				<{$lang._manage|smarty:nodefaults}>
+			</th>
+		</tr>
+	</table>
+
+	<table class="grid blogparts_grid_table" summary="<{$lang.blogparts_list_summary|smarty:nodefaults}>">
+		<{foreach from=$action.blogpartsList item=blogparts}>
+			<tr id="blogparts_current_row<{$blogparts.parts_id}><{$id}>" class="grid_row">
+				<td class="grid_change_disp">
+					<{include file = "blogparts_view_edit_list_current.html"}>
+				</td>
+				<td class="grid_name">
+					<{include file = "blogparts_view_edit_list_name.html"}>
+				</td>
+				<td class="grid_creator">
+					<{include file = "blogparts_view_handle.html" handle=$blogparts.insert_user_name|smarty:nodefaults user_id=$blogparts.insert_user_id}>
+				</td>
+				<td class="grid_create_date">
+					<{* timezone_date_formatはmaple/nccore/common_func.phpのtimezone_date_format関数に第一引数$blogparts.insert_time、第二引数$lang._date_formatで処理している *}>
+					<{$blogparts.insert_time|timezone_date_format:$lang._date_format|smarty:nodefaults}>
+				</td>
+				<td class="grid_manage">
+					<{include file = "blogparts_view_edit_list_manage.html"}>
+				</td>
+			</tr>
+		<{/foreach}>
+	</table>
+</form>
+
+<{include file = "../blogparts_script.html"}>
+<{* //$smarty.const PHP定数の値に直接アクセス出来る。webappのconfigのdefine.inc.php *}>
+<script class="nc_script" type="text/javascript">
+	var opts = {
+		prefetchBuffer:false,
+		sort:true,
+		requestParameters:new Array("scroll=<{$smarty.const._ON}>"),
+		onSendCallback:function() {blogpartsCls["<{$id}>"].checkCurrent();}
+	};
+	new compLiveGrid("<{$id}>", <{$action.visibleRows}>, <{$action.blogpartsCount}>, "blogparts_view_edit_list", opts);
+	opts = null;
+
+	blogpartsCls["<{$id}>"].currentBlogpartsID = "<{$action.currentBlogpartsID}>";
+	blogpartsCls["<{$id}>"].checkCurrent();
+</script>
+<{/strip}>

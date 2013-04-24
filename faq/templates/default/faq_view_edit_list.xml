@@ -1,0 +1,33 @@
+<{* XML *}>
+<?xml version="1.0" encoding="<{$smarty.const._CHARSET}>"?>
+<{strip}>
+<lists>
+	<{foreach from=$action.faq_list item=faq}>
+		<row id="faq_current_row<{$faq.faq_id}><{$id}>">
+			<disp_change>
+				<![CDATA[
+					<{include file = "faq_view_edit_list_current.html"}>
+				]]>
+			</disp_change>
+			<name>
+				<![CDATA[
+					<{include file = "faq_view_edit_list_name.html"}>
+				]]>
+			</name>
+			<creator>
+				<![CDATA[
+					<{include file = "faq_view_handle.html" handle=$faq.insert_user_name|smarty:nodefaults user_id=$faq.insert_user_id}>
+				]]>
+			</creator>
+			<create_date>
+				<{$faq.insert_time|timezone_date_format:$lang._date_format|smarty:nodefaults}>
+			</create_date>
+			<manage>
+				<![CDATA[
+					<{include file = "faq_view_edit_list_manage.html"}>
+				]]>
+			</manage>
+		</row>
+	<{/foreach}>
+</lists>
+<{/strip}>

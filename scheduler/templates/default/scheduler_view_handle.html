@@ -1,0 +1,6 @@
+<{strip}>
+<{* ハンドル名用テンプレート *}>
+<a class="syslink" href="#" title="<{if $smarty.session._login_id == ''}><{$lang.scheduler_add_user_title|sprintf:$handle}><{else}><{$lang._user_title|sprintf:$handle}><{/if}>" onclick="commonCls.showUserDetail(event, '<{$user_id}>');return false;">
+	<{$handle}>
+</a>
+<{/strip}>

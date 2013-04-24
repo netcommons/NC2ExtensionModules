@@ -1,0 +1,383 @@
+div.scheduler_no_schedule {
+	margin-top:10px;
+}
+div.scheduler_schedule_list {
+}
+div.scheduler_schedule_list_head {
+}
+div.scheduler_schedule_list_foot {
+	margin-top:5px;
+}
+span.scheduler_page_switch a {
+	margin:0px 4px;
+}
+span.scheduler_page_switch a.current {
+	font-weight:bold;
+	color:#C90505;
+}
+div.scheduler_schedule_row {
+	border-top: 1px dotted #CCCCCC;
+	padding-top: 5px;
+	margin-top: 5px;
+}
+span.scheduler_schedule_insert_user {
+	margin-right:15px;
+	white-space:nowrap;
+}
+span.scheduler_schedule_insert_date {
+	margin-right:5px;
+}
+span.scheduler_schedule_insert_time {
+	margin-right:5px;
+}
+div.scheduler_description {
+	margin:1px 5px 0px 10px;
+}
+div.scheduler_schedule_operation {
+	text-align:right;
+	margin-top:5px;
+	margin-right:5px;
+}
+div.scheduler_select_schedule_button {
+	margin:4px 0px;
+}
+input.scheduler_schedule_select {
+	margin-right:10px;
+}
+span.scheduler_schedule_summary,
+a.scheduler_schedule_summary {
+	font-weight:bold;
+	white-space:nowrap;
+	margin-right:10px;
+}
+div.scheduler_period_soon {
+	background-color:#FFDDDD;
+}
+div.scheduler_period_over {
+	background-color:#E9F2FB;
+}
+
+div.scheduler_weekday,
+span.scheduler_weekday,
+a.scheduler_weekday {
+}
+div.scheduler_saturday,
+span.scheduler_saturday,
+a.scheduler_saturday {
+	color:#005DBF;
+}
+div.scheduler_sunday,
+span.scheduler_sunday,
+a.scheduler_sunday,
+div.scheduler_holiday,
+span.scheduler_holiday,
+a.scheduler_holiday {
+	color:#C42626;
+}
+div.scheduler_other_month,
+span.scheduler_other_month,
+a.scheduler_other_month {
+	color:#DDDDDD;
+}
+
+form.scheduler_entry_form {
+	padding:5px;
+}
+td.scheduler_schedule_summary {
+}
+input.scheduler_schedule_summary {
+	width:400px;
+}
+div.scheduler_entry_schedule_date_list {
+	width:500px;
+}
+div.scheduler_entry_schedule_date {
+	margin-bottom:15px;
+	border-bottom:1px dotted #CCCCCC;
+}
+input.scheduler_allday_flag {
+	margin-left:25px;
+}
+img.scheduler_delete_schedule_date {
+	margin-left:10px;
+	vertical-align:middle;
+}
+a.scheduler_add_schedule_link {
+	margin-top:10px;
+	margin-left:430px;
+}
+div.scheduler_date_input {
+	text-align:right;
+	margin:3px 0px;
+}
+span.scheduler_from_to {
+	margin:0px 2px;
+}
+
+div.scheduler_show_description {
+	text-align:right;
+	margin:5px;
+}
+div.scheduler_entry_description {
+	margin-top:5px;
+}
+textarea.scheduler_entry_description_textarea {
+	width:610px;
+	height:130px;
+}
+
+div.scheduler_calendar_frame {
+	width:630px;
+}
+div.scheduler_calendar_head {
+	margin:10px 0px 5px;
+	text-align:center;
+}
+span.scheduler_calendar_month {
+	font-size:200%;
+}
+a.scheduler_change_month {
+	margin:0px 10px;
+}
+div.scheduler_calendar_explan {
+	margin-top:-1.5em;
+	text-align:right;
+}
+div.scheduler_calendar_day_of_week_header {
+}
+div.scheduler_calendar_day_of_week,
+div.scheduler_calendar_date {
+	float:left;
+	margin-left:-1px;
+}
+div.scheduler_calendar_day_of_week {
+	width:91px;
+	text-align:center;
+	font-weight:bold;
+	font-size:120%;
+}
+div.scheduler_calendar_date {
+	width:89px;
+	border:1px solid #D6D6D6;
+	margin-top:-1px;
+}
+div.scheduler_calendar_date a {
+	display:block;
+	text-decoration:none;
+	text-align:center;
+}
+div.scheduler_calendar_date a.scheduler_calendar_day {
+	font-size:115%;
+	font-weight:bold;
+	text-align:right;
+	margin-top:3px;
+	margin-right:5px;
+}
+div.scheduler_calendar_separate_day {
+	margin:4px 1px 2px 3px;
+	font-size:90%;
+}
+div.scheduler_calendar_separate_day a {
+	float:left;
+	width:25px;
+	border:1px dashed #E6E6E6;
+	padding:2px 1px;
+	margin-left:-1px;
+}
+a.scheduler_calendar_morning,
+div.scheduler_calendar_morning,
+th.scheduler_calendar_morning {
+	color:#FFA550;
+}
+a.scheduler_calendar_afternoon,
+div.scheduler_calendar_afternoon,
+th.scheduler_calendar_afternoon {
+	color:#1E90FF;
+}
+a.scheduler_calendar_evening,
+div.scheduler_calendar_evening,
+th.scheduler_calendar_evening {
+	color:#BC8F8F;
+}
+a.scheduler_calendar_all_day,
+div.scheduler_calendar_all_day,
+th.scheduler_calendar_all_day {
+}
+a.scheduler_calendar_selected,
+div.scheduler_calendar_selected {
+	background-color:#FFF1AD;
+}
+
+div.scheduler_period {
+	margin-top:10px;
+}
+div.scheduler_mail_send {
+}
+
+td.scheduler_schedule_date_list {
+	font-size:90%;
+	width:504px;
+}
+div.scheduler_entry_type_calendar,
+div.scheduler_entry_type_input {
+	float:left;
+	border-top:1px solid #D6D6D6;
+	border-bottom:1px solid #D6D6D6;
+	background-color:#F6FFF4;
+	margin-top:5px;
+	text-align:center;
+}
+div.scheduler_entry_type_calendar {
+	height:50px;
+}
+div.scheduler_entry_type_input {
+	height:75px;
+}
+div.scheduler_schedule_date {
+	border-left:1px solid #E6E6E6;
+	border-right:1px solid #E6E6E6;
+	border-bottom:1px dashed #D6D6D6;
+	margin-left:-1px;
+	vertical-align:middle;
+}
+div.scheduler_entry_type_calendar div.scheduler_schedule_date {
+	height:25px;
+	line-height:25px;
+}
+div.scheduler_entry_type_input div.scheduler_schedule_date {
+	height:20px;
+	line-height:20px;
+}
+div.scheduler_schedule_time {
+	float:left;
+	width:55px;
+	border-left:1px solid #E6E6E6;
+	border-right:1px solid #E6E6E6;
+	margin-left:-1px;
+	vertical-align:middle;
+}
+div.scheduler_entry_type_calendar div.scheduler_schedule_time {
+	height:25px;
+	line-height:25px;
+}
+div.scheduler_entry_type_input div.scheduler_schedule_time {
+	height:55px;
+}
+div.scheduler_schedule_date_single {
+	margin-top:7px;
+}
+div.scheduler_schedule_date_from_to {
+	line-height:70%;
+}
+
+span.scheduler_schedule_summary_head {
+	font-size:120%;
+}
+div.scheduler_replies_frame {
+	border:1px #E3E3E3 solid;
+	overflow:auto;
+	margin-top:8px;
+}
+div.scheduler_replies_frame_height {
+	height:300px;
+}
+div.scheduler_replies_frame_width {
+	width:660px;
+}
+table.scheduler_replies {
+}
+table.scheduler_replies th,
+table.scheduler_replies td {
+	padding:3px 5px;
+}
+table.scheduler_replies th.scheduler_reply_user_header,
+table.scheduler_replies th.scheduler_reply_date_header,
+table.scheduler_replies th.scheduler_reply_date_time_header {
+	font-weight:bold;
+}
+table.scheduler_replies th.scheduler_reply_user_header {
+	border-right:3px #E3E3E3 double;
+	width:160px;
+}
+table.scheduler_replies th.scheduler_reply_date_header,
+table.scheduler_replies th.scheduler_reply_date_time_header {
+	border-right:1px #E3E3E3 solid;
+	font-size:90%;
+	text-align:center;
+}
+table.scheduler_replies th.scheduler_reply_user_header,
+table.scheduler_replies th.scheduler_reply_date_time_header {
+	border-bottom:3px #E3E3E3 double;
+}
+table.scheduler_replies th.scheduler_reply_date_header {
+	border-bottom:1px #E3E3E3 solid;
+}
+table.scheduler_replies th.scheduler_reply_date_time_header,
+table.scheduler_replies th.scheduler_reply_date_time_header div.scheduler_reply_date_time {
+	width:74px;
+}
+table.scheduler_replies th.scheduler_reply_user,
+table.scheduler_replies td.scheduler_reply {
+	border-bottom:1px #E3E3E3 dashed;
+}
+table.scheduler_replies th.scheduler_reply_user {
+	border-right:3px #E3E3E3 double;
+}
+table.scheduler_replies td.scheduler_reply {
+	border-right:1px #E3E3E3 solid;
+	font-size:150%;
+	text-align:center;
+	font-weight:bold;
+}
+table.scheduler_replies td.scheduler_reply a {
+	text-decoration:none;
+}
+table.scheduler_replies tr.scheduler_own_reply {
+	background-color:#FAFAFA;
+}
+table.scheduler_replies a.scheduler_own_reply {
+}
+table.scheduler_replies th.scheduler_top_date,
+table.scheduler_replies td.scheduler_top_date {
+	background-color:#FFF7DE;
+}
+a.scheduler_reply_ok,
+a.scheduler_reply_ng,
+a.scheduler_reply_fine,
+a.scheduler_reply_none {
+	border-bottom:1px dashed #1F704C;
+}
+a.scheduler_reply_ok,
+a.scheduler_reply_ng,
+a.scheduler_reply_none {
+	padding:0px 20px;
+}
+a.scheduler_reply_ok,
+td.scheduler_reply_ok {
+	color:#FF9900;
+}
+a.scheduler_reply_ng,
+td.scheduler_reply_ng {
+	color:#6E6E6E;
+}
+a.scheduler_reply_fine,
+span.scheduler_reply_fine {
+	color:#3CB371;
+	margin-left:18px;
+}
+a.scheduler_reply_none,
+td.scheduler_reply_none {
+}
+a.scheduler_schedule_list_link {
+	display:block;
+	text-align:right;
+	margin:4px 0px;
+}
+
+textarea.scheduler_reply_comment {
+	width:250px;
+	height:65px;
+}
+span.scheduler_others_reply_comment {
+	margin:10px;
+}

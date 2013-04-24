@@ -1,0 +1,43 @@
+<{strip}>
+<div class="top_description">
+	<{$lang.blogparts_desc|smarty:nodefaults}>
+</div>
+<{* //新規登録と編集のフォームを兼ねている *}>
+<form action="#" method="post" onsubmit="return false;">
+	<{* 編集するparts_idをformで送る。(新規登録では何も入っていない) *}>
+	<{* parts_idを一緒に送るとcomponentsのActionのsetPartsで自動的にアップロードに切り替わる *}>
+	<input type="hidden" name="parts_id" value="<{$action.parts_data.parts_id}>"/>
+	<table class="outer" summary="<{$smarty.const._SUMMARY_SETTINGFORM}>">
+		<tr class="row">
+			<{* ブログパーツ名を登録 *}>
+			<th class="nowrap" scope="row">
+				<label for="parts_name<{$id}>">
+					<{$lang.blogparts_name|smarty:nodefaults}>
+				</label>
+			</th>
+			<td>
+				<{* 新規登録時はparts_idが保持されていないのでvalueには何も入らない *}>
+				<input id="parts_name<{$id}>" class="text" type="text" name="parts_name" value="<{$action.parts_data.parts_name}>" />
+			</td>
+		</tr>
+		<tr class="row">
+			<{* ブログパーツのスクリプトを登録 *}>
+			<th class="nowrap" scope="row">
+				<label for="parts_script<{$id}>">
+					<{$lang.blogparts_script|smarty:nodefaults}>
+				</label>
+			</th>
+			<td>
+				<textarea id="parts_script<{$id}>" class="textarea" name="parts_script"><{$action.parts_data.parts_script}></textarea>
+			</td>
+		</tr>
+	</table>
+	<div class="btn-bottom">
+		<{* blogparts.jsのinsertPartsでformの内容を送る *}>
+		<input class="btn-width lined_btn" type="button" onclick="blogpartsCls['<{$id}>'].insertParts(this.form);return false;" value="<{$lang._regist|smarty:nodefaults}>" />
+		<{* common.jsのsendViewで指定したページへ移動する *}>
+		<input class="btn-width lined_btn" type="button" onclick="commonCls.sendView('<{$id}>', 'blogparts_view_edit_list');return false;" value="<{$lang._cancel|smarty:nodefaults}>" />
+	</div>
+</form>
+<{include file = "../blogparts_script.html"}>
+<{/strip}>

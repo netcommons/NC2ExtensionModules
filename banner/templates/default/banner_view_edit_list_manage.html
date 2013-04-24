@@ -1,0 +1,18 @@
+<{strip}>
+<{* バナー一覧（管理列）用テンプレート *}>
+<{* 
+<{if $banner.banner_type != BANNER_TYPE_SOURCE_VALUE}>
+	<a class="syslink" href="#" title="<{$lang.banner_monthly_click_count_title|smarty:nodefaults}>" onclick="commonCls.showMonth(event, '<{$banner.banner_id}>');return false;">
+		<{$lang.banner_monthly_click_count|smarty:nodefaults}>
+	</a>
+	<{$lang._separator|smarty:nodefaults}>
+<{/if}>
+ *}>
+<a class="syslink" href="#" title="<{$lang._edit_title|smarty:nodefaults|sprintf:$banner.banner_name}>" onclick="bannerCls['<{$id}>'].showEntry(event, '<{$banner.banner_id}>');return false;">
+	<{$lang._edit|smarty:nodefaults}>
+</a>
+<{$lang._separator|smarty:nodefaults}>
+<a class="syslink" href="#" title="<{$lang._del_title|smarty:nodefaults|sprintf:$banner.banner_name}>" onclick="bannerCls['<{$id}>'].deleteBanner('<{$banner.banner_id}>', '<{$lang._del_confirm|sprintf:"`$banner.banner_name`"|smarty:nodefaults|escape:"javascript"|escape:"html"}>');return false;">
+	<{$lang._delete|smarty:nodefaults}>
+</a>
+<{/strip}>

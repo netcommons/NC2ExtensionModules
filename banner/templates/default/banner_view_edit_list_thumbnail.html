@@ -1,0 +1,22 @@
+<{strip}>
+<{* バナー一覧（サムネイル列）用テンプレート *}>
+<{if $banner.banner_type != BANNER_TYPE_LINK_VALUE}>
+	<{assign var="banner_name" value="`$banner.banner_name`"|smarty:nodefaults|escape:"javascript"|escape:"html"}>
+<{/if}>
+
+<a class="banner_thumbnail_link" href="#" title="<{$banner_name}>" onclick="bannerCls['<{$id}>'].showPreview(event, <{$banner.banner_id}>);return false;">
+	<{if $banner.banner_type == BANNER_TYPE_URL_VALUE}>
+		<img class="banner_thumbnail_url" src="<{$banner.image_url}>" alt="<{$banner_name}>" title="" />
+	<{elseif $banner.banner_type == BANNER_TYPE_IMAGE_VALUE}>
+		<img class="banner_thumbnail" src=".<{$smarty.const.INDEX_FILE_NAME}><{$banner.image_path}>" alt="<{$banner_name}>" title="" style="<{$banner.thumbnailStyle}>" />
+	<{elseif $banner.banner_type == BANNER_TYPE_SOURCE_VALUE}>
+		<img class="banner_thumbnail" src="<{"noimage.gif"|get_modules_image}>" alt="" alt="<{$banner_name}>" title="" />
+	<{else}>
+		<img class="banner_thumbnail" src="<{"noimage.gif"|get_modules_image}>" alt="" alt="<{$banner_name}>" title="" />
+	<{/if}>
+</a>
+
+<a class="syslink" href="#" title="<{$banner_name}>" onclick="bannerCls['<{$id}>'].showPreview(event, <{$banner.banner_id}>);return false;">
+	<{$banner.banner_name}>
+</a>
+<{/strip}>

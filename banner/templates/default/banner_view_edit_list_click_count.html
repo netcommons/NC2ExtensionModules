@@ -1,0 +1,8 @@
+<{strip}>
+<{* バナー一覧（クリック数列）用テンプレート *}>
+<{if $banner.banner_type != BANNER_TYPE_SOURCE_VALUE}>
+	<{$lang.banner_count_unit|smarty:nodefaults|sprintf:$clickCount}>
+<{else}>
+	<{$lang.banner_count_none|smarty:nodefaults}>
+<{/if}>
+<{/strip}>

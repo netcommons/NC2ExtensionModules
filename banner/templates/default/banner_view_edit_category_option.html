@@ -1,0 +1,11 @@
+<{strip}>
+<{* カテゴリ選択オプション用テンプレート *}>
+<option value='0' <{if empty($action.category_id|smarty:nodefaults)}>selected='selected'<{/if}>>
+	<{$lang.banner_category_none|smarty:nodefaults}>
+</option>
+<{foreach from=$action.categories item=category}>
+	<option value='<{$category.category_id}>'<{if ($action.category_id==$category.category_id)}> selected='selected'<{/if}>>
+		<{$category.category_name}>
+	</option>
+<{/foreach}>
+<{/strip}>

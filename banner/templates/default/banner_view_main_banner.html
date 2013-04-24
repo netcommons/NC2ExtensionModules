@@ -1,0 +1,32 @@
+<{strip}>
+<{* バナー表示用テンプレート *}>
+<div class="banner_outer">
+	<{if $banner.banner_type != BANNER_TYPE_SOURCE_VALUE}>
+		<{assign var="banner_name" value="`$banner.banner_name`"|smarty:nodefaults|escape:"javascript"|escape:"html"}>
+	<{/if}>
+
+	<{if $banner.banner_type == BANNER_TYPE_URL_VALUE}>
+		<a class="banner_link" href="<{$banner.link_url}>" target="<{$banner.target}>" title="<{$banner_name}>" onclick="bannerCls['<{$id}>'].clickBanner('<{$banner.banner_id}>');">
+			<{if $banner.size_flag == _ON}>
+				<img class="banner_image" src="<{$banner.image_url}>" alt="<{$banner_name}>" title="" width="<{$banner.display_width}>" height="<{$banner.display_height}>" />
+			<{else}>
+				<img class="banner_image" src="<{$banner.image_url}>" alt="<{$banner_name}>" title="" />
+			<{/if}>
+		</a>
+	<{elseif $banner.banner_type == BANNER_TYPE_IMAGE_VALUE}>
+		<a class="banner_link" href="<{$banner.link_url}>" target="<{$banner.target}>" title="<{$banner_name}>" onclick="bannerCls['<{$id}>'].clickBanner('<{$banner.banner_id}>');">
+			<{if $banner.size_flag == _ON}>
+				<img class="banner_image" src=".<{$smarty.const.INDEX_FILE_NAME}><{$banner.image_path}>" alt="<{$banner_name}>" title="" width="<{$banner.display_width}>" height="<{$banner.display_height}>" />
+			<{else}>
+				<img class="banner_image" src=".<{$smarty.const.INDEX_FILE_NAME}><{$banner.image_path}>" alt="<{$banner_name}>" title="" />
+			<{/if}>
+		</a>
+	<{elseif $banner.banner_type == BANNER_TYPE_SOURCE_VALUE}>
+		<{$banner.source_code|smarty:nodefaults}>
+	<{else}>
+		<a class="banner_link" href="<{$banner.link_url}>" target="<{$banner.target}>" title="<{$banner_name}>" onclick="bannerCls['<{$id}>'].clickBanner('<{$banner.banner_id}>');">
+			<{$banner.banner_name}>
+		</a>
+	<{/if}>
+</div>
+<{/strip}>

@@ -1,0 +1,79 @@
+<{strip}>
+<{* スケジュール詳細画面画面用テンプレート *}>
+<table class="outer" summary="<{$lang.scheduler_schedule_detail_summary}>">
+<tbody>
+	<tr class="row">
+		<th scope="row">
+			<{$lang.scheduler_schedule_summary|smarty:nodefaults}>
+		</th>
+		<td class="nowrap">
+			<{if !empty($action.schedule.icon|smarty:nodefaults)}>
+				<img class="icon" src="<{""|get_image_url}>/images/comp/textarea/<{$action.schedule.icon}>" alt="" />
+			<{/if}>
+			<{$action.schedule.summary}>
+		</td>
+	</tr>
+
+	<tr class="row">
+		<th scope="row">
+			<{$lang.scheduler_schedule_date|smarty:nodefaults}>
+		</th>
+		<td class="scheduler_schedule_date_list nowrap">
+			<{foreach from=$action.scheduleDates|smarty:nodefaults item=scheduleDate}>
+				<div class="<{$scheduleDate.entryTypeClassName}>">
+					<div class="scheduler_schedule_date <{$scheduleDate.dateClassName}>">
+						<{$scheduleDate.displayDate}>
+					</div>
+
+					<{foreach from=$scheduleDate.timeDatas|smarty:nodefaults item=timeData}>
+						<div class="scheduler_schedule_time <{$timeData.separateClassName}>">
+							<{include file="scheduler_view_main_date_time.html"}>
+						</div>
+					<{/foreach}>
+					<br class="float-clear" />
+				</div>
+			<{/foreach}>
+			<br class="float-clear" />
+		</td>
+	</tr>
+
+	<tr class="row">
+		<th scope="row">
+			<{$lang.scheduler_schedule_period|smarty:nodefaults}>
+		</th>
+		<td class="nowrap">
+			<{$action.schedule.displayPeriodDate}>
+		</td>
+	</tr>
+
+	<tr class="row">
+		<th scope="row">
+			<{$lang.scheduler_schedule_description|smarty:nodefaults}>
+		</th>
+		<td class="nowrap">
+			<{$action.schedule.description|smarty:nodefaults|wysiwig_convert_url}>
+		</td>
+	</tr>
+
+	<tr class="row">
+		<th scope="row">
+			<{$lang.scheduler_schedule_creator|smarty:nodefaults}>
+		</th>
+		<td class="nowrap">
+			<{$action.schedule.insert_user_name}>
+		</td>
+	</tr>
+
+	<tr class="row">
+		<th scope="row">
+			<{$lang.scheduler_schedule_create_date|smarty:nodefaults}>
+		</th>
+		<td class="nowrap">
+			<{$action.schedule.insert_time|timezone_date_format:$lang._full_date_format}>
+		</td>
+	</tr>
+</tbody>
+</table>
+
+<{include file="../scheduler_script.html"}>
+<{/strip}>

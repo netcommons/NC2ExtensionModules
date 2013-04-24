@@ -1,0 +1,6 @@
+<{strip}>
+<{* 一覧（カレント）用テンプレート *}>
+<label for="faq_current<{$faq.faq_id}><{$id}>">
+	<input id="faq_current<{$faq.faq_id}><{$id}>" type="radio" name="current" onclick="faqCls['<{$id}>'].changeCurrent(<{$faq.faq_id}>);" />
+</label>
+<{/strip}>

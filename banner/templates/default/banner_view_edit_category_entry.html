@@ -1,0 +1,22 @@
+<{strip}>
+<{* カテゴリ登録ポップアップ用テンプレート *}>
+<form class="popupClass nowrap">
+	<table class="outer" summary="<{$smarty.const._SUMMARY_SETTINGFORM}>">
+		<tr class="row">
+			<th scope="row">
+				<label for="banner_category_name<{$id}>">
+					<{$lang.banner_category_name|smarty:nodefaults}>
+				</label>
+			</th>
+			<td class="nowrap">
+				<input id="banner_category_name<{$id}>" name="category_name" type="text" value="<{$lang.banner_category_new_name|smarty:nodefaults|sprintf:$action.categoryNumber}>" />
+			</td>
+		</tr>
+	</table>
+
+	<div class="btn-bottom">
+		<input class="btn-width" type="button" value="<{$lang._regist|smarty:nodefaults}>" onclick="parent.bannerCls['<{$id}>'].enterCategory();return false;" />
+		<input class="lined_btn btn-width" type="button" value="<{$lang._cancel|smarty:nodefaults}>" onclick="parent.bannerCls['<{$id}>'].popup.closePopup();return false;" />
+	</div>
+</form>
+<{/strip}>

@@ -1,0 +1,6 @@
+<{strip}>
+<{* 一覧（表示チェックボックス列）用テンプレート *}>
+<label for="banner_display<{$banner.banner_id}><{$id}>">
+	<input id="banner_display<{$banner.banner_id}><{$id}>" type="checkbox" name="display[<{$banner.banner_id}>]"<{$banner.checkedAttribute}> onclick="bannerCls['<{$id}>'].changeDislpay(<{$banner.banner_id}>);" />
+</label>
+<{/strip}>

@@ -1,0 +1,60 @@
+<{strip}>
+<form id="faq_form<{$id}>" action="#" method="post" onsubmit="return false;">
+	<div class="outerdiv">
+		<table class="outer" summary="">
+			<tr class="row">
+				<th scope="row">
+					<label for="<{$id}>_faq_name">
+						<{$lang.faq_name|smarty:nodefaults}>
+					</label>
+				</th>
+				<td>
+			 		<input id="<{$id}>_faq_name" type="text" size="50" name="faq_name" value="<{$action.faq_obj.faq_name}>" />
+				</td>
+			</tr>
+			<tr class="row">
+				<th scope="row">
+					<{$lang.faq_post_auth|smarty:nodefaults}>
+				</th>
+				<td>
+					<label class="disable_lbl">
+			 		<input type="checkbox" disabled="disabled" checked="checked" />
+			 		<input type="hidden" name="faq_authority[<{$smarty.const._AUTH_CHIEF}>]" value="<{$smarty.const._ON}>" />
+					<{$smarty.const._AUTH_CHIEF_NAME}>
+					</label>
+					<label for="faq_authority<{$smarty.const._AUTH_MODERATE}><{$id}>">
+				 		<input id="faq_authority<{$smarty.const._AUTH_MODERATE}><{$id}>" type="checkbox" name="faq_authority[<{$smarty.const._AUTH_MODERATE}>]" value="<{$smarty.const._ON}>" onclick="commonCls.changeAuthority(this, '<{$id}>');" />
+						<{$smarty.const._AUTH_MODERATE_NAME}>
+					</label>
+					<label for="faq_authority<{$smarty.const._AUTH_GENERAL}><{$id}>">
+						<input id="faq_authority<{$smarty.const._AUTH_GENERAL}><{$id}>" type="checkbox" name="faq_authority[<{$smarty.const._AUTH_GENERAL}>]" value="<{$smarty.const._ON}>" onclick="commonCls.changeAuthority(this, '<{$id}>');" />
+						<{$smarty.const._AUTH_GENERAL_NAME}>
+					</label>
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div class="btn-bottom">
+		<{if ($action.faq_obj.faq_id > 0) }>
+			<input type="hidden" name="faq_id" value="<{$action.faq_obj.faq_id}>" />
+		<{/if}>
+		<input class="btn-width lined_btn" type="button" value="<{$lang._regist|smarty:nodefaults}>" onclick='faqCls["<{$id}>"].insFaq(this.form); return false;' />
+		<input class="btn-width lined_btn" type="button" value="<{$lang._cancel|smarty:nodefaults}>" onclick="commonCls.sendView('<{$id}>', 'faq_view_edit_list'); return false;" />
+		
+	</div>
+</form>
+
+<{include file="../faq_script.html"}>
+<script class="nc_script" type="text/javascript">
+	commonCls.focus("<{$id}>");
+	var faqForm = $("faq_form<{$id}>");
+
+	if (faqForm["faq_authority[<{$action.faq_obj.faq_authority}>]"]) {
+		faqForm["faq_authority[<{$action.faq_obj.faq_authority}>]"].checked = true;
+		commonCls.changeAuthority(faqForm["faq_authority[<{$action.faq_obj.faq_authority}>]"], "<{$id}>");
+	}
+
+	faqForm = null;
+</script>
+<{/strip}>

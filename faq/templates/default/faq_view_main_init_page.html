@@ -1,0 +1,21 @@
+<{strip}>
+<span class="faq_page_switch">
+	<{if $action.prev_link}>
+  		<a class="syslink" title="<{$lang.question_back|smarty:nodefaults}>" href="#" onclick="faqCls['<{$id}>'].toPage(this, '<{$action.faq_id}>', 'category_id<{$id}>', 'display_row<{$id}>', '<{$action.now_page-1}>',''); return false;">
+  			<img class="icon" alt="" src="<{"previous.gif"|get_themes_image}>"/>
+  			<{$lang.question_back|smarty:nodefaults}>
+  		</a>
+	<{/if}>
+	<{section name=cnt loop=$action.link_array}>
+		<a class="syslink<{if $action.now_page==$action.link_array[cnt]}> current<{/if}>" href="#" title="<{$action.link_array[cnt]}>" onclick="<{if $action.now_page!=$action.link_array[cnt]}>faqCls['<{$id}>'].toPage(this, '<{$action.faq_id}>', 'category_id<{$id}>', 'display_row<{$id}>', '<{$action.link_array[cnt]}>','');<{/if}> return false;">
+			<{$action.link_array[cnt]}>
+		</a>
+	<{/section}>
+	<{if $action.next_link}>
+  		<a class="syslink" title="<{$lang.question_next|smarty:nodefaults}>" href="#" onclick="faqCls['<{$id}>'].toPage(this, '<{$action.faq_id}>', 'category_id<{$id}>', 'display_row<{$id}>', '<{$action.now_page+1}>', ''); return false;">
+  			<{$lang.question_next|smarty:nodefaults}>
+  			<img class="icon" alt="" src="<{"next.gif"|get_themes_image}>"/>
+  		</a>
+	<{/if}>
+</span>
+<{/strip}>

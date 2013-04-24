@@ -1,0 +1,38 @@
+<{strip}>
+<div class="multimedia_operation multimedia_album_list_<{$operationPosition}>">
+	<{if $action.multimedia_obj.album_authority}>
+		<div class="multimedia_float_left">
+			<a id="multimedia_album_create<{$operationPosition}><{$id}>" class="syslink" href="#" title="<{$lang.multimedia_album_create|smarty:nodefaults}>" onclick="multimediaCls['<{$id}>'].showAlbumEntry(event, '<{$action.multimedia_obj.multimedia_id}>', '');return false;" />
+				<img class="icon" src="<{"add_folder.gif"|get_themes_image}>" alt="" title="" />
+				<{$lang.multimedia_album_create|smarty:nodefaults}>
+			</a>
+		</div>
+		<div class="multimedia_float_left" style="margin-left:10px;">
+			<a id="multimedia_album_seq<{$operationPosition}><{$id}>" class="syslink" href="#" title="<{$lang.multimedia_album_sequence|smarty:nodefaults}>" onclick="multimediaCls['<{$id}>'].showAlbumSeq(event, '<{$action.multimedia_obj.multimedia_id}>');return false;" />
+				<{$lang.multimedia_album_sequence|smarty:nodefaults}>
+			</a>
+		</div>
+	<{/if}>
+	<{if $action.album_count > 0}>
+		<div class="multimedia_float_right">
+			<div class="multimedia_album_page_operation multimedia_float_left">
+				<{include file = "multimedia_view_main_pager.html"}>
+			</div>
+			<{if !$action.album_edit_flag}>
+				<div class="multimedia_float_right">
+					<select id="multimedia_visible_row_<{$operationPosition}><{$id}>" name="visible_row" onchange="multimediaCls['<{$id}>'].showAlbumList({'visible_row':this.value});return false;">
+						<option value="1"><{$lang.multimedia_visible_row_unit|sprintf:"1"|smarty:nodefaults}></option>
+						<option value="5"><{$lang.multimedia_visible_row_unit|sprintf:"5"|smarty:nodefaults}></option>
+						<option value="10"><{$lang.multimedia_visible_row_unit|sprintf:"10"|smarty:nodefaults}></option>
+						<option value="20"><{$lang.multimedia_visible_row_unit|sprintf:"20"|smarty:nodefaults}></option>
+						<option value="50"><{$lang.multimedia_visible_row_unit|sprintf:"50"|smarty:nodefaults}></option>
+						<option value="100"><{$lang.multimedia_visible_row_unit|sprintf:"100"|smarty:nodefaults}></option>
+						<{* <option value="0"><{$lang.multimedia_all|smarty:nodefaults}></option> *}>
+					</select>
+				</div>
+			<{/if}>
+		</div>
+	<{/if}>
+	<br class="float-clear" />
+</div>
+<{/strip}>

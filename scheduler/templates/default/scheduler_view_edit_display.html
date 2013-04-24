@@ -1,0 +1,106 @@
+<{strip}>
+<{* 表示方法変更画面用テンプレート *}>
+<form id="scheduler_form<{$id}>" action="#">
+	<input type="hidden" name="action" />
+	<input type="hidden" name="scheduler_id" />
+	
+	<table class="outer" summary="<{$smarty.const._SUMMARY_SETTINGFORM}>">
+	<tbody>
+		<tr class="row">
+			<th scope="row">
+				<{$lang.scheduler_display|smarty:nodefaults}>
+			</th>
+
+			<td>
+				<input id="scheduler_display_list<{$id}>" type="radio" name="display" value="<{$smarty.const.SCHEDULER_DISPLAY_LIST}>" />
+				<label for="scheduler_display_list<{$id}>">
+					<{$lang.scheduler_display_list|smarty:nodefaults}>
+				</label>
+				<br />
+
+				<input id="scheduler_display_select<{$id}>" type="radio" name="display" value="<{$smarty.const.SCHEDULER_DISPLAY_SELECT}>" />
+				<label for="scheduler_display_select<{$id}>">
+					<{$lang.scheduler_display_select|smarty:nodefaults}>
+				</label>
+			</td>
+		</tr>
+
+		<tr class="row">
+			<th scope="row">
+				<label for="scheduler_visible_row<{$id}>">
+					<{$lang.scheduler_visible_row|smarty:nodefaults}>
+				</label>
+			</th>
+
+			<td>
+				<select id="scheduler_visible_row<{$id}>" name="visible_row">
+					<{include file = "scheduler_view_visible_row_option.html"}>
+				</select>
+			</td>
+		</tr>
+
+		<tr class="row">
+			<th class="nowrap" scope="row">
+				<label for="scheduler_new_period<{$id}>">
+					<{$lang.scheduler_new_period|smarty:nodefaults}>
+				</label>
+			</th>
+
+			<td>
+				<select id="scheduler_new_period<{$id}>" name="new_period">
+					<option value="0">
+						<{$lang.scheduler_new_period_none|smarty:nodefaults}>
+					</option>
+					<option value="1">
+						<{$lang.scheduler_new_period_unit|smarty:nodefaults|sprintf:"1"}>
+					</option>
+					<option value="2">
+						<{$lang.scheduler_new_period_unit|smarty:nodefaults|sprintf:"2"}>
+					</option>
+					<option value="5">
+						<{$lang.scheduler_new_period_unit|smarty:nodefaults|sprintf:"5"}>
+					</option>
+					<option value="7">
+						<{$lang.scheduler_new_period_unit|smarty:nodefaults|sprintf:"7"}>
+					</option>
+					<option value="30">
+						<{$lang.scheduler_new_period_unit|smarty:nodefaults|sprintf:"30"}>
+					</option>
+					<option value="90">
+						<{$lang.scheduler_new_period_unit|smarty:nodefaults|sprintf:"90"}>
+					</option>
+				</select>
+			</td>
+		</tr>
+	</tbody>
+	</table>
+
+	<div class="btn-bottom">
+		<input class="btn-width" type="button" value="<{$lang._regist|smarty:nodefaults}>" onclick="schedulerCls['<{$id}>'].entryDisplayMethod();" />
+		<input class="btn-width lined_btn" type="button" value="<{$lang._cancel|smarty:nodefaults}>" onclick="commonCls.sendView('<{$id}>', 'scheduler_view_main_init');" />
+	</div>
+</form>
+
+<{include file="../scheduler_script.html"}>
+<script class="nc_script" type="text/javascript">
+	var schedulerForm = $("scheduler_form<{$id}>");
+	schedulerForm["action"].value = "scheduler_action_edit_display";
+	schedulerForm["scheduler_id"].value = "<{$action.scheduler.scheduler_id}>";
+
+	<{if $action.scheduler.display == SCHEDULER_DISPLAY_LIST}>
+		$("scheduler_display_list<{$id}>").checked = true;
+	<{else}>
+		$("scheduler_display_select<{$id}>").checked = true;
+	<{/if}>
+
+	schedulerForm["visible_row"].value = "<{$action.scheduler.visible_row}>";
+	schedulerForm["new_period"].value = "<{$action.scheduler.new_period}>";
+
+	<{if empty($action.scheduler.scheduler_id|smarty:nodefaults)}>
+		schedulerCls["<{$id}>"].initializeScheduler();
+	<{/if}>
+
+	schedulerForm = null;
+	commonCls.focus("<{$id}>");
+</script>
+<{/strip}>

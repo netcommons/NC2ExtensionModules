@@ -1,0 +1,33 @@
+<{strip}>
+<{* バナープレビュー用テンプレート *}>
+<div class="outerdiv banner_preview">
+	<{if $action.banner.banner_type != BANNER_TYPE_SOURCE_VALUE}>
+		<{assign var="banner_name" value="`$action.banner.banner_name`"|smarty:nodefaults|escape:"javascript"|escape:"html"}>
+	<{/if}>
+
+	<{if $action.banner.banner_type == BANNER_TYPE_URL_VALUE}>
+		<a class="banner_preview_link" href="#" title="<{$banner_name}>" onclick="return false;">
+			<{if $action.banner.size_flag == _ON}>
+				<img class="banner_image" src="<{$action.banner.image_url}>" alt="<{$banner_name}>" title="" width="<{$action.banner.width}>" height="<{$action.banner.height}>" />
+			<{else}>
+				<img class="banner_image" src="<{$action.banner.image_url}>" alt="<{$banner_name}>" title="" />
+			<{/if}>
+		</a>
+	<{elseif $action.banner.banner_type == BANNER_TYPE_IMAGE_VALUE}>
+		<a class="banner_preview_link" href="#" title="<{$banner_name}>" onclick="return false;">
+			<{if $action.banner.size_flag == _ON}>
+				<img class="banner_image" src=".<{$smarty.const.INDEX_FILE_NAME}><{$action.banner.image_path}>" alt="<{$banner_name}>" title="" width="<{$action.banner.width}>" height="<{$action.banner.height}>" />
+			<{else}>
+				<img class="banner_image" src=".<{$smarty.const.INDEX_FILE_NAME}><{$action.banner.image_path}>" alt="<{$banner_name}>" title="" />
+			<{/if}>
+		</a>
+	<{elseif $action.banner.banner_type == BANNER_TYPE_SOURCE_VALUE}>
+		<{$action.banner.source_code|smarty:nodefaults}>
+	<{else}>
+		<a class="banner_preview_link" href="#" title="<{$banner_name}>" onclick="return false;">
+			<{$action.banner.banner_name}>
+		</a>
+	<{/if}>
+</div>
+<{include file = "../banner_script.html"}>
+<{/strip}>

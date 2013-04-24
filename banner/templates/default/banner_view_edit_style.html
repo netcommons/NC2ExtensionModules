@@ -1,0 +1,50 @@
+<{strip}>
+<{* バナー表示方法変更画面用テンプレート *}>
+<form id="banner_form<{$id}>" class="banner_form" action="#">
+	<input type="hidden" name="action" />
+
+	<table class="outer" summary="<{$smarty.const._SUMMARY_SETTINGFORM}>">
+		<tr class="row">
+			<th class="nowrap" scope="row">
+				<{$lang.banner_display_type|smarty:nodefaults}>
+			</th>
+			<td>
+				<input id="banner_display_type_random<{$id}>" type="radio" name="display_type" value="<{$smarty.const.BANNER_DISPLAY_RANDOM_VALUE}>" />
+				<label for="banner_display_type_random<{$id}>">
+					<{$lang.banner_display_type_random|smarty:nodefaults}>
+				</label>
+				<br />
+				<input id="banner_display_type_sequence<{$id}>" type="radio" name="display_type" value="<{$smarty.const.BANNER_DISPLAY_SEQUENCE_VALUE}>" />
+				<label for="banner_display_type_sequence<{$id}>">
+					<{$lang.banner_display_type_sequence|smarty:nodefaults}>
+				</label>
+				<br />
+				<input id="banner_display_type_list<{$id}>" type="radio" name="display_type" value="<{$smarty.const.BANNER_DISPLAY_LIST_VALUE}>" />
+				<label for="banner_display_type_list<{$id}>">
+					<{$lang.banner_display_type_list|smarty:nodefaults}>
+				</label>
+			</td>
+		</tr>
+	</table>
+
+	<div class="btn-bottom">
+		<input class="btn-width" type="button" value="<{$lang._regist|smarty:nodefaults}>" onclick="commonCls.sendPost('<{$id}>', Form.serialize($('banner_form<{$id}>')), {'target_el':$('<{$id}>'),'focus_flag':true});" />
+		<input class="btn-width lined_btn" type="button" value="<{$lang._cancel|smarty:nodefaults}>" onclick="commonCls.sendView('<{$id}>', 'banner_view_edit_list');" />
+	</div>
+</form>
+
+<{include file = "../banner_script.html"}>
+<script class="nc_script" type="text/javascript">
+	var bannerForm = $("banner_form<{$id}>");
+	bannerForm["action"].value = "banner_action_edit_style";
+	
+	for (var i = 0, length = bannerForm["display_type"].length; i < length; i++) {
+		if (bannerForm["display_type"][i].value == "<{$action.bannerDisplay.display_type}>") {
+			bannerForm["display_type"][i].checked = true;
+			break;
+		}
+	}
+
+	bannerForm = null;
+</script>
+<{/strip}>

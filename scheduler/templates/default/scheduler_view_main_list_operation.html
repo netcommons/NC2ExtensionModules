@@ -1,0 +1,40 @@
+<{strip}>
+<{* スケジュール一覧操作部用テンプレート *}>
+<div class="scheduler_schedule_list scheduler_schedule_list_<{$operationPosition}>">
+	<div class="float-left nowrap">
+		<{if $action.scheduler.createAuthority}>
+			<a class="syslink" href="#" onclick="schedulerCls['<{$id}>'].showScheduleEntry(event);return false;">
+				<img class="icon" src="<{'edit_light.gif'|get_themes_image}>" alt="" />
+				<{$lang.scheduler_create_schedule|smarty:nodefaults}>
+			</a>
+		<{/if}>
+	</div>
+
+	<{if $action.scheduleCount > 0}>
+		<div class="align-right">
+			<span class="scheduler_page_switch">
+				<{if $action.pageNumber > 0}>
+					<a class="syslink" href="#" onclick="schedulerCls['<{$id}>'].showScheduleList({'pageNumber':'<{$action.pagePrevious}>'});return false;">
+						<{$lang.scheduler_page_previous}>
+					</a>
+				<{/if}>
+				<{section name=page start=$action.pageStart loop=$action.pageEnd}>
+					<a class="syslink<{if $action.pageNumber == $smarty.section.page.index}> current<{/if}>" href="#" onclick="schedulerCls['<{$id}>'].showScheduleList({'pageNumber':'<{$smarty.section.page.index}>'});return false;">
+						<{$smarty.section.page.index+1}>
+					</a>
+				<{/section}>
+				<{if $action.pageNext < $action.pageEnd}>
+					<a class="syslink" href="#" onclick="schedulerCls['<{$id}>'].showScheduleList({'pageNumber':'<{$action.pageNext}>'});return false;">
+						<{$lang.scheduler_page_next|smarty:nodefaults}>
+					</a>
+				<{/if}>
+			</span>
+			
+			<select id="scheduler_visible_row_<{$operationPosition}><{$id}>" name="visible_row" onchange="schedulerCls['<{$id}>'].showScheduleList({'visible_row':this.value});return false;">
+				<{include file = "scheduler_view_visible_row_option.html"}>
+			</select>
+		</div>
+	<{/if}>
+	<br class="float-clear" />
+</div>
+<{/strip}>

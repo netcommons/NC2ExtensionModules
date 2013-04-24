@@ -1,0 +1,169 @@
+<{strip}>
+<{* スケジュール提出画面用テンプレート *}>
+<form id="scheduler_form<{$id}>" action="#">
+	<input type="hidden" name="action" />
+	<input type="hidden" name="scheduler_id" />
+	<input type="hidden" name="schedule_id" />
+
+	<div>
+		<{if !empty($action.schedule.icon|smarty:nodefaults)}>
+			<img class="icon" src="<{""|get_image_url}>/images/comp/textarea/<{$action.schedule.icon}>" alt="" />
+		<{/if}>
+		<span class="scheduler_schedule_summary scheduler_schedule_summary_head">
+			<{$action.schedule.summary}>
+		</span>
+		<a class="syslink" href="#" title="<{$lang.scheduler_schedule_detail_title|smarty:nodefaults}>" onclick="schedulerCls['<{$id}>'].showScheduleDetail(event, '<{$action.schedule.schedule_id}>');return false;">
+			<{$lang._details}>
+		</a>
+	</div>
+
+	<div id="scheduler_replies<{$id}>" class="scheduler_replies_frame scheduler_replies_frame_height scheduler_replies_frame_width">
+		<table class="outer scheduler_replies" summary="<{$lang.scheduler_replies_summary}>">
+		<tbody>
+			<tr>
+				<th class="scheduler_reply_user_header <{$action.schedule.periodClassName}>" rowspan="2" scope="col">
+					<{if ($action.schedule.period) }>
+						<{$lang.scheduler_schedule_period|smarty:nodefaults}>
+						<{$lang._separator2|smarty:nodefaults}>
+						<{$action.schedule.displayPeriodDate}>
+					<{/if}>
+				</th>
+
+				<{foreach from=$action.scheduleDates|smarty:nodefaults item=scheduleDate}>
+					<th class="scheduler_reply_date_header" colspan="<{$scheduleDate.timeDataCount}>" scope="col">
+						<div class="<{$scheduleDate.dateClassName}>">
+							<{$scheduleDate.displayDate}>
+						</div>
+					</th>
+				<{/foreach}>
+			</tr>
+
+			<tr>
+				<{foreach from=$action.scheduleDates|smarty:nodefaults item=scheduleDate}>
+					<{foreach from=$scheduleDate.timeDatas|smarty:nodefaults item=timeData}>
+						<th class="scheduler_reply_date_time_header <{$timeData.separateClassName}> <{$timeData.topDateClassName}>" scope="col">
+							<div class="scheduler_reply_date_time">
+								<{include file="scheduler_view_main_date_time.html"}>
+							</div>
+							<br class="float-clear" />
+						</th>
+					<{/foreach}>
+				<{/foreach}>
+			</tr>
+
+			<{if ($smarty.session._user_id != "0" && $smarty.session._auth_id > $smarty.const._AUTH_GUEST)}>
+				<tr id="scheduler_own_reply<{$id}>" class="scheduler_own_reply">
+					<th class="scheduler_reply_user" scope="row">
+						<{include file="scheduler_view_handle.html" handle=$smarty.session._handle|smarty:nodefaults user_id=$smarty.session._user_id}>
+					</th>
+
+					<{foreach from=$action.scheduleDates|smarty:nodefaults item=scheduleDate}>
+						<{foreach from=$scheduleDate.timeDatas|smarty:nodefaults item=timeData}>
+							<td class="scheduler_reply <{$timeData.topDateClassName}>" onmouseover="commonCls.blockNotice(event, this);">
+								<input type="hidden" name="reply[<{$timeData.date_id}>]" value="<{$action.ownReplies[$timeData.date_id].reply|intval}>" />
+								<{if $action.schedule.periodClassName == 'scheduler_period_over'}>
+									<span class="display-none" >
+										<{$lang.scheduler_reply_none|smarty:nodefaults}>
+									</span>
+									<span class="display-none" >
+										<{$lang.scheduler_reply_ok|smarty:nodefaults}>
+									</span>
+									<span class="display-none" >
+										<{$lang.scheduler_reply_ng|smarty:nodefaults}>
+									</span>
+									<span class="display-none" >
+										<{$lang.scheduler_reply_fine|smarty:nodefaults}>
+									</span>
+								<{else}>
+									<a class="scheduler_reply_none scheduler_own_reply display-none" href="#" onclick="schedulerCls['<{$id}>'].switchReply(this, '<{$smarty.const.SCHEDULER_REPLY_OK}>');return false;">
+										<{$lang.scheduler_reply_none|smarty:nodefaults}>
+									</a>
+									<a class="scheduler_reply_ok scheduler_own_reply display-none" href="#" onclick="schedulerCls['<{$id}>'].switchReply(this, '<{$smarty.const.SCHEDULER_REPLY_NG}>');return false;">
+										<{$lang.scheduler_reply_ok|smarty:nodefaults}>
+									</a>
+									<a class="scheduler_reply_ng scheduler_own_reply display-none" href="#" onclick="schedulerCls['<{$id}>'].switchReply(this, '<{$smarty.const.SCHEDULER_REPLY_FINE}>');return false;">
+										<{$lang.scheduler_reply_ng|smarty:nodefaults}>
+									</a>
+									<a class="scheduler_reply_fine scheduler_own_reply display-none" href="#" onclick="schedulerCls['<{$id}>'].switchReply(this, '<{$smarty.const.SCHEDULER_REPLY_NONE}>');return false;">
+										<{$lang.scheduler_reply_fine|smarty:nodefaults}>
+									</a>
+									<a class="syslink display-none" href="#" onclick="schedulerCls['<{$id}>'].showComment(event, '<{$timeData.date_id}>', '<{$action.ownReplies.reply_user_id}>');return false;">
+										<img class="icon" src="<{'edit_light.gif'|get_themes_image}>" alt="" />
+									</a>
+								<{/if}>
+								<input type="hidden" name="reply_comment[<{$timeData.date_id}>]" value="<{$action.ownReplies[$timeData.date_id].reply_comment}>" />
+							</td>
+						<{/foreach}>
+					<{/foreach}>
+				</tr>
+			<{/if}>
+
+			<{foreach from=$action.replyUsers|smarty:nodefaults item=replyUser}>
+				<tr>
+					<th class="scheduler_reply_user" scope="row">
+						<{include file="scheduler_view_handle.html" handle=$replyUser.handle|smarty:nodefaults user_id=$replyUser.user_id}>
+					</th>
+
+					<{foreach from=$action.scheduleDates|smarty:nodefaults item=scheduleDate}>
+						<{foreach from=$scheduleDate.timeDatas|smarty:nodefaults item=timeData}>
+							<{if $replyUser.reply[$timeData.date_id] == SCHEDULER_REPLY_OK}>
+								<td class="scheduler_reply scheduler_reply_ok <{$timeData.topDateClassName}>">
+									<{$lang.scheduler_reply_ok}>
+								</td>
+							<{/if}>
+
+							<{if $replyUser.reply[$timeData.date_id] == SCHEDULER_REPLY_NG}>
+								<td class="scheduler_reply scheduler_reply_ng <{$timeData.topDateClassName}>">
+									<{$lang.scheduler_reply_ng}>
+								</td>
+							<{/if}>
+
+							<{if $replyUser.reply[$timeData.date_id] == SCHEDULER_REPLY_FINE}>
+								<td class="scheduler_reply scheduler_reply_fine <{$timeData.topDateClassName}>">
+									<span class="scheduler_reply_fine"><{$lang.scheduler_reply_fine}></span>
+									<a class="syslink" href="#" onclick="schedulerCls['<{$id}>'].showComment(event, '<{$timeData.date_id}>', '<{$replyUser.user_id}>');return false;">
+										<img class="valign-top" src="<{'comment.gif'|get_modules_image}>" alt="" />
+									</a>
+								</td>
+							<{/if}>
+
+							<{if $replyUser.reply[$timeData.date_id] == SCHEDULER_REPLY_NONE}>
+								<td class="scheduler_reply scheduler_reply_none <{$timeData.topDateClassName}>">
+									<{$lang.scheduler_reply_none}>
+								</td>
+							<{/if}>
+						<{/foreach}>
+					<{/foreach}>
+				</tr>
+			<{/foreach}>
+		</tbody>
+		</table>
+	</div>
+
+	<a class="syslink scheduler_schedule_list_link" href="#" title="<{$lang.scheduler_schedule_list_link_title|smarty:nodefaults}>" onclick="schedulerCls['<{$id}>'].showScheduleList({});return false;">
+		<{$lang.scheduler_schedule_list_link|smarty:nodefaults}>
+	</a>
+
+	<{if ($smarty.session._user_id != "0" && $smarty.session._auth_id > $smarty.const._AUTH_GUEST)}>
+		<div class="btn-bottom">
+			<input class="btn-width" type="button" value="<{$lang._regist|smarty:nodefaults}>" onclick="schedulerCls['<{$id}>'].reply();" />
+			<{if $action.scheduler.display == SCHEDULER_DISPLAY_LIST}>
+				<input class="btn-width lined_btn" type="button" value="<{$lang._cancel|smarty:nodefaults}>" onclick="commonCls.sendView('<{$id}>', 'scheduler_view_main_init');" />
+			<{/if}>
+		</div>
+	<{/if}>
+</form>
+
+<{include file="../scheduler_script.html"}>
+<script class="nc_script" type="text/javascript">
+	var schedulerForm = $("scheduler_form<{$id}>");
+	schedulerForm["action"].value = "scheduler_action_main_reply";
+	schedulerForm["scheduler_id"].value = "<{$action.schedule.scheduler_id}>";
+	schedulerForm["schedule_id"].value = "<{$action.schedule.schedule_id}>";
+
+	schedulerCls["<{$id}>"].replyFineElementNumber = <{$smarty.const.SCHEDULER_REPLY_FINE}> + 1;
+	schedulerCls["<{$id}>"].initializeReply();
+
+	schedulerForm = null;
+</script>
+<{/strip}>

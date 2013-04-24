@@ -1,0 +1,114 @@
+div.banner_list_header {
+	margin-left:10px;
+	margin-bottom:10px;
+	width:700px;
+}
+div.banner_operation_separator {
+	float:left;
+	margin:0px 5px;
+}
+select.banner_category_select {
+	margin-right:10px;
+}
+th.banner_grid_display_banner,
+td.banner_grid_display_banner {
+	width:50px;
+	text-align:center!important;
+}
+th.banner_grid_thumbnail,
+td.banner_grid_thumbnail {
+	width:140px;
+	text-align:center;
+}
+th.banner_grid_block_click_count,
+td.banner_grid_block_click_count {
+	width:70px;
+	text-align:right;
+}
+th.banner_grid_all_click_count,
+td.banner_grid_all_click_count {
+	width:70px;
+	text-align:right;
+}
+.banner_grid_table {width:742px;}
+a.banner_thumbnail_link,
+div.banner_thumbnail_frame {
+	display:block;
+	width:120px;
+	height:90px;
+	margin:0px auto 5px;
+	position:relative;
+}
+div.banner_thumbnail_frame {
+	float:left;
+}
+div.banner_delete_upload_image {
+	height:90px;
+	vertical-align:bottom;
+}
+img.banner_thumbnail_url,
+img.banner_thumbnail{
+	display:block;
+	position:absolute;
+	left:0px;
+}
+img.banner_thumbnail_url {
+	clip:rect(0px 120px 90px 0px);
+}
+tr.banner_display_checked {
+}
+tr.banner_display_checked_none {
+	background-color:#f0f0f0;
+}
+
+img.banner_image {
+}
+div.banner_preview {
+	white-space:nowrap;
+}
+a.banner_preview_link {
+}
+div.banner_outer {
+	margin:4px 0px;
+}
+a.banner_link {
+}
+form.banner_form {
+	margin:5px;
+}
+input.banner_link_url,
+input.banner_image_url {
+	width:450px;
+}
+label.banner_display_width {
+}
+label.banner_display_height {
+	margin-left:10px;
+}
+input.banner_display_width,
+input.banner_display_height {
+	margin-left:5px;
+	width:40px;
+}
+
+div.banner_category_entry {
+	text-align:right;
+	margin-bottom:10px;
+	width:450px;
+}
+table.banner_category_sequence td,
+table.banner_list_sequence td {
+	padding:2px 0px 2px 5px;
+	border-top:1px solid #e0e0e0;
+	border-bottom:1px solid #e0e0e0;
+	height:2.5em;
+}
+td.banner_category_list_name,
+td.banner_list_sequence_name {
+	width:380px;
+}
+div.banner_back_button {
+	text-align:center;
+	margin-top:10px;
+	width:450px;
+}

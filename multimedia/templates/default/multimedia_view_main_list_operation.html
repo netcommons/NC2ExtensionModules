@@ -1,0 +1,68 @@
+<{strip}>
+<{if $action.multimedia_obj.album_authority}>
+	<div class="outerdiv">
+		<div class="multimedia_float_right">
+			<a id="multimedia_item_create<{$id}>" style="margin-left:10px;" class="syslink" href="#" title="<{$lang.multimedia_item_create_title|smarty:nodefaults}>" onclick="multimediaCls['<{$id}>'].showItemUpload(event, ''); return false;" />
+				<img class="icon" src="<{"add_file.gif"|get_themes_image}>" alt="" title="" />
+				<{$lang.multimedia_item_upload|smarty:nodefaults}>
+			</a>
+		</div>
+		<div class="multimedia_float_right">
+			<a id="multimedia_item_create<{$id}>" class="syslink" href="#" title="<{$lang.multimedia_album_edit|smarty:nodefaults}>" onclick="multimediaCls['<{$id}>'].showAlbumEdit(); return false;" />
+				<img class="icon" src="<{"add_file.gif"|get_themes_image}>" alt="" title="" />
+				<{$lang.multimedia_album_edit|smarty:nodefaults}>
+			</a>
+		</div>
+	</div>
+	<br class="float-clear" />
+<{/if}>
+<div style="margin-top: 10px;">
+	<table class="multimedia_video_topnav" cellspacing="0" cellpadding="0">
+		<tr>
+			<td class="multimedia_video_logo">
+			</td>
+			<td class="multimedia_video_topnav_tab">
+				<div class="<{if $action.view_type == $smarty.const.MULTIMEDIA_MOVIE_TYPE_NEW || $action.view_type == ''}> multimedia_video_topnav_tab_active <{else}> multimedia_video_topnav_tab_inactive <{/if}>">
+					<div id="multimedia_toolbar_<{$smarty.const.MULTIMEDIA_MOVIE_TYPE_NEW}>_text<{$id}>" class="align-center" style="width: 110px;">
+						<div class="multimedia_video_notch">
+							<i> </i>
+							<b> </b>
+						</div>
+						<a class="multimedia_video_link" href="#" onclick="multimediaCls['<{$id}>'].setItem('list', '<{$smarty.const.MULTIMEDIA_MOVIE_TYPE_NEW}>');return false;">
+							<{$lang.multimedia_new_list_title|smarty:nodefaults}>
+						</a>
+					</div>
+				</div>
+			</td>
+			<td class="multimedia_video_topnav_tab">
+				<div class="<{if $action.view_type == $smarty.const.MULTIMEDIA_MOVIE_TYPE_POP}> multimedia_video_topnav_tab_active <{else}> multimedia_video_topnav_tab_inactive <{/if}>">
+					<div id="multimedia_toolbar_<{$smarty.const.MULTIMEDIA_MOVIE_TYPE_POP}>_text<{$id}>" class="align-center" style="width: 110px;">
+						<div class="multimedia_video_notch">
+							<i> </i>
+							<b> </b>
+						</div>
+						<a class="multimedia_video_link" href="#" onclick="multimediaCls['<{$id}>'].setItem('list', '<{$smarty.const.MULTIMEDIA_MOVIE_TYPE_POP}>');return false;">
+							<{$lang.multimedia_pop_list_title|smarty:nodefaults}>
+						</a>
+					</div>
+				</div>
+			</td>
+			<td class="multimedia_video_topnav_tab">
+				<div class="<{if $action.view_type == $smarty.const.MULTIMEDIA_MOVIE_TYPE_FAV}> multimedia_video_topnav_tab_active <{else}> multimedia_video_topnav_tab_inactive <{/if}>">
+					<div id="multimedia_toolbar_<{$smarty.const.MULTIMEDIA_MOVIE_TYPE_FAV}>_text<{$id}>" class="align-center" style="width: 110px;">
+						<div class="multimedia_video_notch">
+							<i> </i>
+							<b> </b>
+						</div>
+						<a class="multimedia_video_link" href="#" onclick="multimediaCls['<{$id}>'].setItem('list', '<{$smarty.const.MULTIMEDIA_MOVIE_TYPE_FAV}>');return false;">
+							<{$lang.multimedia_fav_list_title|smarty:nodefaults}>
+						</a>
+					</div>
+				</div>
+			</td>
+			<td width="100%"> </td>
+		</tr>
+	</table>
+</div>
+<{include file = "multimedia_view_main_toolbar.html" from="list"}>
+<{/strip}>

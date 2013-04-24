@@ -1,0 +1,68 @@
+<{strip}>
+<{* バナー一覧用テンプレート *}>
+<div class="outerdiv">
+	<div class="top_description">
+		<{$lang.banner_list_sequence_description|smarty:nodefaults}>
+	</div>
+
+	<table id="banner_list_sequence<{$id}>" class="banner_list_sequence" summary="<{$lang.banner_list_summary}>">
+		<{foreach from=$action.banners item=banner}>
+			<tr id="banner_row<{$banner.banner_id}><{$id}>">
+				<td class="comp_draganddrop">
+				</td>
+				<td class="banner_list_sequence_name">
+					<{$banner.banner_name}>
+				</td>
+			</tr>
+		<{/foreach}>
+	</table>
+
+	<div class="banner_back_button">
+		<input class="btn-width" type="button" value="<{$lang._btn_prev_arrow|smarty:nodefaults}>" onclick="bannerCls['<{$id}>'].showList();return false;" />
+	</div>
+</div>
+
+<{include file = "../banner_script.html"}>
+<script class="nc_script" type="text/javascript">
+	dropZone = Class.create();
+	dropZone.prototype = Object.extend((new compDropzone), {
+		showHover: function(event) {
+			this.showChgSeqHover(event);
+		},
+
+		hideHover: function(event) {
+			this.hideChgSeqHover(event);
+		},
+
+		accept: function(draggableObjects) {
+			this.acceptChgSeq(draggableObjects);
+		},
+
+		save: function(draggableObjects) {
+			if(this.ChgSeqPosition == null) {
+				return false;
+			}
+			var drag = draggableObjects[0].getHTMLElement();
+			var drop = this.getHTMLElement();
+			
+			var id = this.getParams();
+			bannerCls[id].changeSequence(drag.id, drop.id, this.ChgSeqPosition);
+			return true;
+		}
+	});
+
+	var dragArea = $("banner_list_sequence<{$id}>");
+	dragDrop = new compDragAndDrop();
+	dragDrop.registerDraggableRange(dragArea);
+	var rows = dragArea.getElementsByTagName("tr");
+	for (var i = 0; i < rows.length; i++) {
+		dragDrop.registerDraggable(new compDraggable(rows[i], rows[i].firstChild));
+		dragDrop.registerDropZone(new dropZone(rows[i], "<{$id}>"));
+	}
+
+	dropZone = null;
+	dragArea = null;
+	dragDrop = null;
+	rows = null;
+</script>
+<{/strip}>

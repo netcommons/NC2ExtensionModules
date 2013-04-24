@@ -1,0 +1,23 @@
+<{strip}>
+<{* Blogparts一覧（管理列）用テンプレート *}>
+<{* blogparts.jsのreferBlogpartsで参照をポップアップで表示する *}>
+<a class="syslink" href="#" title="<{$lang._ref_title|smarty:nodefaults|sprintf:$blogparts.parts_name}>" onclick="blogpartsCls['<{$id}>'].referBlogparts(event, '<{$blogparts.parts_id}>');return false;">
+	<{$lang._ref|smarty:nodefaults}>
+</a>
+
+<{if $smarty.session._user_auth_id == $smarty.const._AUTH_ADMIN}>
+	<{* webapp/languageのglobal.iniセパレートを表示する *}>
+	<{$lang._separator|smarty:nodefaults}>
+	
+	<{* blogparts.jsのeditBlogpartsで編集を表示する *}>
+	<a class="syslink" href="#" title="<{$lang._edit_title|smarty:nodefaults|sprintf:$blogparts.parts_name}>" onclick="blogpartsCls['<{$id}>'].editBlogparts('<{$blogparts.parts_id}>');return false;">
+		<{$lang._edit|smarty:nodefaults}>
+	</a>
+	<{$lang._separator|smarty:nodefaults}>
+	
+	<{* blogparts.jsのdeleteBlogpartsで削除をする *}>
+	<a class="syslink" href="#" title="<{$lang._del_title|smarty:nodefaults|sprintf:$blogparts.parts_name}>" onclick="blogpartsCls['<{$id}>'].deleteBlogparts('<{$blogparts.parts_id}>', '<{$lang._del_confirm|sprintf:"`$blogparts.parts_name`"|smarty:nodefaults|escape:"javascript"|escape:"html"}>');return false;">
+		<{$lang._delete|smarty:nodefaults}>
+	</a>
+<{/if}>
+<{/strip}>

@@ -1,0 +1,23 @@
+<{strip}>
+<{* スケジュール日程時間部分用テンプレート *}>
+<{if $action.schedule.entry_type == SCHEDULER_ENTRY_CALENDAR}>
+	<{$timeData.separateValue}>
+<{else}>
+	<div class="<{$timeData.startTimeClassName}>">
+		<{$timeData.startOffsetUnixTimestamp|date_format:"%H:%M"}>
+	</div>
+	<div class="scheduler_schedule_date_from_to">
+		<{$lang.scheduler_from_to}>
+	</div>
+
+	<{if $timeData.isMultipleDate}>
+		<div class="<{$timeData.endDateClassName}>">
+			<{$timeData.endDisplayDate}>
+		</div>
+	<{/if}>
+
+	<div class="<{$timeData.endTimeClassName}>">
+		<{$timeData.endOffsetUnixTimestamp|date_format:"%H:%M"}>
+	</div>
+<{/if}>
+<{/strip}>

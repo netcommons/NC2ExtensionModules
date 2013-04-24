@@ -1,0 +1,48 @@
+<{strip}>
+<div class="outerdiv">
+	<form id="faq_post_form<{$id}>" action="#" onsubmit="return false;">
+
+		<table class="outer" summary="">
+			<tr class="row">
+				<th scope="row"><{$lang.faq_post_category|smarty:nodefaults}></th>
+				<td class="nowrap">
+				    <{if ($action.cate_can_select==false)}>
+                       <input type="hidden" name="category_id" value="<{$action.post.category_id}>" />
+                    <{/if}>
+					<select name="<{if ($action.cate_can_select==true)}>category_id<{/if}>" size="1" <{if ($action.cate_can_select==false)}>disabled<{/if}> >
+						<option value="0" <{if ($action.post.category_id=="0")}>selected="selected"<{/if}>><{$lang.question_nocategory|smarty:nodefaults}></option>
+						<{foreach from=$action.categories item=cat}>
+							<option value="<{$cat.category_id}>" <{if ($action.post.category_id==$cat.category_id)}>selected="selected"<{/if}>><{$cat.category_name}></option>
+						<{/foreach}>
+					</select>
+				</td>
+			</tr>
+            <tr class="row">
+                <th scope="row"><{$lang.question_title|smarty:nodefaults}></th>
+                <td>
+                   <textarea name="question_name" id="textarea_name<{$id}>" rows="4" cols="63" style="height:50px"><{$action.post.question_name}></textarea>
+                </td>
+            </tr>
+            <tr>
+                <th class="row"><{$lang.question_answer|smarty:nodefaults}></th>
+                <td>
+                    <textarea class="comptextarea textarea<{$id}>" rows="18" cols="60"><{$action.post.question_answer|smarty:nodefaults|wysiwig_convert_url|escape:"html"}></textarea>
+                </td>
+            </tr>
+		</table>
+
+		<br/>
+
+		<div class="btn-bottom">
+			<input name="regist" type="button" class="btn-width lined_btn" onclick="faqCls['<{$id}>'].post(this.form, <{$smarty.const._OFF}>);" value="<{$lang._regist|smarty:nodefaults}>" />
+			<input name="cancel" type="button" class="btn-width lined_btn" onclick="commonCls.sendView('<{$id}>', {'action':'faq_view_main_init'});" value="<{$lang._cancel|smarty:nodefaults}>" />
+		</div>
+		<input type="hidden" name="faq_id" value="<{$action.faq_obj.faq_id}>"/>
+		<input type="hidden" name="question_id" value="<{$action.post.question_id}>"/>
+	</form>
+</div>
+<{include file="../faq_script.html"}>
+<script class="nc_script" type="text/javascript">
+	commonCls.focus($("textarea_name<{$id}>"));
+</script>
+<{/strip}>

@@ -1,0 +1,86 @@
+<{strip}>
+<{* カテゴリ一覧用テンプレート *}>
+<div class="outerdiv">
+	<div class="top_description">
+		<{$lang.banner_category_description|smarty:nodefaults}>
+	</div>
+	<div class="banner_category_entry">
+		<a class="syslink" href="#" title="<{$lang.banner_category_entry_title|smarty:nodefaults}>" onclick="bannerCls['<{$id}>'].showCategoryEntry(this);return false;">
+			<img class="icon" src="<{"add_file.gif"|get_themes_image}>" alt="" title="" />
+			<{$lang.banner_category_entry|smarty:nodefaults}>
+		</a>
+	</div>
+	
+	<{if count($action.categories) == 0 }>
+		<{$lang.banner_category_none|smarty:nodefaults}>
+	<{else}>
+		<table id="banner_category_list<{$id}>" class="banner_category_sequence" summary="<{$lang.banner_category_list_summary|smarty:nodefaults}>">	
+			<{foreach from=$action.categories item=category}>
+				<tr id="banner_category_row<{$category.category_id}><{$id}>">
+					<td class="comp_draganddrop">
+					</td>
+					<td class="banner_category_list_name">
+						<a class="link display-block" href="#" title="<{$smarty.const._CLICK_EDIT}>" onclick="bannerCls['<{$id}>'].showCategoryInputElement(this);return false;" onfocus="this.onmouseover(event);" onmouseover="commonCls.blockNotice(event, this);">
+							<{$category.category_name}>
+						</a>
+						<input id="banner_category_name<{$category.category_id}><{$id}>" class="display-none" type="text" value="<{$category.category_name}>" onkeypress="if (event.keyCode == 13) {this.onblur();}" onblur="bannerCls['<{$id}>'].enterCategory(<{$category.category_id}>);" />
+					</td>
+					<td>
+						<a href="#" title="" onclick="bannerCls['<{$id}>'].deleteCategory('<{$category.category_id}>', '<{$lang._del_confirm|sprintf:"`$category.category_name`"|smarty:nodefaults|escape:"javascript"|escape:"html"}>');return false;">
+							<img class="icon" src="<{"trash.gif"|get_themes_image}>" alt="<{$lang._delete}>" title="<{$lang._del_title|smarty:nodefaults|sprintf:$category.category_name}>" />
+						</a>
+					</td>
+				</tr>
+			<{/foreach}>
+		</table>
+	<{/if}>
+
+	<div class="banner_back_button">
+		<input class="btn-width" type="button" value="<{$lang._btn_prev_arrow|smarty:nodefaults}>" onclick="bannerCls['<{$id}>'].showList();return false;" />
+	</div>
+</div>
+
+<{include file = "../banner_script.html"}>
+<script class="nc_script" type="text/javascript">
+	dropZone = Class.create();
+	dropZone.prototype = Object.extend((new compDropzone), {
+		showHover: function(event) {
+			this.showChgSeqHover(event);
+		},
+
+		hideHover: function(event) {
+			this.hideChgSeqHover(event);
+		},
+
+		accept: function(draggableObjects) {
+			this.acceptChgSeq(draggableObjects);
+		},
+
+		save: function(draggableObjects) {
+			if(this.ChgSeqPosition == null) {
+				return false;
+			}
+			var drag = draggableObjects[0].getHTMLElement();
+			var drop = this.getHTMLElement();
+			
+			var id = this.getParams();
+			bannerCls[id].changeCategorySequence(drag.id, drop.id, this.ChgSeqPosition);
+			return true;
+		}
+	});
+
+	var dragArea = $("banner_category_list<{$id}>");
+	dragDrop = new compDragAndDrop();
+	dragDrop.registerDraggableRange(dragArea);
+	var rows = dragArea.getElementsByTagName("tr");
+	for (var i = 0; i < rows.length; i++) {
+		dragDrop.registerDraggable(new compDraggable(rows[i], rows[i].firstChild));
+		dragDrop.registerDropZone(new dropZone(rows[i], "<{$id}>"));
+	}
+
+	dropZone = null;
+	dragArea = null;
+	dragDrop = null;
+	rows = null;
+</script>
+<{/strip}>

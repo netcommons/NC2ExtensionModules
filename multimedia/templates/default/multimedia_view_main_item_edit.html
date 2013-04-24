@@ -1,0 +1,72 @@
+<{strip}>
+<{* 動画登録画面用テンプレート *}>
+<form id="multimedia_item_edit_form<{$id}>" action="#">
+	<input type="hidden" name="item_id" value="<{$action.item.item_id}>" />
+	<input type="hidden" name="insert_user_id" value="<{$action.item.insert_user_id}>" />
+	<table class="outer" summary="<{$smarty.const._SUMMARY_SETTINGFORM}>">
+		<tr class="row">
+			<th class="nowrap" scope="row">
+				<label for="multimedia_item_name<{$id}>">
+					<{$lang.multimedia_item_name|smarty:nodefaults}>
+				</label>
+			</th>
+			<td>
+		 		<input id="multimedia_item_name<{$id}>" class="text" type="text" name="item_name" value="<{$action.item.item_name}>"/>
+			</td>
+		</tr>
+		<tr class="row">
+			<th class="nowrap" scope="row">
+				<label for="multimedia_item_description<{$id}>">
+					<{$lang.multimedia_item_description|smarty:nodefaults}>
+				</label>
+			</th>
+			<td>
+		 		<textarea id="multimedia_item_description<{$id}>" class="multimedia_item_description" name="item_description"><{$action.item.item_description}></textarea>
+			</td>
+		</tr>
+		<tr class="row">
+			<th class="nowrap" scope="row">
+				<label for="multimedia_item_tag<{$id}>">
+					<{$lang.multimedia_item_tag|smarty:nodefaults}>
+				</label>
+			</th>
+			<td>
+				<input id="multimedia_item_tag<{$id}>" class="text" type="text" name="item_tag" value="<{$action.item.item_tag}>"/><br />
+				<{$lang.multimedia_item_tag_readme|smarty:nodefaults}>
+			</td>
+		</tr>
+		<tr class="row">
+			<th class="nowrap" scope="row">
+				<label for="multimedia_item_category<{$id}>">
+					<{$lang.multimedia_item_album_select|smarty:nodefaults}>
+				</label>
+			</th>
+			<td>
+ 				<select id="multimedia_item_category<{$id}>" name="album_id">
+					<{foreach from=$action.album_list item=album}>
+						<option value="<{$album.album_id}>" <{if $action.item.album_id == $album.album_id}> selected="selected"<{/if}>><{$album.album_name}></option>
+					<{/foreach}>
+				</select>
+			</td>
+		</tr>
+		<tr class="row">
+			<th class="nowrap" scope="row">
+				<label for="multimedia_item_privacy<{$id}>">
+					<{$lang.multimedia_item_privacy|smarty:nodefaults}>
+				</label>
+			</th>
+			<td>
+ 				<select id="multimedia_item_privacy<{$id}>" name="privacy">
+					<option value="<{$smarty.const._AUTH_GENERAL}>" <{if $action.item.privacy == $smarty.const._AUTH_GENERAL}> selected="selected"<{/if}>><{$lang.multimedia_item_privacy_regist|smarty:nodefaults}></option>
+					<option value="<{$smarty.const._AUTH_GUEST}>" <{if $action.item.privacy == $smarty.const._AUTH_GUEST}> selected="selected"<{/if}>><{$lang.multimedia_all|smarty:nodefaults}></option>
+				</select>
+			</td>
+		</tr>
+	</table>
+	<div class="btn-bottom">
+		<input class="btn-width" type="button" value="<{$lang._regist|smarty:nodefaults}>" onclick="multimediaCls['<{$id}>'].editItem(this.form); return false;" />
+		<input class="lined_btn btn-width" type="button" value="<{$lang._cancel|smarty:nodefaults}>" onclick="commonCls.removeBlock('<{$id}>'); return false;" />
+	</div>
+</form>
+<{include file="../multimedia_script.html"}>
+<{/strip}>

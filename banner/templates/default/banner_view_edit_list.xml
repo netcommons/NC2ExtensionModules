@@ -1,0 +1,39 @@
+<{* XML *}>
+<?xml version="1.0" encoding="<{$smarty.const._CHARSET}>"?>
+<{strip}>
+<lists>
+	<{foreach from=$action.banners item=banner}>
+		<row id="banner_current_tr<{$banner.banner_id}><{$id}>">
+			<display>
+				<![CDATA[
+					<{include file = "banner_view_edit_list_display.html"}>
+				]]>
+			</display>
+			<thumbnail>
+				<![CDATA[
+					<{include file = "banner_view_edit_list_thumbnail.html"}>
+				]]>
+			</thumbnail>
+			<blockClickCount>
+				<{include file = "banner_view_edit_list_click_count.html" clickCount=$banner.block_click_count}>
+			</blockClickCount>
+			<allClickCount>
+				<{include file = "banner_view_edit_list_click_count.html" clickCount=$banner.all_click_count}>
+			</allClickCount>
+			<creator>
+				<![CDATA[
+					<{include file = "banner_view_handle.html" handle=$banner.insert_user_name|smarty:nodefaults user_id=$banner.insert_user_id}>
+				]]>
+			</creator>
+			<createDate>
+				<{$banner.insert_time|timezone_date_format:$lang._date_format|smarty:nodefaults}>
+			</createDate>
+			<manage>
+				<![CDATA[
+					<{include file = "banner_view_edit_list_manage.html"}>
+				]]>
+			</manage>
+		</row>
+	<{/foreach}>
+</lists>
+<{/strip}>

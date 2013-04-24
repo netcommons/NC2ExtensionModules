@@ -1,0 +1,46 @@
+<{strip}>
+<div class="outerdiv">
+	<form action="post" onsubmit="return false;">
+		<table class="outer">
+			<tr>
+				<th style="width:160px"><{$lang.faq_display_items|smarty:nodefaults}></th>
+				<td>
+					<select name="display_row" size="1">
+						<option value="1" <{if ($action.faq_obj.display_row==1)}>selected="selected"<{/if}>>1<{$lang.faq_display_item|smarty:nodefaults}></option>
+						<option value="5" <{if ($action.faq_obj.display_row==5)}>selected="selected"<{/if}>>5<{$lang.faq_display_item|smarty:nodefaults}></option>
+						<option value="10" <{if ($action.faq_obj.display_row==10)}>selected="selected"<{/if}>>10<{$lang.faq_display_item|smarty:nodefaults}></option>
+						<option value="20" <{if ($action.faq_obj.display_row==20)}>selected="selected"<{/if}>>20<{$lang.faq_display_item|smarty:nodefaults}></option>
+						<option value="50" <{if ($action.faq_obj.display_row==50)}>selected="selected"<{/if}>>50<{$lang.faq_display_item|smarty:nodefaults}></option>
+						<option value="100" <{if ($action.faq_obj.display_row==100)}>selected="selected"<{/if}>>100<{$lang.faq_display_item|smarty:nodefaults}></option>
+						<{* <option value="0" <{if ($action.faq_obj.display_row==0)}>selected="selected"<{/if}>><{$lang.faq_display_item_all|smarty:nodefaults}></option> *}>
+					</select>
+				</td>
+			</tr>
+            <tr>
+                <th><{$lang.faq_catlist|smarty:nodefaults}></th>
+                <td>
+                    <input type="radio" name="show_cate_list" <{if ($action.faq_obj.display_category==0)}>checked="checked"<{/if}> value="1" onClick="commonCls.displayNone($$('#faq_category_list_selector')[0])"/><{$lang.faq_show_catlist|smarty:nodefaults}>&nbsp;
+                    <input type="radio" name="show_cate_list" <{if ($action.faq_obj.display_category<>0)}>checked="checked"<{/if}> value="0" onClick="commonCls.displayVisible($$('#faq_category_list_selector')[0])"/><{$lang.faq_no_show_catlist|smarty:nodefaults}>
+                </td>
+            </tr>
+            <tr>
+                <th>&nbsp;</th>
+                <td>
+                    <div id="faq_category_list_selector" <{if ($action.faq_obj.display_category==0)}>class="display-none"<{/if}>>
+                       <{$lang.faq_default_category|smarty:nodefaults}> <select name="display_category"  size="1">
+                            <{foreach from=$action.categories item=cat}>
+                            <option value="<{$cat.category_id}>" <{if ($action.faq_obj.display_category==$cat.category_id)}>selected="selected"<{/if}>><{$cat.category_name}></option>
+                            <{/foreach}>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+		</table>
+		<div class="btn-bottom">
+			<input class="btn-width lined_btn" type="button" onclick="faqCls['<{$id}>'].styleEdit(this.form); return false;" value="<{$lang._regist|smarty:nodefaults}>" />
+			<input class="btn-width lined_btn" type="button" onclick="faqCls['<{$id}>'].editCancel(); return false;" value="<{$lang._cancel|smarty:nodefaults}>" />
+		</div>
+	</form>
+</div>
+<{include file="../faq_script.html"}>
+<{/strip}>

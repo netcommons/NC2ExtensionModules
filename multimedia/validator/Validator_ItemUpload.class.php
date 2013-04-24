@@ -1,0 +1,191 @@
+<?php
+
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
+
+/**
+ * 動画のアップロードとチェック
+ * 必須チェック
+ *  リクエストパラメータ
+ *  var $registration_id = null;
+ *  var $items = null;
+ *
+ * @package     NetCommons.validator
+ * @author      Noriko Arai,Ryuji Masukawa
+ * @copyright   2006-2007 NetCommons Project
+ * @license     http://www.netcommons.org/license.txt  NetCommons License
+ * @project     NetCommons Project, supported by National Institute of Informatics
+ * @access      public
+ */
+class Multimedia_Validator_ItemUpload extends Validator
+{
+    /**
+     * validate実行
+     *
+     * @param   mixed   $attributes チェックする値
+     *                  
+     * @param   string  $errStr     エラー文字列(未使用：エラーメッセージ固定)
+     * @param   array   $params     オプション引数
+     * @return  string  エラー文字列(エラーの場合)
+     * @access  public
+     */
+    function validate($attributes, $errStr, $params)
+    {
+		// container取得
+		$container =& DIContainerFactory::getContainer();
+		$db =& $container->getComponent("DbObject");
+		$fileUpload =& $container->getComponent("FileUpload");
+		$uploadsAction =& $container->getComponent("uploadsAction");
+		
+		$filterChain =& $container->getComponent("FilterChain");
+		$smartyAssign =& $filterChain->getFilterByName("SmartyAssign");
+		$multimediaAction =& $container->getComponent("multimediaAction");
+
+		if(!isset($attributes['multimedia_id']) || !isset($attributes['album_id']) || !isset($attributes['privacy'])) {
+			return $smartyAssign->getLang("_invalid_input");
+		}
+		
+    	//ffmpeg拡張のチェック
+    	if(!$multimediaAction->hasFfmpegLib()) {
+			$extension_fullname = PHP_EXTENSION_DIR . "/" . MULTIMEDIA_EXTENSION.".".PHP_SHLIB_SUFFIX;
+    		return sprintf($smartyAssign->getLang("multimedia_item_upload_video_extension_error"), $extension_fullname);
+    	}
+
+    	//アップロードしたファイルの処理
+		$files = $uploadsAction->uploads();
+		$params = array(
+			"album_id" => $attributes['album_id']
+		);
+		
+		$itemSequence = $db->maxExecute("multimedia_item", "item_sequence", $params);
+		$actionChain =& $container->getComponent("ActionChain");
+		$action_name = $actionChain->getCurActionName();
+		$pathList = explode("_", $action_name);
+    	$dirname = $pathList[0];
+    	$file_path = $dirname."/";
+
+		foreach($files as $file) {
+			$itemSequence++;
+			$file_dir = FILEUPLOADS_DIR.$file_path;
+
+			if($file['extension'] != "flv") {
+	    		$item_name = str_replace(".". $file['extension'], "", $file['physical_file_name']);
+	    		$str_cmd = "/usr/local/bin/ffmpeg -y -i ".$file_dir.$file['physical_file_name']." -ar 44100 ".$file_dir.$item_name.".flv 2>&1";
+	    		exec($str_cmd, $arr, $ret);
+	    		if($ret != 0) {
+	    			$uploadsAction->delUploadsById($file['upload_id']);
+	    			return sprintf($smartyAssign->getLang("multimedia_item_upload_video_convert_error"), $ret);
+	    		}else {
+	    			unlink($file_dir.$file['physical_file_name']);
+	    		}
+	    		$file['physical_file_name'] = $item_name.".flv";
+	    		$upload_params = array(
+	    			"file_name" => $file['physical_file_name'],
+	    			"physical_file_name" => $file['physical_file_name'],
+	    			"file_size" => filesize($file_dir.$file['physical_file_name']),
+	    			"extension" => "flv"
+	    		);
+	    		$where_params = array(
+	    			"upload_id" => $file['upload_id']
+	    		);
+	    		if(!$uploadsAction->updUploads($upload_params, $where_params)) {
+	    			$uploadsAction->delUploadsById($file['upload_id']);
+	    			return $smartyAssign->getLang("multimedia_item_upload_video_update_error");
+	    		}
+    		}
+
+			//サムネイルを作成
+			$movie = $file_dir.$file['physical_file_name'];
+	    	$mov = new ffmpeg_movie($movie);
+	    	if ($mov->hasVideo()) {
+	    		$duration = $mov->getDuration();
+				$frame = $mov->getFrame(ceil($mov->getFrameCount()/2));
+				if($frame === false) {
+					$frame = $mov->getFrame(1);
+					if($frame === false) {
+						$uploadsAction->delUploadsById($file['upload_id']);
+						return $smartyAssign->getLang("multimedia_item_upload_thmbnail_get_error");
+					}
+				}
+
+				if(!function_exists("gd_info")) {
+					$uploadsAction->delUploadsById($file['upload_id']);
+					return $smartyAssign->getLang("multimedia_item_upload_video_nogd_error");
+				}
+				$image = $frame->toGDImage();
+				if($image === false) {
+					$uploadsAction->delUploadsById($file['upload_id']);
+					return $smartyAssign->getLang("multimedia_item_upload_thmbnail_create_error");
+				}
+				$width_orig = $frame->getWidth();
+				$height_orig = $frame->getHeight();
+				$scale = min(MULTIMEDIA_MOVIE_THUMBNAIL_WIDTH/$width_orig, MULTIMEDIA_MOVIE_THUMBNAIL_HEIGHT/$height_orig);
+				$width = (int)($width_orig*$scale);
+				$height = (int)($height_orig*$scale);
+				$delta_width = (int)((MULTIMEDIA_MOVIE_THUMBNAIL_WIDTH - $width)/2);
+				$delta_height = (int)((MULTIMEDIA_MOVIE_THUMBNAIL_HEIGHT - $height)/2);
+				
+				$gb_result = false;
+				$gb_result = $image_p = imagecreatetruecolor(MULTIMEDIA_MOVIE_THUMBNAIL_WIDTH, MULTIMEDIA_MOVIE_THUMBNAIL_HEIGHT);
+				$gb_result = $back = imagecolorallocate($image_p, 0, 0, 0);
+				$gb_result = imagefill($image_p, 0, 0, $back);
+				$gb_result = imagecopyresampled($image_p, $image, $delta_width, $delta_height, 0, 0, $width, $height, $width_orig, $height_orig);
+	
+				$gb_result = imageJpeg($image_p, $file_dir.$file['upload_id'].MULTIMEDIA_MOVIE_THUMBNAIL_NAME);
+				$gb_result = imageDestroy($image);
+				$gb_result = imageDestroy($image_p);
+				if($gb_result === false) {
+					$uploadsAction->delUploadsById($file['upload_id']);
+					return $smartyAssign->getLang("multimedia_item_upload_thmbnail_create_error");
+				}
+
+				$session =& $container->getComponent("Session");
+				$request =& $container->getComponent("Request");
+				$multimedia_obj = $request->getParameter("multimedia_obj");
+				$auth_id = $session->getParameter("_auth_id");
+				if($auth_id >= _AUTH_CHIEF || $multimedia_obj['confirm_flag'] == _OFF) {
+					$agree_flag = _ON;
+				}else {
+					$agree_flag = _OFF;
+				}
+				$params = array(
+					"album_id" => $attributes['album_id'],
+					"multimedia_id" => $attributes['multimedia_id'],
+					"item_name" => empty($attributes['item_name'])?str_replace(".". $file['extension'], "", $file['file_name']):$attributes['item_name'],
+					"agree_flag" => $agree_flag,
+			    	"item_sequence" => $itemSequence,
+					"upload_id" => $file['upload_id'],
+			    	"duration" => $duration,
+			    	"file_path" => $file_path,
+					"item_path" => "?". ACTION_KEY. "=". $file['action_name']. "&upload_id=". $file['upload_id'],
+					"item_description" => $attributes['item_description'],
+					"privacy" => $attributes['privacy']
+				);
+
+				$item_id = $db->insertExecute("multimedia_item", $params, true, "item_id");
+		    	if (!$item_id) {
+			    	$uploadsAction->delUploadsById($file['upload_id']);
+			    	return $smartyAssign->getLang("multimedia_item_upload_video_insert_error");
+			    }
+			    if(!$multimediaAction->setItemTag($item_id, $attributes['item_tag'])) {
+			    	$uploadsAction->delUploadsById($file['upload_id']);
+			    	return $smartyAssign->getLang("multimedia_item_upload_video_tag_error");
+			    }
+	    	}else {
+	    		$uploadsAction->delUploadsById($file['upload_id']);
+	    		return $smartyAssign->getLang("multimedia_item_upload_video_type_error");
+	    	}
+	    	
+	    	if(!$multimediaAction->setItemCount($attributes['album_id'], 1)) {
+	    		return $smartyAssign->getLang("multimedia_item_upload_video_count_error");
+	    	}
+	    	
+	    	$result = $db->updateExecute("multimedia_album", array("item_upload_time" => timezone_date()), array("album_id" => $attributes['album_id']), true);
+	    	if($result === false) {
+	    		return $smartyAssign->getLang("multimedia_item_upload_video_insert_error");
+	    	}
+		}
+				
+		return;
+	}
+}
+?>

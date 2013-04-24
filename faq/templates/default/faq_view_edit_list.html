@@ -1,0 +1,57 @@
+<{strip}>
+<div class="outerdiv">
+	<form action="#">
+		<div class="top_description">
+			<{$lang._list_desc|smarty:nodefaults|sprintf:$lang.faq_list_name}>
+		</div>
+
+		<div id="_faq_list<{$id}>">
+			<table class="grid_header" cellspacing="0" summary="<{$lang.faq_list_summary|smarty:nodefaults}>">
+				<tr>
+					<th class="grid_change_disp" scope="col">&nbsp;</th>
+					<th class="_sort_faq_name grid_name" scope="col"><{$lang.faq_list_title|smarty:nodefaults}></th>
+					<th class="_sort_insert_user_name grid_creator" scope="col"><{$lang._creator|smarty:nodefaults}></th>
+					<th class="_sort_insert_time grid_create_date" scope="col"><{$lang._create_date|smarty:nodefaults}></th>
+					<th class="faq_grid_manage" scope="col"><{$lang._manage|smarty:nodefaults}></th>
+				</tr>
+			</table>
+
+			<table class="grid faq_grid_table" cellspacing="0" summary="">
+				<{foreach from=$action.faq_list item=faq}>
+					<tr id="faq_current_row<{$faq.faq_id}><{$id}>" class="grid_row">
+						<td class="grid_change_disp">
+							<{include file = "faq_view_edit_list_current.html"}>
+						</td>
+						<td class="grid_name">
+							<{include file = "faq_view_edit_list_name.html"}>
+						</td>
+						<td class="grid_creator">
+							<{include file = "faq_view_handle.html" handle=$faq.insert_user_name|smarty:nodefaults user_id=$faq.insert_user_id}>
+						</td>
+						<td class="grid_create_date">
+							<{$faq.insert_time|timezone_date_format:$lang._date_format|smarty:nodefaults}>
+						</td>
+						<td class="faq_grid_manage">
+							<{include file = "faq_view_edit_list_manage.html"}>
+						</td>
+					</tr>
+				<{/foreach}>
+			</table>
+		</div>
+	</form>
+</div>
+<{include file="../faq_script.html"}>
+<script class="nc_script" type="text/javascript">
+	var opts = {
+		prefetchBuffer:false,
+		sort:true,
+		requestParameters:new Array("scroll=<{$smarty.const._ON}>"),
+		onSendCallback:function() {faqCls["<{$id}>"].checkCurrent();}
+	};
+	new compLiveGrid("<{$id}>", <{$action.display_row}>, <{$action.faq_count}>, "faq_view_edit_list", opts);
+	opts = null;
+
+	faqCls["<{$id}>"].currentFaqId = "<{$action.current_faq_id}>";
+	faqCls["<{$id}>"].checkCurrent();
+</script>
+<{/strip}>

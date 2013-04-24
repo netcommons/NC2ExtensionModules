@@ -1,0 +1,20 @@
+<{strip}>
+<{* コメント入力画面用テンプレート *}>
+<form id="scheduler_comment_form<{$id}>" class="scheduler_entry_form" action="#">
+	<input type="hidden" name="date_id" value="<{$action.date_id}>" />
+
+	<textarea id="scheduler_reply_comment<{$id}>" class="scheduler_reply_comment" name="reply_comment">
+		<{$action.reply_comment}>
+	</textarea>
+
+	<div class="btn-bottom">
+		<input class="btn-width" type="button" value="<{$lang._regist|smarty:nodefaults}>" onclick="schedulerCls['<{$id}>'].replyComment();return false;" />
+		<input class="btn-width lined_btn" type="button" value="<{$lang._cancel|smarty:nodefaults}>" onclick="commonCls.removeBlock('<{$id}>');return false;">
+	</div>
+</form>
+
+<{include file = "../scheduler_script.html"}>
+<script class="nc_script" type="text/javascript">
+	commonCls.focus($("scheduler_reply_comment<{$id}>"));
+</script>
+<{/strip}>

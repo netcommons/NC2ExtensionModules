@@ -1,0 +1,94 @@
+<{strip}>
+<div class="outerdiv">
+	<{* タイトル *}>
+	<{*
+	<div class="nowrap bold">
+		<{$action.faq_obj.faq_name}>
+	</div>
+	*}>
+	<table class="faq_head_table">
+		<tr>
+			<td class="nowrap faq_top faq_right_space">
+				<{if $action.faq_obj.has_post_auth}>
+					<a class="syslink" href="#" title="<{$lang.question_new_title|smarty:nodefaults}>" onclick="commonCls.sendView('<{$id}>', {'action':'faq_view_main_post'}, {'loading_el':this}); return false;">
+						<img class="icon" alt="" src="<{"edit.gif"|get_themes_image}>"/>
+						<{$lang.question_new_title|smarty:nodefaults}>
+						</a>
+					<{if $smarty.session._auth_id >= $smarty.const._AUTH_CHIEF}>
+						<{$lang._separator|smarty:nodefaults}>
+						<a class="syslink" href="#" title="<{$lang.question_change_seq|smarty:nodefaults}>" onclick="commonCls.sendView('<{$id}>', {'action':'faq_view_main_sequence', 'category_id':'<{$action.category_id}>'}, {'loading_el':this}); return false;">
+							<{$lang.question_change_seq|smarty:nodefaults}>
+						</a>
+					<{/if}>
+				<{/if}>
+			</td>
+			<td class="nowrap align-right">
+				<{if $action.total_page > 1}>
+					<{include file="faq_view_main_init_page.html"}>
+				<{/if}>
+				<{include file = "faq_view_main_init_control.html" position="top"}>
+			</td>
+		</tr>
+	</table>
+<{if $action.question_count == 0}>
+	<{$lang.question_none_post|smarty:nodefaults}>
+<{else}>
+
+<div class="outerdiv">
+<{foreach item=post from=$action.question_list}>
+<div class="cell" style="padding: 0px 8px 8px 15px;">
+<table class="module_box noneframe widthmax">
+	<tbody>
+		<tr>
+			<td>
+			<table class="th_none widthmax" border="0" cellpadding="0" cellspacing="0">
+				<tbody>
+					<tr>
+						<td class="th_none_content">
+						<h2 class="th_none_title nc_block_title display-none" title=""></h2>
+						<div class="content">
+							<div class="widthmax">
+								<div class="faq_question_title">
+									<a class="syslink" onclick="commonCls.displayChange($('_faq_answer_<{$post.question_id}>'));return false;" href="#">
+										<{$post.question_name|regex_replace:"/\n/":"<br \/>"}>
+									</a>
+								</div>
+								<div class="faq_question_answer display-none" id="_faq_answer_<{$post.question_id}>">
+									<{$post.question_answer|smarty:nodefaults|wysiwig_convert_url}>
+									<br class="float-clear" />
+									<div class="align-right">
+										<{if $post.has_edit_auth}>
+											<a class="syslink" title="<{$lang.question_edit|smarty:nodefaults}>" href="#" onclick="commonCls.sendView('<{$id}>', {'action':'faq_view_main_post','question_id':<{$post.question_id}>}, {'loading_el':this}); return false;">
+												<{$lang._edit|smarty:nodefaults}>
+											</a>
+											<{$lang._separator|smarty:nodefaults}>
+											<a class="syslink" title="<{$lang.question_del|smarty:nodefaults}>" href="#" onclick="faqCls['<{$id}>'].deletePost(this, '<{$post.question_id}>', '<{$lang.question_delete_confirm|smarty:nodefaults}>'); return false;">
+												<{$lang._delete|smarty:nodefaults}>
+											</a>
+											<{$lang._separator|smarty:nodefaults}>
+										<{/if}>
+										<a class="syslink" title="<{$lang.question_hide|smarty:nodefaults}>" onclick="commonCls.displayChange($('_faq_answer_<{$post.question_id}>'));return false;" href="#"> <{$lang.question_hide|smarty:nodefaults}> </a>
+									</div>
+								</div>
+							</div>
+						</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+<{/foreach}>
+
+<{* -- question list end -- *}>
+</div>
+<{/if}>
+<input type="hidden" id="faq_id<{$id}>" value="<{$action.faq_obj.faq_id}>" />
+<{* -- all over -- *}>
+</div>
+<{* Javascriptクラス作成ファイルインクルード *}>
+<{include file="../faq_script.html"}>
+<{/strip}>

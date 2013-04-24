@@ -1,0 +1,127 @@
+<{strip}>
+<{* スケジュール登録画面 *}>
+<form id="scheduler_form<{$id}>" class="scheduler_entry_form" action="#">
+	<input type="hidden" name="action" />
+	<input type="hidden" name="schedule_id" />
+	<input type="hidden" name="mail_send" />
+	<input type="hidden" name="entry_type" />
+
+	<table class="outer" summary="<{$lang.scheduler_summary|smarty:nodefaults}>">
+	<tbody>
+		<tr class="row">
+			<th class="nowrap" scope="row">
+				<label for="scheduler_schedule_summary<{$id}>">
+					<{$lang.scheduler_schedule_summary|smarty:nodefaults}>
+				</lable>
+			</th>
+
+			<td class="nowrap scheduler_schedule_summary">
+				<a href="#" title="">
+					<img id="scheduler_icon<{$id}>" class="comp_title_icon" alt="" onclick='schedulerCls["<{$id}>"].showIcon();' onmouseover='Element.addClassName(this, "comptextarea_dialog_highlight");' onmouseout='Element.removeClassName(this, "comptextarea_dialog_highlight");' />
+				</a>
+				<input id="icon_hidden<{$id}>" type="hidden" name="icon" />
+				<input id="scheduler_schedule_summary<{$id}>" class="scheduler_schedule_summary" name="summary" type="text" />
+			</td>
+		</tr>
+
+		<tr id="scheduler_entry_schedule_date_row<{$id}>" class="row">
+			<th class="nowrap" scope="row">
+				<{$lang.scheduler_schedule_date|smarty:nodefaults}>
+			</th>
+
+			<td>
+				<div id="scheduler_entry_schedule_date_list<{$id}>" class="scheduler_entry_schedule_date_list">
+					<{if $action.schedule.entry_type == SCHEDULER_ENTRY_INPUT}>
+						<{include file="scheduler_view_main_date_input.html"}>
+					<{/if}>
+				</div>
+				<div id="scheduler_entry_schedule_date_add<{$id}>" class="display-none">
+				</div>
+				<a class="syslink scheduler_add_schedule_link" href="#" onclick="schedulerCls['<{$id}>'].addDate();return false;">
+					<img src="<{"add.gif"|get_themes_image}>" alt="" title="" />
+					<{$lang.scheduler_add_list|smarty:nodefaults}>
+				</a>
+			</td>
+		</tr>
+	</tbody>
+	</table>
+
+	<{if $action.schedule.entry_type == SCHEDULER_ENTRY_CALENDAR}>
+		<div id="scheduler_calendar<{$id}>">
+			<{include file="scheduler_view_main_calendar.html"}>
+		</div>
+	<{/if}>
+
+	<div class="scheduler_period">
+		<input id="scheduler_period_checkbox<{$id}>" type="checkbox" name="period_checkbox" value="<{$smarty.const._ON}>" onclick="schedulerCls['<{$id}>'].changePeriod();" />
+		<label for="scheduler_period_checkbox<{$id}>">
+			<{$lang.scheduler_period_entry}>
+		</label>
+		<label>
+			<input id="scheduler_period<{$id}>" class="comp_calendar_text" type="text" name="period" />
+		</label>
+	</div>
+
+	<{if $action.scheduler.mail_send == _ON}>
+		<div class="scheduler_mail_send">
+			<input id="scheduler_mail_send<{$id}>" type="checkbox" name="mail_send" value="<{$smarty.const._ON}>"/>
+			<label for="scheduler_mail_send<{$id}>">
+				<{$lang.scheduler_notification_mail|smarty:nodefaults}>
+			</label>
+		</div>
+	<{/if}>
+
+	<{if empty($action.schedule.schedule_id|smarty:nodefaults)}>
+		<div class="scheduler_show_description">
+			<a href="#" onclick="commonCls.displayChange($('scheduler_entry_description<{$id}>'));return false;">
+				<{$lang.scheduler_show_description|smarty:nodefaults}>
+			</a>
+		</div>
+	<{/if}>
+
+	<div id="scheduler_entry_description<{$id}>" class="scheduler_entry_description">
+		<textarea class="comptextarea scheduler_entry_description_textarea" name="description" rows="0" cols="0"></textarea>
+	</div>
+
+	<div class="btn-bottom">
+		<input class="btn-width" name="regist" type="button" value="<{$lang._regist|smarty:nodefaults}>" onclick="schedulerCls['<{$id}>'].entrySchedule();" />
+		<input class="btn-width lined_btn" name="cancel" type="button" value="<{$lang._cancel|smarty:nodefaults}>" onclick="commonCls.removeBlock('<{$id}>');" />
+	</div>
+</form>
+
+<{include file="../scheduler_script.html"}>
+<script class="nc_script" type="text/javascript">
+	var schedulerForm = $("scheduler_form<{$id}>");
+	schedulerForm["action"].value = "scheduler_action_main_entry";
+	schedulerForm["schedule_id"].value = "<{$action.schedule.schedule_id}>";
+	schedulerForm["entry_type"].value = "<{$action.schedule.entry_type}>";
+
+	<{if !empty($action.schedule.icon|smarty:nodefaults)}>
+		$('scheduler_icon<{$id}>').src = "<{""|get_image_url}>/images/comp/textarea/<{$action.schedule.icon}>";
+		$('icon_hidden<{$id}>').value = "<{$action.schedule.icon}>";
+	<{else}>
+		$('scheduler_icon<{$id}>').src = "<{""|get_image_url}>/images/comp/textarea/titleicon/blank.gif";
+	<{/if}>
+	schedulerForm["summary"].value = "<{$action.schedule.summary|smarty:nodefaults|escape:"javascript"}>";
+
+	<{if $action.schedule.entry_type == SCHEDULER_ENTRY_CALENDAR}>
+		commonCls.displayNone($("scheduler_entry_schedule_date_row<{$id}>"));
+	<{/if}>
+
+	schedulerForm["description"].value = "<{$action.schedule.description|smarty:nodefaults|wysiwig_convert_url|escape:"javascript"}>";
+	schedulerCls["<{$id}>"].showWysiwyg();
+	<{if empty($action.schedule.schedule_id|smarty:nodefaults)}>
+		commonCls.displayNone($("scheduler_entry_description<{$id}>"));
+	<{/if}>
+
+	<{if !empty($action.schedule.period|smarty:nodefaults)}>
+		schedulerForm["period_checkbox"].checked = true;
+		schedulerForm["period"].value = "<{$action.schedule.displayPeriodDate}>";
+	<{/if}>
+	schedulerCls["<{$id}>"].calendar = new compCalendar("<{$id}>", $("scheduler_period<{$id}>"));
+
+	schedulerCls["<{$id}>"].changePeriod();
+
+	schedulerForm = null;
+</script>
+<{/strip}>

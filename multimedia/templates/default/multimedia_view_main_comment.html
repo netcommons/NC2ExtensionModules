@@ -1,0 +1,56 @@
+<{strip}>
+<div class="multimedia_comment_area">
+    <{if $action.commentCount > 0 || $action.item.comment_authority}>
+    <div class="bold multimedia_detail_comment_header multimedia_float_left">
+        <{$lang.multimedia_comment_number|sprintf:$action.commentCount}>
+    </div>
+    <{include file="multimedia_view_main_pager.html" from="comment"}>
+    <br class="float-clear"/>
+    <{/if}>
+    <{if $action.commentCount > 0}>
+    <{foreach item=comment from=$action.comments}>
+    <div class="multimedia_comment">
+        <div class="multimedia_comment_operation">
+            <div class="multimedia_float_left">
+                <{include file = "multimedia_view_handle.html" handle=$comment.insert_user_name|smarty:nodefaults user_id=$comment.insert_user_id}>
+            </div>
+            <div class="multimedia_comment_manage">
+                <span class="multimedia_comment_time">
+                    <{$comment.insert_time|timezone_date_format:$lang._full_date_format}>
+                </span>
+                <{if $comment.edit_authority}>
+                <a class="syslink" href="#" title="<{$lang._edit_title|sprintf:$lang.multimedia_comment|smarty:nodefaults}>" onclick="multimediaCls['<{$id}>'].showCommentEntry('<{$comment.comment_id}>');return false;">
+                    <{$lang._edit|smarty:nodefaults}>
+                </a>
+                <{$lang._separator|smarty:nodefaults}>
+                <a class="syslink" href="#" title="<{$lang._del_title|sprintf:$lang.multimedia_comment|smarty:nodefaults}>" onclick="multimediaCls['<{$id}>'].deleteComment('<{$comment.comment_id}>', <{$action.item.item_id}>, <{$action.item.album_id}>, '<{$lang._del_confirm|sprintf:"`$lang.multimedia_comment`"|smarty:nodefaults|escape:"javascript"|escape:"html"}>');return false;">
+                   <{$lang._delete|smarty:nodefaults}>
+            </a>
+            <{/if}>
+        </div>
+        <br class="float-clear" />
+    </div>
+    <div id="multimedia_comment_value<{$comment.comment_id}><{$id}>" style="overflow:hidden;">
+        <{$comment.comment_value|nl2br}>
+    </div>
+    </div>
+    <{/foreach}>
+    <{/if}>
+    <{if $action.item.comment_authority}>
+    <form id="multimedia_comment_form<{$id}>" style="margin-top: 25px;" class="multimedia_comment_form" action="#" onsubmit="multimediaCls['<{$id}>'].enterComment('<{$action.album_id}>', '<{$action.item_id}>'); return false;">
+        <input type="hidden" name="action" value="multimedia_action_main_comment_entry" />
+        <input type="hidden" name="album_id" value="<{$action.item.album_id}>" />
+        <input type="hidden" name="item_id" value="<{$action.item_id}>" />
+        <input type="hidden" name="comment_id" />
+        <label class="bold" for="multimedia_comment_value<{$id}>">
+            <span><{$lang.multimedia_comment_value|smarty:nodefaults}></span><br />
+            <textarea id="multimedia_comment_value<{$id}>" class="textarea" name="comment_value"></textarea>
+        </label>
+        <div class="btn-bottom" style="margin-left: 25px;">
+            <input class="btn-width" type="submit" value="<{$lang._regist|smarty:nodefaults}>" />
+            <input class="lined_btn btn-width" type="button" value="<{$lang._cancel|smarty:nodefaults}>" onclick="multimediaCls['<{$id}>'].cancelComment();" />
+        </div>
+    </form>
+    <{/if}>
+</div>
+<{/strip}>

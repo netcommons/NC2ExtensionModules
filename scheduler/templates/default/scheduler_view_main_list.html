@@ -1,0 +1,93 @@
+<{strip}>
+<{* スケジュール一覧画面用テンプレート *}>
+<div class="outerdiv">
+	<{assign var="operationPosition" value="head"}>
+	<{include file = "scheduler_view_main_list_operation.html"}>
+
+	<{foreach from=$action.schedules|smarty:nodefaults item=schedule}>
+		<div class="scheduler_schedule_row">
+			<div class="<{$schedule.periodClassName}>">
+				<{if $action.scheduler.selectAuthority}>
+					<input id="scheduler_schedule_id<{$schedule.schedule_id}><{$id}>" class="scheduler_schedule_select" type="radio" name="schedule_id" value="<{$schedule.schedule_id}>" />
+				<{/if}>
+
+				<a class="syslink scheduler_schedule_summary" href="#" title="<{$lang.scheduler_schedule_summary_title|smarty:nodefaults}>" onclick="schedulerCls['<{$id}>'].showReply('<{$schedule.schedule_id}>');return false;">
+					<{if !empty($schedule.icon|smarty:nodefaults)}>
+						<img class="icon" src="<{""|get_image_url}>/images/comp/textarea/<{$schedule.icon}>" alt="" />
+					<{/if}>
+					<{$schedule.summary}>
+				</a>
+				<{if $action.scheduler.newPeriodTime <= $schedule.insert_time}>
+					<img class="icon" src="<{"new.gif"|get_modules_image}>" alt="<{$lang._new}>" title="<{$lang._new}>" />
+				<{/if}>
+
+				<div class="float-right">
+					<span class="scheduler_schedule_insert_user">
+						<{include file="scheduler_view_handle.html" handle=$schedule.insert_user_name|smarty:nodefaults user_id=$schedule.insert_user_id}>
+					</span>
+					<span class="scheduler_schedule_insert_date">
+						<{$schedule.insert_time|timezone_date_format:$lang._date_format}>
+					</span>
+					<span class="scheduler_schedule_insert_time">
+						<{$schedule.insert_time|timezone_date_format:$lang._short_time_format}>
+					</span>
+				</div>
+			</div>
+			<br class="float-clear" />
+
+			<div class="scheduler_description">
+				<{$schedule.description|smarty:nodefaults|truncate:$action.config.description_length.conf_value:$smarty.const._SEARCH_MORE:true|escape:"html"|nl2br}>
+			</div>
+
+			<div class="scheduler_schedule_operation">
+				<a class="syslink" href="#" title="<{$lang.scheduler_schedule_detail_title|smarty:nodefaults}>" onclick="schedulerCls['<{$id}>'].showScheduleDetail(event, '<{$schedule.schedule_id}>');return false;">
+					<{$lang._details}>
+				</a>
+				<{if $schedule.editAuthority}>
+					<{$lang._separator|smarty:nodefaults}>
+					<a class="syslink" href="#" title="<{$lang.scheduler_schedule_edit_title|smarty:nodefaults}>" onclick="schedulerCls['<{$id}>'].showScheduleEntry(event, '<{$schedule.schedule_id}>');return false;">
+						<{$lang._edit}>
+					</a>
+					<{$lang._separator|smarty:nodefaults}>
+					<a class="syslink" href="#" title="<{$lang.scheduler_schedule_delete_title|smarty:nodefaults}>" onclick="schedulerCls['<{$id}>'].deleteSchedule('<{$schedule.schedule_id}>','<{$lang._del_confirm|sprintf:"`$schedule.summary`"|smarty:nodefaults|escape:"javascript"|escape:"html"}>');return false;">
+						<{$lang._delete}>
+					</a>
+				<{/if}>
+			</div>
+		</div>
+	<{foreachelse}>
+		<div class="scheduler_no_schedule">
+			<{$lang.scheduler_no_schedule}>
+		</div>
+	<{/foreach}>
+
+	<{if $action.scheduler.selectAuthority && $action.scheduleCount > 0}>
+		<div class="scheduler_select_schedule_button">
+			<input id="scheduler_scheduler_id<{$id}>" type="hidden" name="scheduler_id" />
+			<input type="button" value="<{$lang._regist|smarty:nodefaults}>" onclick="schedulerCls['<{$id}>'].selectSchedule();" />
+		</div>
+	<{/if}>
+
+	<{if $action.scheduleCount > $action.visible_row}>
+		<{assign var="operationPosition" value="foot"}>
+		<{include file = "scheduler_view_main_list_operation.html"}>
+	<{/if}>
+</div>
+
+<{include file="../scheduler_script.html"}>
+<script class="nc_script" type="text/javascript">
+	<{if $action.scheduleCount > 0}>
+		$("scheduler_visible_row_head<{$id}>").value = "<{$action.visible_row}>";
+	<{/if}>
+	<{if $action.scheduleCount > $action.visible_row}>
+		$("scheduler_visible_row_foot<{$id}>").value = "<{$action.visible_row}>";
+	<{/if}>
+
+	<{if $action.scheduler.selectAuthority}>
+		$("scheduler_scheduler_id<{$id}>").value = "<{$action.scheduler.scheduler_id}>";
+		if ($("scheduler_schedule_id<{$action.scheduler.schedule_id}><{$id}>")) {
+			$("scheduler_schedule_id<{$action.scheduler.schedule_id}><{$id}>").checked = true;
+		}
+	<{/if}>
+</script>
+<{/strip}>

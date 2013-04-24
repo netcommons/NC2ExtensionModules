@@ -1,0 +1,95 @@
+<{strip}>
+<{* スケジューラ日程入力画面用テンプレート *}>
+<{foreach from=$action.scheduleDates|smarty:nodefaults item=scheduleDate name="date"}>
+	<{if empty($action.dateIteration|smarty:nodefaults)}>
+		<{assign var="iteration" value=$smarty.foreach.date.iteration}>
+	<{else}>
+		<{assign var="iteration" value=$action.dateIteration}>
+	<{/if}>
+
+	<div class="scheduler_entry_schedule_date">
+		<input type="hidden" name="date_id[<{$iteration}>]" />
+	
+		<input id="scheduler_start_date<{$iteration}><{$id}>" class="comp_calendar_text" type="text" name="start_date[<{$iteration}>]" maxlength="10" />
+		<input id="allday_flag<{$iteration}><{$id}>" class="scheduler_allday_flag" type="checkbox" name="allday_flag[<{$iteration}>]" value="<{$smarty.const._ON}>" onclick="schedulerCls['<{$id}>'].switchAllday('<{$iteration}>');" />
+		<label for="allday_flag<{$id}>">
+			<{$lang.scheduler_allday_flag|smarty:nodefaults}>
+		</label>
+	
+		<select name="start_hour[<{$iteration}>]">
+			<{section name=hour loop=24 start=0 step=1}>
+				<{assign var=hour value=$smarty.section.hour.index}>
+				<{assign var=scheduler_hour value=$scheduler.start_time_view|substr:0:2|intval}>
+				<option value="<{"%02d"|sprintf:$hour}>">
+					<{$lang.scheduler_hour_format|sprintf:$hour|smarty:nodefaults}>
+				</option>
+			<{/section}>
+		</select>
+		&nbsp;
+		<select name="start_minute[<{$iteration}>]">
+			<{section name=minute loop=60 start=0 step=5}>
+				<{assign var=minute value=$smarty.section.minute.index}>
+				<{assign var=scheduler_minute value=$scheduler.start_time_view|substr:2:2|intval}>
+				<option value="<{"%02d"|sprintf:$minute}>">
+					<{$lang.scheduler_minute_format|sprintf:$minute|smarty:nodefaults}>
+				</option>
+			<{/section}>
+		</select>
+	
+		<span class="scheduler_from_to">
+			<{$lang.scheduler_from_to|smarty:nodefaults}>
+		</span>
+	
+		<select name="end_hour[<{$iteration}>]">
+			<{section name=hour loop=25 start=0 step=1}>
+				<{assign var=hour value=$smarty.section.hour.index}>
+				<{assign var=scheduler_hour value=$scheduler.end_time_view|substr:0:2|intval}>
+				<option value="<{"%02d"|sprintf:$hour}>">
+					<{$lang.scheduler_hour_format|sprintf:$hour|smarty:nodefaults}>
+				</option>
+			<{/section}>
+		</select>
+		&nbsp;
+		<select name="end_minute[<{$iteration}>]">
+			<{section name=minute loop=60 start=0 step=5}>
+				<{assign var=minute value=$smarty.section.minute.index}>
+				<{assign var=scheduler_minute value=$scheduler.end_time_view|substr:2:2|intval}>
+				<option value="<{"%02d"|sprintf:$minute}>">
+					<{$lang.scheduler_minute_format|sprintf:$minute|smarty:nodefaults}>
+				</option>
+			<{/section}>
+		</select>
+	
+		<a class="syslink" href="#" onclick="schedulerCls['<{$id}>'].deleteDate(this.parentNode);return false;">
+			<img class="scheduler_delete_schedule_date" src="<{"trash.gif"|get_themes_image}>" />
+		</a>
+
+		<input id="scheduler_end_date<{$iteration}><{$id}>" class="comp_calendar_text display-none" type="text" name="end_date[<{$iteration}>]" maxlength="10" />
+		<input type="hidden" name="timezone_offset[<{$iteration}>]" />
+	</div>
+
+	<{include file="../scheduler_script.html"}>
+	<script class="nc_script" type="text/javascript">
+		var schedulerForm = $("scheduler_form<{$id}>");
+		schedulerForm["date_id[<{$iteration}>]"].value = "<{$scheduleDate.date_id}>";
+		<{if ($scheduleDate.allday_flag == _ON) }>
+			$("allday_flag<{$iteration}><{$id}>").checked = true;
+			schedulerCls["<{$id}>"].switchAllday("<{$iteration}>");
+		<{/if}>
+		schedulerForm["start_date[<{$iteration}>]"].value = "<{$scheduleDate.startEntryDate}>";
+		schedulerForm["start_hour[<{$iteration}>]"].value = "<{$scheduleDate.startOffsetUnixTimestamp|date_format:"%H"}>";
+		schedulerForm["start_minute[<{$iteration}>]"].value = "<{$scheduleDate.startOffsetUnixTimestamp|date_format:"%M"}>";
+		schedulerForm["end_date[<{$iteration}>]"].value = "<{$scheduleDate.endEntryDate}>";
+		schedulerForm["end_hour[<{$iteration}>]"].value = "<{$scheduleDate.endOffsetUnixTimestamp|date_format:"%H"}>";
+		schedulerForm["end_minute[<{$iteration}>]"].value = "<{$scheduleDate.endOffsetUnixTimestamp|date_format:"%M"}>";
+	
+		new compCalendar("<{$id}>", $("scheduler_start_date<{$iteration}><{$id}>"));
+	
+		schedulerForm = null;
+	</script>
+<{/foreach}>
+
+<script class="nc_script" type="text/javascript">
+	schedulerCls["<{$id}>"].dateIteration = <{$iteration}>;
+</script>
+<{/strip}>

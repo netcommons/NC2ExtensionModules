@@ -1,0 +1,10 @@
+<{strip}>
+<{* バナー一覧用テンプレート *}>
+<div class="outerdiv">
+	<{foreach from=$action.banners item=banner}>
+		<{include file = "banner_view_main_banner.html"}>
+	<{/foreach}>
+</div>
+
+<{include file = "../banner_script.html"}>
+<{/strip}>

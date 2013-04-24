@@ -1,0 +1,103 @@
+<{strip}>
+<{* バナー一覧用テンプレート *}>
+<div class="outerdiv">
+	<div class="banner_list_header">
+		<a id="banner_create<{$id}>" class="syslink display-block float-left" href="#" onclick="bannerCls['<{$id}>'].showEntry(event);return false;">
+			<img class="icon" src="<{"add_file.gif"|get_themes_image}>" alt="" title="" />
+			<{$lang.banner_create|smarty:nodefaults}>
+		</a>
+		<div class="banner_operation_separator">
+			<{$lang._separator|smarty:nodefaults}>
+		</div>
+		<a class="syslink display-block float-left" href="#" onclick="bannerCls['<{$id}>'].showSequence(event);return false;">
+			<{$lang.banner_sequence|smarty:nodefaults}>
+		</a>
+
+		<div class="align-right">
+			<select id="banner_category<{$id}>" class="banner_category_select" name="category" onchange="bannerCls['<{$id}>'].showList(this.value);return false;">
+				<{include file = "banner_view_edit_category_option.html"}>
+			</select>
+			<a class="syslink" href="#" onclick="bannerCls['<{$id}>'].showCategory(event);return false;">
+				<{$lang.banner_category_edit|smarty:nodefaults}>
+			</a>
+		</div>
+		<br class="float-clear" />
+	</div>
+
+	<table class="grid_header" cellspacing="0" summary="<{$lang.banner_list_summary}>">
+		<tr class="grid_row">
+			<th class="banner_grid_display_banner" scope="col">
+				<label for="banner_display_all<{$id}>">
+					<{$lang.banner_display_banner|smarty:nodefaults}>
+				</label>
+				<br />
+				<input id="banner_display_all<{$id}>" type="checkbox" onclick="bannerCls['<{$id}>'].changeDislpayAll(this.checked);" />
+			</th>
+			<th class="banner_grid_thumbnail" scope="col">
+				<{$lang.banner_thumbnail|smarty:nodefaults}>
+			</th>
+			<th class="_sort_block_click_count banner_grid_block_click_count" scope="col">
+				<{$lang.banner_block_click_count|smarty:nodefaults}>
+			</th>
+			<th class="_sort_all_click_count banner_grid_all_click_count" scope="col">
+				<{$lang.banner_all_click_count|smarty:nodefaults}>
+			</th>
+			<th class="_sort_insert_user_name grid_creator" scope="col">
+				<{$lang._creator|smarty:nodefaults}>
+			</th>
+			<th class="_sort_insert_time grid_create_date" scope="col">
+				<{$lang._create_date|smarty:nodefaults}>
+			</th>
+			<th class="grid_manage" scope="col">
+				<{$lang._manage|smarty:nodefaults}>
+			</th>
+		</tr>
+	</table>
+
+	<table id="banner_list<{$id}>" class="grid banner_grid_table" summary="<{$lang.banner_list_summary}>">
+		<{foreach from=$action.banners item=banner}>
+			<tr id="banner_list_tr<{$banner.banner_id}><{$id}>" class="grid_row">
+				<td class="banner_grid_display_banner">
+					<{include file = "banner_view_edit_list_display.html"}>
+				</td>
+				<td class="banner_grid_thumbnail">
+					<{include file = "banner_view_edit_list_thumbnail.html"}>
+				</td>
+				<td class="banner_grid_block_click_count">
+					<{include file = "banner_view_edit_list_click_count.html" clickCount=$banner.block_click_count}>
+				</td>
+				<td class="banner_grid_all_click_count">
+					<{include file = "banner_view_edit_list_click_count.html" clickCount=$banner.all_click_count}>
+				</td>
+				<td class="grid_creator">
+					<{include file = "banner_view_handle.html" handle=$banner.insert_user_name|smarty:nodefaults user_id=$banner.insert_user_id}>
+				</td>
+				<td class="grid_create_date">
+					<{$banner.insert_time|timezone_date_format:$lang._date_format|smarty:nodefaults}>
+				</td>
+				<td class="grid_manage">
+					<{include file = "banner_view_edit_list_manage.html"}>
+				</td>
+			</tr>
+		<{/foreach}>
+	</table>
+</div>
+
+<{include file = "../banner_script.html"}>
+<script class="nc_script" type="text/javascript">
+	var options = {
+		prefetchBuffer:false,
+		sort:true,
+		requestParameters:new Array("scroll=<{$smarty.const._ON}>"),
+		onSendCallback:function() {bannerCls["<{$id}>"].initializeDisplay();}
+	};
+	new compLiveGrid("<{$id}>", <{$action.displayRow}>, <{$action.bannerCount}>, "banner_view_edit_list", options);
+	options = null;
+
+	bannerCls["<{$id}>"].initializeDisplay();
+
+	<{if !empty($action.isInitialize|smarty:nodefaults) && count($action.banners) == 0}>
+		bannerCls["<{$id}>"].showEntry();
+	<{/if}>
+</script>
+<{/strip}>

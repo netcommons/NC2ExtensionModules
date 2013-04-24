@@ -1,0 +1,11 @@
+<{strip}>
+<{* //余分なスペースや改行を削り取る *}>
+
+<{* //htmlファイル内でincludeすることで利用できるJavaScript *}>
+<script class="nc_script" type="text/javascript">
+	<{* //blogpartsCls["<{$id}>"]の中身がfalseのときfiles/js/default/blogparts.jsをNewして格納そのときにコンストラクタにidを渡す *}>
+	if(!blogpartsCls["<{$id}>"]) {
+		blogpartsCls["<{$id}>"] = new clsBlogparts("<{$id}>");
+	}
+</script>
+<{/strip}>

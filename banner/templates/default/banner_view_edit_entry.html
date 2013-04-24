@@ -1,0 +1,194 @@
+<{strip}>
+<{* バナー登録画面用テンプレート *}>
+<form id="banner_form<{$id}>" class="banner_form" action="#" target="attachment_form<{$id}>" enctype="multipart/form-data" onsubmit="return false;">
+	<input type="hidden" name="banner_id" />
+	
+	<table class="outer" summary="<{$smarty.const._SUMMARY_SETTINGFORM}>">
+		<tr class="row">
+			<th class="nowrap" scope="row">
+				<{$lang.banner_banner_name|smarty:nodefaults}>
+			</th>
+			<td>
+				<input id="banner_name<{$id}>" class="text" type="text" name="banner_name" />
+			</td>
+		</tr>
+
+		<tr class="row">
+			<th class="nowrap" scope="row">
+				<{$lang.banner_type|smarty:nodefaults}>
+			</th>
+			<td>
+				<input id="banner_type_image<{$id}>" type="radio" name="banner_type" value="<{$smarty.const.BANNER_TYPE_IMAGE_VALUE}>" onclick="bannerCls['<{$id}>'].selectBannerTypeImage();" />
+				<label for="banner_type_image<{$id}>">
+					<{$lang.banner_banner_type_image|smarty:nodefaults}>
+				</label>
+				<br />
+				<input id="banner_type_source<{$id}>" type="radio" name="banner_type" value="<{$smarty.const.BANNER_TYPE_SOURCE_VALUE}>" onclick="bannerCls['<{$id}>'].selectBannerTypeSource();" />
+				<label for="banner_type_source<{$id}>">
+					<{$lang.banner_banner_type_source|smarty:nodefaults}>
+				</label>
+				<br />
+				<input id="banner_type_url<{$id}>" type="radio" name="banner_type" value="<{$smarty.const.BANNER_TYPE_URL_VALUE}>" onclick="bannerCls['<{$id}>'].selectBannerTypeUrl();" />
+				<label for="banner_type_url<{$id}>">
+					<{$lang.banner_banner_type_url|smarty:nodefaults}>
+				</label>
+				<br />
+				<input id="banner_type_link<{$id}>" type="radio" name="banner_type" value="<{$smarty.const.BANNER_TYPE_LINK_VALUE}>" onclick="bannerCls['<{$id}>'].selectBannerTypeLink();" />
+				<label for="banner_type_link<{$id}>">
+					<{$lang.banner_banner_type_link|smarty:nodefaults}>
+				</label>
+			</td>
+		</tr>
+
+		<tr class="row">
+			<th class="nowrap" scope="row">
+				<{$lang.banner_category|smarty:nodefaults}>
+			</th>
+			<td>
+				<span id="baner_category_select<{$id}>">
+					<{include file = "banner_view_edit_entry_select.html"}>
+				</span>
+				<a class="syslink" href="#" title="<{$lang.banner_category_entry_title|smarty:nodefaults}>" onclick="bannerCls['<{$id}>'].showCategoryEntry(this);return false;">
+					<img class="icon" src="<{"add_file.gif"|get_themes_image}>" alt="" title="" />
+					<{$lang.banner_category_entry|smarty:nodefaults}>
+				</a>
+			</td>
+		</tr>
+
+		<tr id="banner_link_url_tr<{$id}>" class="row">
+			<th class="nowrap" scope="row">
+				<label for="banner_link_url<{$id}>">
+					<{$lang.banner_link_url|smarty:nodefaults}>
+				</label>
+			</th>
+			<td>
+				<input id="banner_link_url<{$id}>" class="banner_link_url" type="text" name="link_url" />
+				<br />
+				<input id="banner_target_blank_flag<{$id}>" type="checkbox" name="target_blank_flag" />
+				<label for="banner_target_blank_flag<{$id}>">
+					<{$lang.banner_target_blank_flag|smarty:nodefaults}>
+				</label>
+			</td>
+		</tr>
+
+		<tr id="banner_image_url_tr<{$id}>" class="row">
+			<th class="nowrap" scope="row">
+				<label for="banner_image_url<{$id}>">
+					<{$lang.banner_image_url|smarty:nodefaults}>
+				</label>
+			</th>
+			<td>
+				<input id="banner_image_url<{$id}>" class="banner_image_url" type="text" name="image_url" />
+			</td>
+		</tr>
+
+		<tr id="banner_upload_tr<{$id}>" class="row">
+			<th class="nowrap" scope="row">
+				<label for="banner_upload<{$id}>">
+					<{$lang.banner_upload|smarty:nodefaults}>
+				</label>
+			</th>
+			<td>
+				<input id="banner_upload<{$id}>" class="banner_upload"  type="file" name="banner_upload" size="75" />
+				<{*
+				<{if !empty($action.banner.image_path|smarty:nodefaults)}>
+					<div class="banner_thumbnail_frame">
+						<img class="banner_thumbnail" src=".<{$smarty.const.INDEX_FILE_NAME}><{$action.banner.image_path}>" alt="<{$action.banner.banner_name}>" title="" style="<{$action.banner.thumbnailStyle}>" />
+					</div>
+					<div class="banner_delete_upload_image">
+						<a class="syslink" href="#" onclick="bannerCls['<{$id}>'].deleteUploadImage();return false;">
+							<{$lang.banner_delete_upload_image|smarty:nodefaults}>
+						</a>
+					</div>
+					<br class="float-clear" />
+				<{/if}>
+				*}>
+			</td>
+		</tr>
+
+		<tr id="banner_size_tr<{$id}>" class="row">
+			<th class="nowrap" scope="row">
+				<{$lang.banner_size_flag}>
+			</th>
+
+			<td>
+				<label for="banner_size_flag_off<{$id}>">
+			 		<input id="banner_size_flag_off<{$id}>" type="radio" name="size_flag" value="<{$smarty.const._OFF}>" onclick="bannerCls['<{$id}>'].changeSizeFlag(false);" />
+	 				<{$lang.banner_size_flag_off}>
+		 		</label><br />
+
+				<label for="banner_size_flag_on<{$id}>">
+			 		<input id="banner_size_flag_on<{$id}>" type="radio" name="size_flag" value="<{$smarty.const._ON}>" onclick="bannerCls['<{$id}>'].changeSizeFlag(true);" />
+			 	</label>
+				<label class="banner_display_width" for="banner_display_width<{$id}>">
+		 			<{$lang.banner_display_width}>
+			 	</label>
+	 			<input id="banner_display_width<{$id}>" class="banner_display_width" type="text" name="display_width" />
+				<label class="banner_display_height" for="banner_display_height<{$id}>">
+		 			<{$lang.banner_display_height}>
+			 	</label>
+	 			<input id="banner_display_height<{$id}>" class="banner_display_height" type="text" name="display_height" />
+			</td>
+		</tr>
+
+		<tr id="banner_source_tr<{$id}>" class="row">
+			<th class="nowrap" scope="row">
+				<label for="banner_source_code<{$id}>">
+					<{$lang.banner_source_code|smarty:nodefaults}>
+				</label>
+			</th>
+			<td>
+				<textarea id="banner_source_code<{$id}>" class="textarea" name="source_code">
+				</textarea>
+			</td>
+		</tr>
+	</table>
+
+	<div class="btn-bottom">
+		<input class="btn-width" type="button" value="<{$lang._regist|smarty:nodefaults}>" onclick="bannerCls['<{$id}>'].enterBanner();return false;" />
+		<input class="lined_btn btn-width" type="button" value="<{$lang._cancel|smarty:nodefaults}>" onclick="commonCls.removeBlock('<{$id}>');return false;" />
+	</div>
+</form>
+<{include file="../banner_script.html"}>
+<script class="nc_script" type="text/javascript">
+	var bannerForm = $("banner_form<{$id}>");
+	bannerForm["banner_id"].value = "<{$action.banner.banner_id}>";
+
+	<{if empty($action.banner.banner_id|smarty:nodefaults)}>
+		bannerForm["banner_name"].value = "<{$lang.banner_new_name|smarty:nodefaults|sprintf:$action.bannerNumber}>";
+	<{else}>
+		bannerForm["banner_name"].value = "<{$action.banner.banner_name|smarty:nodefaults|escape:"javascript"}>";
+	<{/if}>
+
+	bannerForm["category_id"].value = "<{$action.banner.category_id}>";
+
+	for (var i = 0, length = bannerForm["banner_type"].length; i < length; i++) {
+		if (bannerForm["banner_type"][i].value == "<{$action.banner.banner_type}>") {
+			bannerForm["banner_type"][i].checked = true;
+			bannerForm["banner_type"][i].onclick();
+			break;
+		}
+	}
+
+	bannerForm["link_url"].value = "<{$action.banner.link_url|smarty:nodefaults|escape:"javascript"}>";
+	<{if $action.banner.target != BANNER_LINK_TARGET_SELF}>
+		bannerForm["target_blank_flag"].checked = true;
+	<{/if}>
+	bannerForm["image_url"].value = "<{$action.banner.image_url|smarty:nodefaults|escape:"javascript"}>";
+	
+	<{if $action.banner.size_flag == _ON}>
+		$("banner_size_flag_on<{$id}>").checked = true;
+		bannerCls["<{$id}>"].changeSizeFlag(true);
+	<{else}>
+		$("banner_size_flag_off<{$id}>").checked = true;
+		bannerCls["<{$id}>"].changeSizeFlag(false);
+	<{/if}>
+	bannerForm["display_width"].value = "<{$action.banner.display_width|smarty:nodefaults|escape:"javascript"}>";
+	bannerForm["display_height"].value = "<{$action.banner.display_height|smarty:nodefaults|escape:"javascript"}>";
+
+	bannerForm["source_code"].value = "<{$action.banner.source_code|smarty:nodefaults|escape:"javascript"}>";
+	bannerForm = null;
+
+	commonCls.focus("<{$id}>");
+</script>
+<{/strip}>

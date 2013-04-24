@@ -1,0 +1,146 @@
+<{strip}>
+<{* スケジューラ設定画面用テンプレート *}>
+<form id="scheduler_form<{$id}>" action="#" onsubmit="return false;">
+	<input type="hidden" name="action" />
+	<input type="hidden" name="scheduler_id" />
+
+	<div class="top_description">
+		<{$lang.scheduler_entry_note|smarty:nodefaults}>
+	</div>
+	<div class="hr"></div>
+
+	<table class="outer" summary="<{$smarty.const._SUMMARY_SETTINGFORM}>">
+	<tbody>
+		<tr class="row">
+			<th class="nowrap" scope="row">
+				<{$lang.scheduler_authority|smarty:nodefaults}>
+			</th>
+
+			<td>
+				<input type="checkbox" disabled="disabled" checked="checked" />
+				<input type="hidden" name="authority[<{$smarty.const._AUTH_CHIEF}>]" value="<{$smarty.const._ON}>" />
+				<label class="disable_lbl">
+					<{$smarty.const._AUTH_CHIEF_NAME}>
+				</label>
+
+				<input id="scheduler_authority<{$smarty.const._AUTH_MODERATE}><{$id}>" type="checkbox" name="authority[<{$smarty.const._AUTH_MODERATE}>]" value="<{$smarty.const._ON}>" onclick="commonCls.changeAuthority(this, '<{$id}>');" />
+				<label for="scheduler_authority<{$smarty.const._AUTH_MODERATE}><{$id}>">
+					<{$smarty.const._AUTH_MODERATE_NAME}>
+				</label>
+
+				<input id="scheduler_authority<{$smarty.const._AUTH_GENERAL}><{$id}>" type="checkbox" name="authority[<{$smarty.const._AUTH_GENERAL}>]" value="<{$smarty.const._ON}>" onclick="commonCls.changeAuthority(this, '<{$id}>');" />
+				<label for="scheduler_authority<{$smarty.const._AUTH_GENERAL}><{$id}>">
+					<{$smarty.const._AUTH_GENERAL_NAME}>
+				</label>
+			</td>
+		</tr>
+
+		<tr class="row">
+			<th class="nowrap" scope="row">
+				<{$lang.scheduler_mail_send|smarty:nodefaults}>
+			</th>
+
+			<td>
+				<input id="scheduler_mail_send<{$smarty.const._ON}><{$id}>" type="radio" name="mail_send" value="<{$smarty.const._ON}>" onclick="schedulerCls['<{$id}>'].changeMailSend(true);" />
+				<label for="scheduler_mail_send<{$smarty.const._ON}><{$id}>">
+					<{$lang.scheduler_mail_send_on|smarty:nodefaults}>
+				</label>
+
+				<input id="scheduler_mail_send<{$smarty.const._OFF}><{$id}>" type="radio" name="mail_send" value="<{$smarty.const._OFF}>" onclick="schedulerCls['<{$id}>'].changeMailSend(false);" />
+				<label for="scheduler_mail_send<{$smarty.const._OFF}><{$id}>">
+					<{$lang.scheduler_mail_send_off|smarty:nodefaults}>
+				</label>
+
+				<div class="note">
+					<{$lang.scheduler_mail_send_note|smarty:nodefaults}>
+				</div>
+
+				<div id="scheduler_mail_send_content<{$id}>">
+					<div class="hr"></div>
+					<div>
+						<{$lang.scheduler_mail_authority|smarty:nodefaults}>
+					</div>
+
+					<input type="checkbox" disabled="disabled" checked="checked" />
+					<input type="hidden" name="mail_authority[<{$smarty.const._AUTH_CHIEF}>]" value="<{$smarty.const._ON}>" />
+					<label class="disable_lbl">
+						<{$smarty.const._AUTH_CHIEF_NAME}>
+					</label>
+
+					<input id="scheduler_mail_authority<{$smarty.const._AUTH_MODERATE}><{$id}>" type="checkbox" name="mail_authority[<{$smarty.const._AUTH_MODERATE}>]" value="<{$smarty.const._ON}>" onclick="commonCls.changeAuthority(this, '<{$id}>');" />
+					<label for="scheduler_mail_authority<{$smarty.const._AUTH_MODERATE}><{$id}>">
+						<{$smarty.const._AUTH_MODERATE_NAME}>
+					</label>
+
+					<input id="scheduler_mail_authority<{$smarty.const._AUTH_GENERAL}><{$id}>" type="checkbox" name="mail_authority[<{$smarty.const._AUTH_GENERAL}>]" value="<{$smarty.const._ON}>" onclick="commonCls.changeAuthority(this, '<{$id}>');" />
+					<label for="scheduler_mail_authority<{$smarty.const._AUTH_GENERAL}><{$id}>">
+						<{$smarty.const._AUTH_GENERAL_NAME}>
+					</label>
+
+					<input id="scheduler_mail_authority<{$smarty.const._AUTH_GUEST}><{$id}>" type="checkbox" name="mail_authority[<{$smarty.const._AUTH_GUEST}>]" value="<{$smarty.const._ON}>" onclick="commonCls.changeAuthority(this, '<{$id}>');" />
+					<label for="scheduler_mail_authority<{$smarty.const._AUTH_GUEST}><{$id}>">
+						<{$smarty.const._AUTH_GUEST_NAME}>
+					</label>
+
+					<div class="hr"></div>
+					<label for="scheduler_mail_subject<{$id}>">
+						<{$lang.scheduler_mail_subject|smarty:nodefaults}>
+					</label>
+					<input id="scheduler_mail_subject<{$id}>" class="mail_subject" type="text" name="mail_subject" />
+
+					<div class="hr"></div>
+					<label class="display-block" for="scheduler_mail_body<{$id}>" class="">
+						<{$lang.scheduler_mail_body|smarty:nodefaults}>
+					</label>
+					<textarea id="scheduler_mail_body<{$id}>" class="mail_body" name="mail_body"></textarea>
+
+					<div class="note">
+						<{$lang.scheduler_mail_body_note|smarty:nodefaults}>
+					</div>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+	</table>
+
+	<div class="btn-bottom">
+		<input class="btn-width" type="button" value="<{$lang._regist|smarty:nodefaults}>" onclick="schedulerCls['<{$id}>'].entryScheduler();" />
+		<input class="btn-width lined_btn" type="button" value="<{$lang._cancel|smarty:nodefaults}>" onclick="commonCls.sendView('<{$id}>', 'scheduler_view_main_init');" />
+	</div>
+</form>
+
+<{include file="../scheduler_script.html"}>
+<script class="nc_script" type="text/javascript">
+	var schedulerForm = $("scheduler_form<{$id}>");
+	schedulerForm["action"].value = "scheduler_action_edit_entry";
+	schedulerForm["scheduler_id"].value = "<{$action.scheduler.scheduler_id}>";
+
+	if (schedulerForm["authority[<{$action.scheduler.authority}>]"]) {
+		schedulerForm["authority[<{$action.scheduler.authority}>]"].checked = true;
+		commonCls.changeAuthority(schedulerForm["authority[<{$action.scheduler.authority}>]"], "<{$id}>");
+	}
+
+	<{if $action.scheduler.mail_send == _ON}>
+		$("scheduler_mail_send<{$smarty.const._ON}><{$id}>").checked = true;
+		schedulerCls["<{$id}>"].changeMailSend(true);
+	<{else}>
+		$("scheduler_mail_send<{$smarty.const._OFF}><{$id}>").checked = true;
+		schedulerCls["<{$id}>"].changeMailSend(false);
+	<{/if}>
+
+	if (schedulerForm["mail_authority[<{$action.scheduler.mail_authority}>]"]) {
+		schedulerForm["mail_authority[<{$action.scheduler.mail_authority}>]"].checked = true;
+		commonCls.changeAuthority(schedulerForm["mail_authority[<{$action.scheduler.mail_authority}>]"], "<{$id}>");
+	}
+
+	schedulerForm["mail_subject"].value = "<{$action.scheduler.mail_subject|smarty:nodefaults|escape:"javascript"}>";
+	schedulerForm["mail_body"].value = "<{$action.scheduler.mail_body|smarty:nodefaults|escape:"javascript"|replace:"\\\\n":"\\n"}>";
+
+	<{if empty($action.scheduler.scheduler_id|smarty:nodefaults)}>
+		schedulerCls["<{$id}>"].initializeScheduler();
+	<{/if}>
+
+	schedulerForm = null;
+	commonCls.focus("<{$id}>");
+</script>
+<{/strip}>

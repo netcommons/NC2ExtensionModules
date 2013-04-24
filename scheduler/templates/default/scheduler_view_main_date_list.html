@@ -1,0 +1,61 @@
+<{strip}>
+<{* スケジュール日程画面用テンプレート *}>
+<{if $scheduleDate.startDisplayDate == $scheduleDate.endDisplayDate}>
+	<div class="bold scheduler_date <{$scheduleDate.startDateClassName}>">
+		<{$scheduleDate.startDisplayDate}>
+	</div>
+
+	<{if $scheduleDate.startDisplayTime|date_format:"%H%M" == SCHEDULER_CALENDAR_MORNING}>
+		<span class="scheduler_calendar_morning">
+			<{$lang.scheduler_calendar_morning|smarty:nodefaults}>
+		</span>
+	<{elseif $scheduleDate.startDisplayTime|date_format:"%H%M" == SCHEDULER_CALENDAR_AFTERNOON}>
+		<span class="scheduler_calendar_afternoon">
+			<{$lang.scheduler_calendar_afternoon|smarty:nodefaults}>
+		</span>
+	<{elseif $scheduleDate.startDisplayTime|date_format:"%H%M" == SCHEDULER_CALENDAR_EVENING}>
+		<span class="scheduler_calendar_evening">
+			<{$lang.scheduler_calendar_evening|smarty:nodefaults}>
+		</span>
+	<{/if}>
+
+<{*	<{if $scheduleDate.allday_flag == _OFF}>
+		<div class="scheduler_reply_date_list_time">
+			<span class="scheduler_time <{$scheduleDate.startTimeClassName}>">
+				<{$scheduleDate.startDisplayTime}>
+			</span>
+			<span>
+				<{$lang.scheduler_from_to}>
+			</span>
+			<span class="scheduler_time <{$scheduleDate.endTimeClassName}>">
+				<{$scheduleDate.endDisplayTime}>
+			</span>
+		</div>
+	<{/if}>*}>
+<{else}>
+	<div>
+		<div class="scheduler_date <{$scheduleDate.startDateClassName}>">
+			<{$scheduleDate.startDisplayDate}>
+		</div>
+		<{if $scheduleDate.allday_flag == _OFF}>
+			<div class="scheduler_time <{$scheduleDate.startTimeClassName}>">
+				<{$scheduleDate.startDisplayTime}>
+			</div>
+		<{/if}>
+	</div>
+	<div>
+		<{$lang.scheduler_from_to}>
+	</div>
+	<div>
+		<div class="scheduler_date <{$scheduleDate.endDateClassName}>">
+			<{$scheduleDate.endDisplayDate}>
+		</div>
+		<{if $scheduleDate.allday_flag == _OFF}>
+			<div class="scheduler_time <{$scheduleDate.endTimeClassName}>">
+				<{$scheduleDate.endDisplayTime}>
+			</div>
+		<{/if}>
+	</div>
+	<br class="float-clear" />
+<{/if}>
+<{/strip}>

@@ -1,0 +1,27 @@
+<{strip}>
+<div id="multimedia_item_image_object_<{$item.item_id}><{$id}>" class="multimedia_wrapper_outer" <{if $item.edit_authority}>onmouseover="commonCls.displayVisible($('multimedia_item_edit_icon_<{$item.item_id}><{$id}>'));" onmouseout="commonCls.displayNone($('multimedia_item_edit_icon_<{$item.item_id}><{$id}>'));"<{/if}>>
+	<div id="multimedia_item_image_<{$item.item_id}><{$id}>" class="multimedia_wrapper_inner align-center">
+		<a id="multimedia_item_link_<{$item.item_id}><{$id}>" class="display-block" href="#" onclick="multimediaCls['<{$id}>'].showItem(event, <{$item.item_id}>); return false;">
+			<img class="multimedia_wrapper_inner" src=".<{$smarty.const.INDEX_FILE_NAME}>?action=multimedia_view_main_item_thumbnail&amp;item_id=<{$item.item_id}>&amp;page_id=<{$page_id}>" title="<{$item.item_description|smarty:nodefaults}>" alt="<{$item.item_name|smarty:nodefaults}>"/>
+		</a>
+	</div>
+	<{if $item.edit_authority}>
+		<div id="multimedia_item_edit_icon_<{$item.item_id}><{$id}>" class="multimedia_item_edit_icon multimedia_float_left multimedia_position_relative display-none">
+			<span id="multimedia_item_time_span<{$item.item_id}><{$id}>" class="multimedia_item_edit_icon">
+				<a class="syslink" href="#" title="<{$lang._edit_title|sprintf:$item.item_name}>" onclick="multimediaCls['<{$id}>'].showItemEdit(event, '<{$item.item_id}>'); return false;">
+					<img class="icon" src="<{"edit_light.gif"|get_themes_image}>" alt="<{$lang._edit_title|sprintf:$item.item_name}>" title="" />
+				</a>
+				<a class="syslink" href="#" title="<{$lang._del_title|sprintf:$item.item_name}>" onclick="multimediaCls['<{$id}>'].deleteItem('<{$lang._del_confirm|sprintf:"`$item.item_name`"|smarty:nodefaults|escape:"javascript"|escape:"html"}>', '<{$item.item_id}>', '<{$item.insert_user_id}>'); return false;">
+					<img class="icon" src="<{"trash_silhouette.gif"|get_themes_image}>" alt="<{$lang._del_title|sprintf:$item.item_name}>" title="" />
+				</a>
+			</span>
+		</div>
+	<{/if}>
+	<div id="multimedia_item_time_<{$item.item_id}><{$id}>" class="multimedia_item_time multimedia_float_right multimedia_position_relative">
+		<span id="multimedia_item_time_span<{$item.item_id}><{$id}>" class="multimedia_item_time">
+			<{$item.duration}>
+		</span>
+	</div>
+	<br class="float-clear"/>
+</div>
+<{/strip}>

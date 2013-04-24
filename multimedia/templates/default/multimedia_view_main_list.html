@@ -1,0 +1,22 @@
+<{strip}>
+<{include file = "multimedia_view_main_search.html"}>
+<br class="float-clear" />
+<div id="multimedia_top_main<{$id}>" class="outerdiv">
+	<{include file = "multimedia_view_main_list_operation.html" }>
+	<br class="float-clear" />
+	<{if $action.item_count > 0}>
+		<div id="multimedia_video_list<{$id}>" class="multimedia_item_list">
+			<{foreach item=item from=$action.item_list}>
+				<{include file = "multimedia_view_main_item.html" dragDrog=$smarty.const._OFF}>
+			<{/foreach}>
+		</div>
+		<br class="float-clear" />
+	<{else}>
+		<{$lang.multimedia_no_item|smarty:nodefaults}>
+	<{/if}>
+</div>
+<{include file="../multimedia_script.html"}>
+<script class="nc_script" type="text/javascript">
+	multimediaCls["<{$id}>"].multimedia_id = "<{$action.multimedia_obj.multimedia_id}>";
+</script>
+<{/strip}>
