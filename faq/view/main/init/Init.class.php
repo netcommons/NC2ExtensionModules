@@ -3,7 +3,7 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * [[機能説明]]
+ * 質問一覧画面表示アクションクラス
  *
  * @package     NetCommons
  * @author      Ka
@@ -19,20 +19,23 @@ class Faq_View_Main_Init extends Action
     var $category_id = null;
     var $display_row = null;
     var $question_id = null;
-    
+	var $block_id = null;
+
     // バリデートによりセット
     var $faq_obj = null;
 
     // 使用コンポーネントを受け取るため
     var $faqView = null;
     var $session = null;
- 
+	var $mobileView = null;
+
     // 値をセットするため
     var $categories = null;
     var $question_count = null;
     var $question_list = null;
     var $show_cate_list = true;
-    
+	var $block_num = null;
+
     //ページ
     var $data_cnt    = 0;
     var $now_page    = null;
@@ -42,13 +45,18 @@ class Faq_View_Main_Init extends Action
     var $disp_begin  = 0;
     var $disp_end    = 0;
     var $link_array  = NULL;
-    /**
-     * [[機能説明]]
-     *
-     * @access  public
-     */
-    function execute()
-    {
+
+	/**
+	 * 質問一覧画面表示アクション
+	 *
+	 * @access  public
+	 */
+	function execute()
+	{
+		if ($this->session->getParameter('_mobile_flag') == true) {
+			$this->block_num = $this->mobileView->getCountForBlockInPageWithBlock($this->block_id);
+		}
+
         if(empty($this->faq_id)) {
             $this->faq_id = $this->faq_obj['faq_id'];
         }

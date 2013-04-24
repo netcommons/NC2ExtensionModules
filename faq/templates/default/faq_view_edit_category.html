@@ -1,4 +1,5 @@
 <{strip}>
+<{* カテゴリー編集画面用テンプレート *}>
 <div class="outerdiv">
 	<div class="bold">
 		<{$action.faq_obj.faq_name}>
@@ -17,7 +18,7 @@
 		<{ include file="faq_view_edit_category_comp.html" }>
 	</div>
 	<{if $action.category_count == 0}>
-		<{$lang.noneexists_category|smarty:nodefaults}>
+		<{$lang.faq_noneexists_category|smarty:nodefaults}>
 	<{else}>
 		<div id="_faq_cat<{$id}>" class="faq_cat_main_sort_range">
 			<{foreach item=cat from=$action.categories}>

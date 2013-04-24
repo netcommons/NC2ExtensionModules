@@ -78,16 +78,16 @@
 <script class="nc_script" type="text/javascript">
 	<{if $action.scheduleCount > 0}>
 		$("scheduler_visible_row_head<{$id}>").value = "<{$action.visible_row}>";
-	<{/if}>
-	<{if $action.scheduleCount > $action.visible_row}>
-		$("scheduler_visible_row_foot<{$id}>").value = "<{$action.visible_row}>";
-	<{/if}>
-
-	<{if $action.scheduler.selectAuthority}>
-		$("scheduler_scheduler_id<{$id}>").value = "<{$action.scheduler.scheduler_id}>";
-		if ($("scheduler_schedule_id<{$action.scheduler.schedule_id}><{$id}>")) {
-			$("scheduler_schedule_id<{$action.scheduler.schedule_id}><{$id}>").checked = true;
-		}
+		<{if $action.scheduleCount > $action.visible_row}>
+			$("scheduler_visible_row_foot<{$id}>").value = "<{$action.visible_row}>";
+		<{/if}>
+	
+		<{if $action.scheduler.selectAuthority}>
+			$("scheduler_scheduler_id<{$id}>").value = "<{$action.scheduler.scheduler_id}>";
+			if ($("scheduler_schedule_id<{$action.scheduler.schedule_id}><{$id}>")) {
+				$("scheduler_schedule_id<{$action.scheduler.schedule_id}><{$id}>").checked = true;
+			}
+		<{/if}>
 	<{/if}>
 </script>
 <{/strip}>

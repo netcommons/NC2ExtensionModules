@@ -1,0 +1,34 @@
+<{strip}>
+<{* カテゴリ、表示件数切り替え *}>
+<div data-role="navbar">
+<form method="get" action=".<{$smarty.const.INDEX_FILE_NAME}>">
+<div data-role="controlgroup" data-type="horizontal" style="margin-bottom:0px;text-align:right;">
+	<input type="hidden" name="action" value="faq_view_main_init">
+	<input type="hidden" name="block_id" value="<{$block_id}>">
+	<input type="hidden" name="faq_id" value="<{$action.faq_id}>">
+	<input type="hidden" name="now_page" value="<{$action.now_page}>">
+
+	<{if ($action.show_cate_list==true)}>
+		<select name="category_id">
+			<option value="0" <{if $action.category_id == "" || $action.category_id == 0}> selected="selected"<{/if}>><{$lang.faq_question_category_select|smarty:nodefaults}></option>
+			<{foreach from=$action.categories item=cat}>
+				<option value="<{$cat.category_id}>" <{if ($action.category_id==$cat.category_id)}>selected="selected"<{/if}>><{$cat.category_name}></option>
+			<{/foreach}>
+		</select>
+	<{/if}>
+
+	<select name="display_row">
+		<option value="1" <{if ($action.display_row==1)}>selected="selected"<{/if}>>1<{$lang.faq_display_item|smarty:nodefaults}></option>
+		<option value="5" <{if ($action.display_row==5)}>selected="selected"<{/if}>>5<{$lang.faq_display_item|smarty:nodefaults}></option>
+		<option value="10" <{if ($action.display_row==10)}>selected="selected"<{/if}>>10<{$lang.faq_display_item|smarty:nodefaults}></option>
+		<option value="20" <{if ($action.display_row==20)}>selected="selected"<{/if}>>20<{$lang.faq_display_item|smarty:nodefaults}></option>
+		<option value="50" <{if ($action.display_row==50)}>selected="selected"<{/if}>>50<{$lang.faq_display_item|smarty:nodefaults}></option>
+		<option value="100" <{if ($action.display_row==100)}>selected="selected"<{/if}>>100<{$lang.faq_display_item|smarty:nodefaults}></option>
+	</select>
+
+	<input data-icon="refresh" data-iconpos="right" type="submit" name="switch" value="<{$lang._mobile_switch|smarty:nodefaults}>">
+	<{$session_form|smarty:nodefaults}>
+</div>
+</form>
+</div>
+<{/strip}>

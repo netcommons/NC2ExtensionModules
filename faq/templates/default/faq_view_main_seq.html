@@ -1,30 +1,30 @@
 <{strip}>
-<{* タスク表示順変更用テンプレート *}>
+<{* 質問表示順変更用テンプレート *}>
 <div class="faq_seq_head">
-	<a class="syslink" href="#" title="<{$lang.question_change_seq_end|smarty:nodefaults}>" onclick="commonCls.sendView('<{$id}>', {'action':'faq_view_main_init'});return false;">
-		<{$lang.question_change_seq_end|smarty:nodefaults}>
+	<a class="syslink" href="#" title="<{$lang.faq_question_change_seq_end|smarty:nodefaults}>" onclick="commonCls.sendView('<{$id}>', {'action':'faq_view_main_init'});return false;">
+		<{$lang.faq_question_change_seq_end|smarty:nodefaults}>
 	</a>
 </div>
 
 <{if $action.question_count == 0}>
-        <{$lang.question_none_post|smarty:nodefaults}>
+	<{$lang.faq_question_none_post|smarty:nodefaults}>
 <{else}>
-<table id="faq_question_list<{$id}>" class="faq_question_seq">	
-	<{foreach from=$action.questions item=question}>
-		<tr id="faq_question_row<{$question.question_id}><{$id}>">
-			<td class="comp_draganddrop">
-			</td>
-			<td class="question_title">
-				<{$question.question_name|regex_replace:"/\n/":"<br \/>"}>
-			</td>
-		</tr>
-	<{/foreach}>
-</table>
+	<table id="faq_question_list<{$id}>" class="faq_question_seq">
+		<{foreach from=$action.questions item=question}>
+			<tr id="faq_question_row<{$question.question_id}><{$id}>">
+				<td class="comp_draganddrop">
+				</td>
+				<td class="question_title">
+					<{$question.question_name|regex_replace:"/\n/":"<br \/>"}>
+				</td>
+			</tr>
+		<{/foreach}>
+	</table>
 <{/if}>
 
 <{include file = "../faq_script.html"}>
+<{if $action.question_count > 0}>
 <script class="nc_script" type="text/javascript">
-
 	dropZone = Class.create();
 	dropZone.prototype = Object.extend((new compDropzone), {
 		showHover: function(event) {
@@ -38,14 +38,14 @@
 		accept: function(draggableObjects) {
 			this.acceptChgSeq(draggableObjects);
 		},
-		
+
 		save: function(draggableObjects) {
 			if(this.ChgSeqPosition == null) {
 				return false;
 			}
-	    	var drag = draggableObjects[0].getHTMLElement();
-	    	var drop = this.getHTMLElement();
-			
+			var drag = draggableObjects[0].getHTMLElement();
+			var drop = this.getHTMLElement();
+
 			var id = this.getParams();
 			faqCls[id].changeSequence(drag.id, drop.id, this.ChgSeqPosition);
 			return true;
@@ -65,6 +65,6 @@
 	dragArea = null;
 	dragDrop = null;
 	rows = null;
-
 </script>
+<{/if}>
 <{/strip}>

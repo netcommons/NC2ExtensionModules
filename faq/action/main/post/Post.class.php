@@ -3,7 +3,7 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * [[機能説明]]
+ * 質問登録アクションクラス
  *
  * @package     NetCommons
  * @author      Noriko Arai,Ryuji Masukawa
@@ -28,15 +28,11 @@ class Faq_Action_Main_Post extends Action
 	// 使用コンポーネントを受け取るため
 	var $faqView = null;
 	var $db = null;
-	//var $whatsnewAction = null;
 	var $request = null;
 	var $session = null;
-	var $configView = null;
-
-	// 値をセットするため
 
 	/**
-	 * [[機能説明]]
+	 * 質問登録アクション
 	 *
 	 * @access  public
 	 */
@@ -84,6 +80,7 @@ class Faq_Action_Main_Post extends Action
 				return "error";
 			}
 
+			$this->request->setParameter('question_id', $question_id);
 			$this->question_id = $question_id;
 		}
 		

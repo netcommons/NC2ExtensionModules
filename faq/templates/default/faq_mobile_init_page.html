@@ -1,0 +1,35 @@
+<{strip}>
+<{* ページ切り替え *}>
+<{if $action.total_page > 1 }>
+
+<div data-role="navbar" data-type="horizontal">
+	<{$lang._mobile_page|smarty:nodefaults}>
+
+	<{if $action.prev_link}>
+		<a data-role="button" data-inline="true" class="ui-btn-corner-all" href="?action=faq_view_main_init&amp;block_id=<{$block_id}>&amp;faq_id=<{$action.faq_id}>&amp;now_page=<{$action.now_page-1}><{$session_param}>">
+			<img class="icon" alt="" src="<{"previous.gif"|get_themes_image}>"/>
+			<{$lang.faq_question_back|smarty:nodefaults}>
+		</a>
+	<{/if}>
+	<{section name=cnt loop=$action.link_array}>
+		&nbsp;
+		<{if $action.now_page==$action.link_array[cnt]}>
+			<{$action.link_array[cnt]}>
+		<{else}>
+			<a data-role="button" data-inline="true" class="ui-btn-corner-all" href="?action=faq_view_main_init&amp;block_id=<{$block_id}>&amp;faq_id=<{$action.faq_id}>&amp;now_page=<{$action.link_array[cnt]}><{$session_param}>" >
+				<{$action.link_array[cnt]}>
+			</a>
+		<{/if}>
+	<{/section}>
+	<{if $action.next_link}>
+		&nbsp;
+		<a data-role="button" data-inline="true" class="ui-btn-corner-all" href="?action=faq_view_main_init&amp;block_id=<{$block_id}>&amp;faq_id=<{$action.faq_id}>&amp;now_page=<{$action.now_page+1}><{$session_param}>">
+			<{$lang.faq_question_next|smarty:nodefaults}>
+			<img class="icon" alt="" src="<{"next.gif"|get_themes_image}>"/>
+		</a>
+	<{/if}>
+</div>
+
+<{/if}>
+
+<{/strip}>

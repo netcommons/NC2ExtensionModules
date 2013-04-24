@@ -41,46 +41,48 @@
 </div>
 
 <{include file = "../banner_script.html"}>
-<script class="nc_script" type="text/javascript">
-	dropZone = Class.create();
-	dropZone.prototype = Object.extend((new compDropzone), {
-		showHover: function(event) {
-			this.showChgSeqHover(event);
-		},
-
-		hideHover: function(event) {
-			this.hideChgSeqHover(event);
-		},
-
-		accept: function(draggableObjects) {
-			this.acceptChgSeq(draggableObjects);
-		},
-
-		save: function(draggableObjects) {
-			if(this.ChgSeqPosition == null) {
-				return false;
+<{if count($action.categories) != 0 }>
+	<script class="nc_script" type="text/javascript">
+		dropZone = Class.create();
+		dropZone.prototype = Object.extend((new compDropzone), {
+			showHover: function(event) {
+				this.showChgSeqHover(event);
+			},
+	
+			hideHover: function(event) {
+				this.hideChgSeqHover(event);
+			},
+	
+			accept: function(draggableObjects) {
+				this.acceptChgSeq(draggableObjects);
+			},
+	
+			save: function(draggableObjects) {
+				if(this.ChgSeqPosition == null) {
+					return false;
+				}
+				var drag = draggableObjects[0].getHTMLElement();
+				var drop = this.getHTMLElement();
+				
+				var id = this.getParams();
+				bannerCls[id].changeCategorySequence(drag.id, drop.id, this.ChgSeqPosition);
+				return true;
 			}
-			var drag = draggableObjects[0].getHTMLElement();
-			var drop = this.getHTMLElement();
-			
-			var id = this.getParams();
-			bannerCls[id].changeCategorySequence(drag.id, drop.id, this.ChgSeqPosition);
-			return true;
+		});
+	
+		var dragArea = $("banner_category_list<{$id}>");
+		dragDrop = new compDragAndDrop();
+		dragDrop.registerDraggableRange(dragArea);
+		var rows = dragArea.getElementsByTagName("tr");
+		for (var i = 0; i < rows.length; i++) {
+			dragDrop.registerDraggable(new compDraggable(rows[i], rows[i].firstChild));
+			dragDrop.registerDropZone(new dropZone(rows[i], "<{$id}>"));
 		}
-	});
-
-	var dragArea = $("banner_category_list<{$id}>");
-	dragDrop = new compDragAndDrop();
-	dragDrop.registerDraggableRange(dragArea);
-	var rows = dragArea.getElementsByTagName("tr");
-	for (var i = 0; i < rows.length; i++) {
-		dragDrop.registerDraggable(new compDraggable(rows[i], rows[i].firstChild));
-		dragDrop.registerDropZone(new dropZone(rows[i], "<{$id}>"));
-	}
-
-	dropZone = null;
-	dragArea = null;
-	dragDrop = null;
-	rows = null;
-</script>
+	
+		dropZone = null;
+		dragArea = null;
+		dragDrop = null;
+		rows = null;
+	</script>
+<{/if}>
 <{/strip}>

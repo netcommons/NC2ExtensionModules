@@ -1,4 +1,5 @@
 <{strip}>
+<{* 質問一覧画面用テンプレート *}>
 <div class="outerdiv">
 	<{* タイトル *}>
 	<{*
@@ -10,14 +11,14 @@
 		<tr>
 			<td class="nowrap faq_top faq_right_space">
 				<{if $action.faq_obj.has_post_auth}>
-					<a class="syslink" href="#" title="<{$lang.question_new_title|smarty:nodefaults}>" onclick="commonCls.sendView('<{$id}>', {'action':'faq_view_main_post'}, {'loading_el':this}); return false;">
+					<a class="syslink" href="#" title="<{$lang.faq_question_new_title|smarty:nodefaults}>" onclick="commonCls.sendView('<{$id}>', {'action':'faq_view_main_post'}, {'loading_el':this}); return false;">
 						<img class="icon" alt="" src="<{"edit.gif"|get_themes_image}>"/>
-						<{$lang.question_new_title|smarty:nodefaults}>
+						<{$lang.faq_question_new_title|smarty:nodefaults}>
 						</a>
 					<{if $smarty.session._auth_id >= $smarty.const._AUTH_CHIEF}>
 						<{$lang._separator|smarty:nodefaults}>
-						<a class="syslink" href="#" title="<{$lang.question_change_seq|smarty:nodefaults}>" onclick="commonCls.sendView('<{$id}>', {'action':'faq_view_main_sequence', 'category_id':'<{$action.category_id}>'}, {'loading_el':this}); return false;">
-							<{$lang.question_change_seq|smarty:nodefaults}>
+						<a class="syslink" href="#" title="<{$lang.faq_question_change_seq|smarty:nodefaults}>" onclick="commonCls.sendView('<{$id}>', {'action':'faq_view_main_sequence', 'category_id':'<{$action.category_id}>'}, {'loading_el':this}); return false;">
+							<{$lang.faq_question_change_seq|smarty:nodefaults}>
 						</a>
 					<{/if}>
 				<{/if}>
@@ -31,7 +32,7 @@
 		</tr>
 	</table>
 <{if $action.question_count == 0}>
-	<{$lang.question_none_post|smarty:nodefaults}>
+	<{$lang.faq_question_none_post|smarty:nodefaults}>
 <{else}>
 
 <div class="outerdiv">
@@ -58,16 +59,16 @@
 									<br class="float-clear" />
 									<div class="align-right">
 										<{if $post.has_edit_auth}>
-											<a class="syslink" title="<{$lang.question_edit|smarty:nodefaults}>" href="#" onclick="commonCls.sendView('<{$id}>', {'action':'faq_view_main_post','question_id':<{$post.question_id}>}, {'loading_el':this}); return false;">
+											<a class="syslink" title="<{$lang.faq_question_edit|smarty:nodefaults}>" href="#" onclick="commonCls.sendView('<{$id}>', {'action':'faq_view_main_post','question_id':<{$post.question_id}>}, {'loading_el':this}); return false;">
 												<{$lang._edit|smarty:nodefaults}>
 											</a>
 											<{$lang._separator|smarty:nodefaults}>
-											<a class="syslink" title="<{$lang.question_del|smarty:nodefaults}>" href="#" onclick="faqCls['<{$id}>'].deletePost(this, '<{$post.question_id}>', '<{$lang.question_delete_confirm|smarty:nodefaults}>'); return false;">
+											<a class="syslink" title="<{$lang.faq_question_del|smarty:nodefaults}>" href="#" onclick="faqCls['<{$id}>'].deletePost(this, '<{$post.question_id}>', '<{$lang.faq_question_delete_confirm|smarty:nodefaults}>'); return false;">
 												<{$lang._delete|smarty:nodefaults}>
 											</a>
 											<{$lang._separator|smarty:nodefaults}>
 										<{/if}>
-										<a class="syslink" title="<{$lang.question_hide|smarty:nodefaults}>" onclick="commonCls.displayChange($('_faq_answer_<{$post.question_id}>'));return false;" href="#"> <{$lang.question_hide|smarty:nodefaults}> </a>
+										<a class="syslink" title="<{$lang.faq_question_hide|smarty:nodefaults}>" onclick="commonCls.displayChange($('_faq_answer_<{$post.question_id}>'));return false;" href="#"> <{$lang.faq_question_hide|smarty:nodefaults}> </a>
 									</div>
 								</div>
 							</div>

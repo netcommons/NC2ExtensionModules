@@ -9,7 +9,9 @@
 	<{/if}>
 
 	<{if $action_name == "faq_view_main_init" && !empty($action.question_id|smarty:nodefaults)}>
-		commonCls.displayVisible($('_faq_answer_<{$action.question_id}>'));
+		if ($('_faq_answer_<{$action.question_id}>')) {
+			commonCls.displayVisible($('_faq_answer_<{$action.question_id}>'));
+		}
 	<{/if}>
 </script>
 <{/strip}>

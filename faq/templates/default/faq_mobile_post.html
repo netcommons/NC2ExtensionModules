@@ -1,0 +1,23 @@
+<{strip}>
+<{* FAQ投稿画面 *}>
+<form method="post" id="faq_post_form<{$id}>" action="./<{$smaryt.const.INDEX_FILE_NAME}>" >
+	<input type="hidden" name="faq_id" value="<{$action.faq_obj.faq_id}>"/>
+	<input type="hidden" name="action" value="faq_action_mobile_post">
+	<input type="hidden" name="block_id" value="<{$block_id}>">
+	<input type="hidden" name="faq_id" value="<{$action.faq_obj.faq_id}>"/>
+	<input type="hidden" name="question_id" value="<{$action.post.question_id}>"/>
+	<{$token_form|smarty:nodefaults}>
+	<{$session_form|smarty:nodefaults}>
+
+	<{if ($smarty.session._smartphone_flag == _ON) }>
+		<{include file="faq_mobile_post_smart.html"}>
+	<{else}>
+		<{include file="faq_mobile_post_feature.html"}>
+	<{/if}>
+
+	<div class="btn-bottom" style="text-align:center;">
+		<input data-role="button" data-inline="true" type="submit" name="regist" value="<{$lang._regist|smarty:nodefaults}>">
+		<input data-role="button" data-inline="true" type="submit" name="cancel" value="<{$lang._cancel|smarty:nodefaults}>">
+	</div>
+</form>
+<{/strip}>

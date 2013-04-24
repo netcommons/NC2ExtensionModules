@@ -1,14 +1,14 @@
 <{strip}>
+<{* 質問一覧画面ヘッダー部用テンプレート *}>
 <span class="faq_separator">
-
 	<select class="category_id<{$id}> <{if ($action.show_cate_list!=true)}>display-none<{/if}>" onchange="faqCls['<{$id}>'].toPage(this, '<{$action.faq_id}>', 'category_id<{$id}>', 'display_row<{$id}>', '', '<{$position}>')" id="category_id<{$id}><{if $position == "bottom"}>_bottom<{/if}>" size="1">
-		<option value="0" <{if $action.category_id == "" || $action.category_id == 0}> selected="selected"<{/if}>><{$lang.question_category_select|smarty:nodefaults}></option>
+		<option value="0" <{if $action.category_id == "" || $action.category_id == 0}> selected="selected"<{/if}>><{$lang.faq_question_category_select|smarty:nodefaults}></option>
 		<{foreach from=$action.categories item=cat}>
 			<option value="<{$cat.category_id}>" <{if ($action.category_id==$cat.category_id)}>selected="selected"<{/if}>><{$cat.category_name}></option>
 		<{/foreach}>
 	</select>
-
 </span>
+
 <span>
 	<select class="display_row<{$id}>" onchange="faqCls['<{$id}>'].toPage(this, '<{$action.faq_id}>', 'category_id<{$id}>', 'display_row<{$id}>', '', '<{$position}>')" id="display_row<{$id}><{if $position == "bottom"}>_bottom<{/if}>" size="1">
 		<option value="1" <{if ($action.display_row==1)}>selected="selected"<{/if}>>1<{$lang.faq_display_item|smarty:nodefaults}></option>

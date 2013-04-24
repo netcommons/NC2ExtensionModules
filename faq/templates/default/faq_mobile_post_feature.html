@@ -1,0 +1,30 @@
+<{strip}>
+<{* FAQ投稿画面携帯用 *}>
+<{if ($action.cate_can_select==false)}>
+	<input type="hidden" name="category_id" value="<{$action.post.category_id}>" />
+<{else}>
+	<div>
+		<{$lang.faq_post_category|smarty:nodefaults}>
+	</div>
+	<div>
+	<select name="<{if ($action.cate_can_select==true)}>category_id<{/if}>" size="1">
+		<option value="0" <{if ($action.post.category_id=="0")}>selected="selected"<{/if}>><{$lang.faq_question_nocategory|smarty:nodefaults}></option>
+		<{foreach from=$action.categories item=cat}>
+			<option value="<{$cat.category_id}>" <{if ($action.post.category_id==$cat.category_id)}>selected="selected"<{/if}>><{$cat.category_name}></option>
+		<{/foreach}>
+	</select>
+	</div>
+<{/if}>
+
+<div>
+	<{$lang.faq_question_title|smarty:nodefaults}>
+</div>
+<div>
+	<textarea name="question_name" rows="4"><{$action.post.question_name|smarty:nodefaults|html_to_text}></textarea>
+</div>
+
+<div><{$lang.faq_question_answer|smarty:nodefaults}></div>
+<div>
+	<textarea name="question_answer" rows="6"><{$action.post.question_answer|smarty:nodefaults|html_to_text}></textarea>
+</div>
+<{/strip}>

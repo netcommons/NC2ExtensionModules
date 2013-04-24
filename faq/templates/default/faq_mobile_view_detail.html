@@ -1,0 +1,31 @@
+<{strip}>
+<{* FAQ携帯・スマホ詳細表示画面 *}>
+<h4>
+	<img style="margin-right:5px;" alt="Q" src="<{"Q.gif"|get_modules_image}>"/>
+	<{$action.question.question_name|smarty:nodefaults}>
+</h4>
+<p>
+	<img style="margin-right:5px;" alt="A" src="<{"A.gif"|get_modules_image}>"/>
+	<{$action.question.question_answer|smarty:nodefaults|img_style_rgb_to_hex|wysiwig_convert_url}>
+</p>
+
+<{if $action.question.has_edit_auth}>
+	<div style="text-align:right;">
+		<a data-role="button" data-icon="check" data-inline="true" href="?action=faq_view_main_post&amp;block_id=<{$block_id}>&amp;faq_id=<{$action.question.faq_id}>&amp;question_id=<{$action.question.question_id}><{$session_param}>">
+			<{$lang._edit|smarty:nodefaults}>
+		</a>
+		<{if ($smarty.session._smartphone_flag != _ON) }>
+		<{$lang._separator|smarty:nodefaults}>
+		<{/if}>
+		<a data-role="button" data-icon="delete" data-inline="true" href="?action=faq_view_mobile_delete&amp;block_id=<{$block_id}>&amp;faq_id=<{$action.question.faq_id}>&amp;question_id=<{$action.question.question_id}><{$session_param}>">
+			<{$lang._delete|smarty:nodefaults}>
+		</a>
+	</div>
+<{/if}>
+<br />
+<div style="text-align:right;">
+	<a data-direction="reverse" href="?action=faq_view_main_init&amp;block_id=<{$block_id}><{$session_param}>">
+		<{$lang._btn_prev_arrow|smarty:nodefaults}>
+	</a>
+</div>
+<{/strip}>

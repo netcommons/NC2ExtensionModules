@@ -1,4 +1,5 @@
 <{strip}>
+<{* 質問登録画面用テンプレート *}>
 <div class="outerdiv">
 	<form id="faq_post_form<{$id}>" action="#" onsubmit="return false;">
 
@@ -6,29 +7,29 @@
 			<tr class="row">
 				<th scope="row"><{$lang.faq_post_category|smarty:nodefaults}></th>
 				<td class="nowrap">
-				    <{if ($action.cate_can_select==false)}>
-                       <input type="hidden" name="category_id" value="<{$action.post.category_id}>" />
-                    <{/if}>
+					<{if ($action.cate_can_select==false)}>
+						<input type="hidden" name="category_id" value="<{$action.post.category_id}>" />
+					<{/if}>
 					<select name="<{if ($action.cate_can_select==true)}>category_id<{/if}>" size="1" <{if ($action.cate_can_select==false)}>disabled<{/if}> >
-						<option value="0" <{if ($action.post.category_id=="0")}>selected="selected"<{/if}>><{$lang.question_nocategory|smarty:nodefaults}></option>
+						<option value="0" <{if ($action.post.category_id=="0")}>selected="selected"<{/if}>><{$lang.faq_question_nocategory|smarty:nodefaults}></option>
 						<{foreach from=$action.categories item=cat}>
 							<option value="<{$cat.category_id}>" <{if ($action.post.category_id==$cat.category_id)}>selected="selected"<{/if}>><{$cat.category_name}></option>
 						<{/foreach}>
 					</select>
 				</td>
 			</tr>
-            <tr class="row">
-                <th scope="row"><{$lang.question_title|smarty:nodefaults}></th>
-                <td>
-                   <textarea name="question_name" id="textarea_name<{$id}>" rows="4" cols="63" style="height:50px"><{$action.post.question_name}></textarea>
-                </td>
-            </tr>
-            <tr>
-                <th class="row"><{$lang.question_answer|smarty:nodefaults}></th>
-                <td>
-                    <textarea class="comptextarea textarea<{$id}>" rows="18" cols="60"><{$action.post.question_answer|smarty:nodefaults|wysiwig_convert_url|escape:"html"}></textarea>
-                </td>
-            </tr>
+			<tr class="row">
+				<th scope="row"><{$lang.faq_question_title|smarty:nodefaults}></th>
+				<td>
+					<textarea name="question_name" id="textarea_name<{$id}>" rows="4" cols="63" style="height:50px"><{$action.post.question_name}></textarea>
+				</td>
+			</tr>
+			<tr>
+				<th class="row"><{$lang.faq_question_answer|smarty:nodefaults}></th>
+				<td>
+					<textarea class="comptextarea textarea<{$id}>" rows="18" cols="60"><{$action.post.question_answer|smarty:nodefaults|wysiwig_convert_url|escape:"html"}></textarea>
+				</td>
+			</tr>
 		</table>
 
 		<br/>

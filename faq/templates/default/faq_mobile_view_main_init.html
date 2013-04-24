@@ -1,0 +1,42 @@
+<{strip}>
+<{* FAQ携帯スマホ一覧表示画面 *}>
+<{* タイトル *}>
+<h3><{$action.faq_obj.faq_name}></h3>
+
+<{include file="faq_mobile_init_control.html"}>
+<{include file="faq_mobile_init_page.html"}>
+
+<p>
+	<{if $action.question_count == 0}>
+		<{$lang.faq_noneexists_category|smarty:nodefaults}>
+	<{else}>
+		<ul data-role="listview"  data-theme="c">
+			<{foreach item=post from=$action.question_list}>
+				<li class="faq_question_title">
+					<a href="?action=faq_view_mobile_detail&amp;block_id=<{$block_id}>&amp;faq_id=<{$action.faq_id}>&amp;question_id=<{$post.question_id}>">
+						<{$post.question_name|regex_replace:"/\n/":"<br \/>"}>
+					</a>
+				</li>
+			<{/foreach}>
+		</ul>
+	<{/if}>
+</p>
+<br />
+
+<{if $action.faq_obj.has_post_auth}>
+	<a data-role="button" href="?action=faq_view_main_post&amp;faq_id=<{$action.faq_obj.faq_id}>&amp;block_id=<{$block_id}>">
+		<img class="icon" alt="" src="<{"edit.gif"|get_themes_image}>" style="vertical-align:middle;" />
+		<{$lang.faq_question_new_title|smarty:nodefaults}>
+	</a>
+<{/if}>
+<br />
+<div style="text-align:right;">
+	<{if ($action.block_num == 1 ) }>
+		<a data-direction="reverse" href="?action=menu_view_mobile_init<{$session_param}>">
+	<{else}>
+		<a data-direction="reverse" href="?action=menu_view_mobile_detail<{$session_param}>">
+	<{/if}>
+		<{$lang._btn_prev_arrow|smarty:nodefaults}>
+	</a>
+</div>
+<{/strip}>
