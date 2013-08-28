@@ -45,12 +45,10 @@ class Multimedia_Action_Main_Item_Play extends Action
 			//動画ファイルサイズ取得
 			$file = $pathname . $filename;
 			$file_size = filesize($file) - 1;	//Rangeヘッダのオフセットが0であるため、-1
-//error_log(print_r($file_size, true)."<-file_size\n\n", 3, LOG_DIR."/error.log");
 
 			//Rangeヘッダを解析
 			list($range_header, $range) = explode('=', $_SERVER['HTTP_RANGE']);
 			list($range_offset, $range_limit) = explode('-', $range);
-//error_log(print_r($_SERVER['HTTP_RANGE'], true)."<-p\n\n", 3, LOG_DIR."/error.log");
 			$playback_session_id_array = array();
 
 			//Rangeヘッダが0からファイル終端の場合(ファイル存在確認後、1度のみリクエストされる)
@@ -122,12 +120,7 @@ class Multimedia_Action_Main_Item_Play extends Action
 			}
 // 以上、webapp/components/uploads/View.class.php の function _headerOutput より
 
-//error_log(print_r($filename, true)."<-filename\n\n", 3, LOG_DIR."/error.log");
-//error_log(print_r($file_size, true)."<-file_size\n\n", 3, LOG_DIR."/error.log");
-//error_log(print_r($content_length, true)."<-content_length\n\n", 3, LOG_DIR."/error.log");
-
 			//ファイル出力
-//			echo $content;
 			$fp = fopen($file, "rb");
 			fseek($fp, $range_offset, SEEK_SET);
 			echo fread($fp, $content_length);
