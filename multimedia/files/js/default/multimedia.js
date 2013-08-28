@@ -70,10 +70,6 @@ clsMultimedia.prototype = {
 		commonCls.sendPost(this.id, post, params);
 	},
 	showItem: function(event, item_id) {
-		var play_count_el = $("multimedia_play_count_" + item_id + this.id);
-		var play_count = parseInt(play_count_el.innerHTML.match(/\d+/)[0]) + 1;
-		play_count_el.innerHTML = play_count_el.innerHTML.replace(/\d+/, play_count);
-		
 		var params = new Object();
 		params = {
 			"action":"multimedia_view_main_item_detail",

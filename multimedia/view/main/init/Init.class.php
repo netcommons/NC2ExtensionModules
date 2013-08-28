@@ -14,6 +14,7 @@
  */
 class Multimedia_View_Main_Init extends Action
 {
+
 	// リクエストパラメータを受け取るため
 	var $album_edit_flag = null;
 	
