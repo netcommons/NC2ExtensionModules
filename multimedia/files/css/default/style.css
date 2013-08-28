@@ -590,3 +590,536 @@ div.multimedia_search_title {
 .multimedia_upload_table_td{
 	width:260px;
 }
+.multimedia_player_background{
+	border:1px solid #bbb;
+}
+.multimedia_player_thumbnail{
+	width:100%;
+	height:100%;
+}
+.multimedia_player_error_block{
+	position:absolute;
+	margin-top:-27px;
+	height:26px;
+	background-color:#000;
+	border-top:1px solid #bbb;
+}
+.multimedia_player_error_detail{
+	margin:5px;
+	font-size:13px;
+	color:#fff;
+}
+
+/* 以下、動画プレイヤー用 */
+div.jp-video {
+	font-size:1.25em; /* 1.25em for testing in site pages */ /* No parent CSS that can effect the size in the demos ZIP */
+	font-family:Verdana, Arial, sans-serif;
+	line-height:1.6;
+	color: #000;
+	background-color:#eee;
+}
+
+div.jp-video-embeded {
+	width:400px;	/* 幅を変更する場合はここを修正 */
+}
+div.jp-video-normal {
+	width:504px;	/* 幅を変更する場合はここを修正 */
+}
+div.jp-video-full {
+	position:static !important; position:relative
+}
+
+div.jp-video-full div div {
+	z-index:1000;
+}
+
+div.jp-video-full div.jp-jplayer {
+	top: 0;
+	left: 0;
+	position: fixed !important; position: relative;
+	overflow: hidden;
+}
+
+div.jp-video-full div.jp-gui {
+	position: fixed !important; position: static;
+	top: 0;
+	left: 0;
+	width:100%;
+	height:100%;
+	z-index:1001;
+}
+
+div.jp-video-full div.jp-interface {
+	position: absolute !important; position: relative;
+	bottom: 0;
+	left: 0;
+}
+
+div.jp-gui div.jp-interface {
+	position: relative;
+	background-color:#eee;
+	width:100%;
+	margin-top: -21px;
+}
+
+div.jp-video div.jp-interface {
+}
+
+/* @group CONTROLS */
+
+div.jp-controls-holder {
+	clear: both;
+	margin:0 auto;
+	position: relative;
+	overflow:hidden;
+	height:18px;
+	background: url("<{$smarty.const.CORE_BASE_URL}>/images/multimedia/jplayer/jplayer.netcommons.jpg") 0 -101px repeat-x;
+	border-left: 1px solid #bbb;
+	border-right: 1px solid #bbb;
+}
+
+div.jp-interface ul.jp-controls {
+	list-style-type:none;
+	margin:0;
+	padding: 0;
+	overflow:hidden;
+}
+
+div.jp-interface ul.jp-controls-left {
+	list-style-type:none;
+	margin:0;
+	padding: 0;
+	overflow:hidden;
+	margin-top: 1px;
+}
+
+div.jp-interface ul.jp-controls-right {
+	list-style-type:none;
+	margin:0;
+	padding: 0;
+	overflow:hidden;
+	margin-top: 1px;
+}
+
+div.jp-video div.jp-type-single ul.jp-controls {
+	width: 78px;
+	margin-left: 200px;
+}
+
+div.jp-video div.jp-type-single ul.jp-controls-left {
+}
+
+div.jp-video div.jp-type-single ul.jp-controls-right {
+}
+
+div.jp-video ul.jp-controls,
+div.jp-interface ul.jp-controls li {
+	display:inline;
+	float: left;
+}
+
+div.jp-video ul.jp-controls-left,
+div.jp-interface ul.jp-controls-left li {
+	display:inline;
+	float: left;
+}
+
+div.jp-video ul.jp-controls-right,
+div.jp-interface ul.jp-controls-right li {
+	display:inline;
+	float: right;
+}
+
+div.jp-interface ul.jp-controls a {
+	display:block;
+	overflow:hidden;
+	text-indent:-9999px;
+}
+
+div.jp-interface ul.jp-controls-left a {
+	display:block;
+	overflow:hidden;
+	text-indent:-9999px;
+}
+
+div.jp-interface ul.jp-controls-right a {
+	display:block;
+	overflow:hidden;
+	text-indent:-9999px;
+}
+
+a.jp-play,
+a.jp-pause {
+	width: 15px;
+	height: 15px;
+}
+
+a.jp-play {
+	background: url("<{$smarty.const.CORE_BASE_URL}>/images/multimedia/jplayer/jplayer.netcommons.jpg") 0 0 no-repeat;
+	margin-left: 6px;
+}
+a.jp-play:hover {
+	background: url("<{$smarty.const.CORE_BASE_URL}>/images/multimedia/jplayer/jplayer.netcommons.jpg") -17px 0 no-repeat;
+}
+a.jp-pause {
+	background: url("<{$smarty.const.CORE_BASE_URL}>/images/multimedia/jplayer/jplayer.netcommons.jpg") 0 -16px no-repeat;
+	margin-left: 6px;
+	display: none;
+}
+a.jp-pause:hover {
+	background: url("<{$smarty.const.CORE_BASE_URL}>/images/multimedia/jplayer/jplayer.netcommons.jpg") -17px -16px no-repeat;
+}
+
+a.jp-stop {
+	display: none;
+}
+
+/* @group progress bar */
+
+div.jp-progress {
+	overflow:hidden;
+	background-color: #ddd;
+}
+
+div.jp-video div.jp-progress {
+	top:0px;
+	left:0px;
+	width:100%;
+	height:3px;
+}
+div.jp-seek-bar {
+	background: url("<{$smarty.const.CORE_BASE_URL}>/images/multimedia/jplayer/jplayer.netcommons.jpg") 0 -81px repeat-x;
+	width:0px;
+	height:100%;
+	cursor: pointer;
+}
+div.jp-play-bar {
+	background: url("<{$smarty.const.CORE_BASE_URL}>/images/multimedia/jplayer/jplayer.netcommons.jpg") 0 -85px repeat-x ;
+	width:0px;
+	height:100%;
+}
+
+div.jp-seeking-bg {
+	background: url("jplayer/jplayer.blue.monday.seeking.gif");
+}
+
+/* @group volume controls */
+
+a.jp-mute,
+a.jp-unmute,
+a.jp-volume-max {
+	width:16px;
+	height:15px;
+	margin-left: 3px;
+}
+
+div.jp-video a.jp-mute,
+div.jp-video a.jp-unmute,
+div.jp-video a.jp-volume-max {
+}
+
+div.jp-video a.jp-mute,
+div.jp-video a.jp-unmute {
+	left: 50px;
+}
+
+div.jp-video a.jp-volume-max {
+	left: 134px;
+}
+
+a.jp-mute {
+	background: url("<{$smarty.const.CORE_BASE_URL}>/images/multimedia/jplayer/jplayer.netcommons.jpg") 0 -48px no-repeat;
+}
+a.jp-mute:hover {
+	background: url("<{$smarty.const.CORE_BASE_URL}>/images/multimedia/jplayer/jplayer.netcommons.jpg") -17px -48px no-repeat;
+}
+a.jp-unmute {
+	background: url("<{$smarty.const.CORE_BASE_URL}>/images/multimedia/jplayer/jplayer.netcommons.jpg") 0 -32px no-repeat;
+	display: none;
+}
+a.jp-unmute:hover {
+	background: url("<{$smarty.const.CORE_BASE_URL}>/images/multimedia/jplayer/jplayer.netcommons.jpg") -17px -32px no-repeat;
+}
+
+a.jp-volume-max {
+	background: url("<{$smarty.const.CORE_BASE_URL}>/images/multimedia/jplayer/jplayer.netcommons.jpg") 0 -32px no-repeat;
+}
+a.jp-volume-max:hover {
+	background: url("<{$smarty.const.CORE_BASE_URL}>/images/multimedia/jplayer/jplayer.netcommons.jpg") -17px -32px no-repeat;
+}
+
+div.jp-volume-bar {
+	overflow:hidden;
+	background: url("<{$smarty.const.CORE_BASE_URL}>/images/multimedia/jplayer/jplayer.netcommons.jpg") 0 -89px repeat-x;
+	width:100px;
+	height:5px;
+	cursor: pointer;
+	margin-top: 5px;
+	margin-left:3px;
+}
+
+div.jp-video div.jp-volume-bar {
+}
+div.jp-volume-bar-value {
+	background: url("<{$smarty.const.CORE_BASE_URL}>/images/multimedia/jplayer/jplayer.netcommons.jpg") 0 -95px repeat-x;
+	width:0px;
+	height:5px;
+}
+
+/* @group current time and duration */
+
+div.jp-audio div.jp-time-holder {
+	position:absolute;
+	top:50px;
+}
+div.jp-audio div.jp-type-single div.jp-time-holder {
+	left:110px;
+	width:186px;
+}
+div.jp-audio div.jp-type-playlist div.jp-time-holder {
+	left:166px;
+	width:130px;
+}
+
+div.jp-current-time,
+div.jp-duration {
+	font-size: 9px;
+}
+div.jp-current-time {
+}
+div.jp-duration {
+}
+
+div.jp-video div.jp-current-time {
+	margin-left: 5px;
+}
+div.jp-video div.jp-duration {
+	margin-left: 5px;
+}
+
+/* @group playlist */
+
+div.jp-title {
+	font-weight:bold;
+	text-align:center;
+}
+
+div.jp-title,
+div.jp-playlist {
+	width:100%;
+	background-color:#ccc;
+	border-top:1px solid #009be3;
+}
+div.jp-type-single div.jp-title,
+div.jp-type-playlist div.jp-title,
+div.jp-type-single div.jp-playlist {
+	border-top:none;
+}
+div.jp-title ul,
+div.jp-playlist ul {
+	list-style-type:none;
+	margin:0;
+	padding:0 20px;
+	font-size:.72em;
+}
+
+div.jp-title li {
+	padding:5px 0;
+	font-weight:bold;
+}
+div.jp-playlist li {
+	padding:5px 0 4px 20px;
+	border-bottom:1px solid #eee;
+}
+
+div.jp-playlist li div {
+	display:inline;
+}
+
+div.jp-type-playlist div.jp-playlist li:last-child {
+	padding:5px 0 5px 20px;
+	border-bottom:none;
+}
+div.jp-type-playlist div.jp-playlist li.jp-playlist-current {
+	list-style-type:square;
+	list-style-position:inside;
+	padding-left:7px;
+}
+div.jp-type-playlist div.jp-playlist a {
+	color: #333;
+	text-decoration: none;
+}
+div.jp-type-playlist div.jp-playlist a:hover {
+	color:#0d88c1;
+}
+div.jp-type-playlist div.jp-playlist a.jp-playlist-current {
+	color:#0d88c1;
+}
+
+div.jp-type-playlist div.jp-playlist a.jp-playlist-item-remove {
+	float:right;
+	display:inline;
+	text-align:right;
+	margin-right:10px;
+	font-weight:bold;
+	color:#666;
+}
+div.jp-type-playlist div.jp-playlist a.jp-playlist-item-remove:hover {
+	color:#0d88c1;
+}
+div.jp-type-playlist div.jp-playlist span.jp-free-media {
+	float:right;
+	display:inline;
+	text-align:right;
+	margin-right:10px;
+}
+div.jp-type-playlist div.jp-playlist span.jp-free-media a{
+	color:#666;
+}
+div.jp-type-playlist div.jp-playlist span.jp-free-media a:hover{
+	color:#0d88c1;
+}
+span.jp-artist {
+	font-size:.8em;
+	color:#666;
+}
+
+/* @end */
+
+div.jp-video-play {
+	width:100%;
+	overflow:hidden;
+	cursor:pointer;
+	background-color:rgba(0,0,0,0);
+}
+div.jp-video-embeded div.jp-video-play {
+	/* 高さを変更する場合はここを修正 */
+	margin-top:-300px;
+	height:300px;
+}
+div.jp-video-normal div.jp-video-play {
+	/* 高さを変更する場合はここを修正 */
+	margin-top:-290px;
+	height:290px;
+}
+div.jp-video-full div.jp-video-play {
+	height:100%;
+}
+a.jp-video-play-icon {
+	position:relative;
+	display:block;
+	width: 80px;
+	height: 80px;
+	margin-left:-40px;
+	margin-top:-40px;
+	left:50%;
+	top:50%;
+	background: url("jplayer/jplayer.netcommons.video.play.png") 0 0 no-repeat;
+	text-indent:-9999px;
+}
+
+div.jp-video-full a.jp-video-play-icon {
+	position:absolute;
+	z-index:1002;
+}
+
+div.jp-jplayer {
+	width:0px;
+	height:0px;
+}
+
+div.jp-jplayer {
+	background-color: #000000;
+	border:1px solid #bbb;
+}
+
+/* @group TOGGLES */
+
+ul.jp-toggles {
+	list-style-type:none;
+	padding:0;
+	margin:0 auto;
+	overflow:hidden;
+}
+
+div.jp-video ul.jp-toggles {
+	margin-top:10px;
+	width:100px;
+}
+
+ul.jp-toggles li {
+	display:block;
+	float:right;
+}
+
+ul.jp-toggles li a {
+	display:block;
+	width:25px;
+	height:18px;
+	text-indent:-9999px;
+	line-height:100%;
+}
+
+a.jp-full-screen {
+	background: url("<{$smarty.const.CORE_BASE_URL}>/images/multimedia/jplayer/jplayer.netcommons.jpg") 0 -64px no-repeat;
+	width: 16px;
+	height: 15px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+a.jp-full-screen:hover {
+	background: url("<{$smarty.const.CORE_BASE_URL}>/images/multimedia/jplayer/jplayer.netcommons.jpg") -17px -64px no-repeat;
+}
+
+a.jp-restore-screen {
+	background: url("<{$smarty.const.CORE_BASE_URL}>/images/multimedia/jplayer/jplayer.netcommons.jpg") 0 -64px no-repeat;
+	width: 16px;
+	height: 15px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+a.jp-restore-screen:hover {
+	background: url("<{$smarty.const.CORE_BASE_URL}>/images/multimedia/jplayer/jplayer.netcommons.jpg") -17px -64px no-repeat;
+}
+
+a.jp-repeat {
+	display: none;
+}
+
+a.jp-repeat-off {
+	display: none;
+}
+
+a.jp-shuffle {
+	display: none;
+}
+
+a.jp-shuffle-off {
+	display: none;
+}
+
+/* @group NO SOLUTION error feedback */
+
+.jp-no-solution {
+	padding:5px;
+	font-size:.8em;
+	background-color:#eee;
+	border:2px solid #009be3;
+	color:#000;
+	display:none;
+}
+
+.jp-no-solution a {
+	color:#000;
+}
+
+.jp-no-solution span {
+	font-size:1em;
+	display:block;
+	text-align:center;
+	font-weight:bold;
+}
+
+/* @end */
