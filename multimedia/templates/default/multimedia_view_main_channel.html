@@ -78,7 +78,9 @@
 <script class="nc_script" type="text/javascript">
 	multimediaCls["<{$id}>"].multimedia_id = "<{$action.multimedia_obj.multimedia_id}>";
 	<{if $action.album_count > 0}>
-		$("multimedia_visible_row_head<{$id}>").value = "<{$action.visible_row}>";
+		if ($("multimedia_visible_row_head<{$id}>")) {
+			$("multimedia_visible_row_head<{$id}>").value = "<{$action.visible_row}>";
+		}
 	<{/if}>
 </script>
 <{/strip}>
