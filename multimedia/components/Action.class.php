@@ -38,7 +38,63 @@ class Multimedia_Components_Action
 		$this->_db =& $container->getComponent("DbObject");
 		$this->_request =& $container->getComponent("Request");
 	}
-	
+
+	/**
+	 * ffmpegインストールチェック処理
+	 *
+	 * @param void
+	 * @return boolean	true or false
+	 * @access	public
+	 */
+	function hasFfmpeg() {
+		if (!file_exists(MULTIMEDIA_FFMPEG_PATH)) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * MP4Bpxインストールチェック処理
+	 *
+	 * @param void
+	 * @return boolean	true or false
+	 * @access	public
+	 */
+	function hasMp4box() {
+		if (!file_exists(MULTIMEDIA_MP4BOX_PATH)) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * サムネイル画像及び仮サムネイル画像削除処理
+	 *
+	 * @param string $thumbnail_path サムネイル画像のパス(縮小後)
+	 * @param string $temp_thumbnail_path キャプチャ画像のパス(縮小前)
+	 * @return void
+	 * @access	public
+	 */
+# 	function deleteImages($thumbnail_path, $temp_thumbnail_path) {
+# 		//画像削除
+# 		unlink($thumbnail_path);
+# 		unlink($temp_thumbnail_path);
+# 	}
+
+	/**
+	 * ファイル削除処理
+	 *
+	 * @param array $image_paths 削除対象ファイルパス
+	 * @return void
+	 * @access	public
+	 */
+	function deleteFiles($file_paths) {
+		foreach($file_paths as $path) {
+			//ファイル削除
+			unlink($path);
+		}
+	}
+
 	function hasFfmpegLib() {
 		$extension_fullname = PHP_EXTENSION_DIR . "/" . MULTIMEDIA_EXTENSION.".".PHP_SHLIB_SUFFIX;
     	if (!extension_loaded(MULTIMEDIA_EXTENSION)) {

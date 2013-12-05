@@ -1,0 +1,195 @@
+<{strip}>
+<{*
+<script type="text/javascript">
+//<![CDATA[
+jQuery(document).ready(function(){
+
+	$("#jquery_jplayer_1").jPlayer({
+		solution:"flash, html",
+		ready: function () {
+			$(this).jPlayer("setMedia", {
+				m4v: "<{$smarty.const.BASE_URL}><{$smarty.const.INDEX_FILE_NAME}>?action=<{$action.xml_action}>&id=<{$action.item_id}>&autostart=true"
+			}).jPlayer("play");
+		},
+		swfPath: "<{$smarty.const.BASE_URL|smarty:nodefaults}>/js",
+		supplied: "m4v",
+		size: {
+			width: "640px",
+			height: "360px",
+			cssClass: "jp-video-360p"
+		}
+	});
+
+});
+//]]>
+</script>
+*}>
+<div id="multimedia_item_detail<{$id}>" style="width:745px;">
+    <div id="multimedia_item_detail_main<{$id}>" class="multimedia_float_left">
+
+		<div id="jquery_jplayer_1" class="jp-jplayer"></div>
+		<div class="jp-gui">
+			<div class="jp-video-play">
+				<a href="javascript:;" class="jp-video-play-icon" tabindex="1">play</a>
+			</div>
+			<div class="jp-interface">
+				<div class="jp-progress">
+					<div class="jp-seek-bar">
+						<div class="jp-play-bar"></div>
+					</div>
+				</div>
+				<div class="jp-current-time"></div>
+				<div class="jp-duration"></div>
+				<div class="jp-controls-holder">
+					<ul class="jp-controls">
+						<li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
+						<li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>
+						<li><a href="javascript:;" class="jp-stop" tabindex="1">stop</a></li>
+						<li><a href="javascript:;" class="jp-mute" tabindex="1" title="mute">mute</a></li>
+						<li><a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute">unmute</a></li>
+						<li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume">max volume</a></li>
+					</ul>
+					<div class="jp-volume-bar">
+						<div class="jp-volume-bar-value"></div>
+					</div>
+					<ul class="jp-toggles">
+						<li><a href="javascript:;" class="jp-full-screen" tabindex="1" title="full screen">full screen</a></li>
+						<li><a href="javascript:;" class="jp-restore-screen" tabindex="1" title="restore screen">restore screen</a></li>
+						<li><a href="javascript:;" class="jp-repeat" tabindex="1" title="repeat">repeat</a></li>
+						<li><a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">repeat off</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+        <div id="multimedia_video<{$id}>">
+            <object width="<{$smarty.const.MULTIMEDIA_MOVIE_PLAYER_WIDTH}>" height="<{$smarty.const.MULTIMEDIA_MOVIE_PLAYER_HEIGHT}>">
+            	<param name="movie" value="<{$smarty.const.BASE_URL}><{$smarty.const.INDEX_FILE_NAME}>?action=<{$action.play_action}>"></param>
+				<param name="allowFullScreen" value="true"></param>
+				<param name="allowscriptaccess" value="always"></param>
+				<param name="flashvars" value="file=<{$smarty.const.BASE_URL}><{$smarty.const.INDEX_FILE_NAME}>?action=<{$action.xml_action}>&id=<{$action.item_id}>&autostart=true"></param>
+				<embed src="<{$smarty.const.BASE_URL}><{$smarty.const.INDEX_FILE_NAME}>?action=<{$action.play_action}>" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" flashvars="file=<{$smarty.const.BASE_URL}><{$smarty.const.INDEX_FILE_NAME}>?action=<{$action.xml_action}>&id=<{$action.item_id}>&autostart=true" width="<{$smarty.const.MULTIMEDIA_MOVIE_PLAYER_WIDTH}>" height="<{$smarty.const.MULTIMEDIA_MOVIE_PLAYER_HEIGHT}>"></embed>
+			</object>
+        </div>
+
+        <div id="multimedia_video_footer<{$id}>" class="align-right">
+            <a class="syslink" onclick="commonCls.displayChange($('multimedia_video_embed<{$id}>'));return false;" title="<{$lang.multimedia_video_object|smarty:nodefaults}>" href="#">
+                <{$lang.multimedia_video_object|smarty:nodefaults}>
+            </a>
+            <{if $action.multimedia_obj.vote_flag == _ON}>
+            <{if $action.item.vote_authority}>
+            <span id="multimedia_vote_link<{$id}>">
+                <{$lang._separator|smarty:nodefaults}>
+                <a class="syslink" href="#" title="<{$lang.multimedia_vote_title|smarty:nodefaults}>" onclick="multimediaCls['<{$id}>'].vote('<{$action.item.album_id}>', '<{$action.item_id}>'); return false;">
+                    <{$lang.multimedia_vote|smarty:nodefaults}>
+                </a>
+            </span>
+            <{/if}>
+            <{$lang._separator|smarty:nodefaults}>
+            <span id="multimedia_vote_count<{$id}>">
+                <{$lang.multimedia_vote_count|sprintf:$action.item.item_vote_count}>
+            </span>
+            <{/if}>
+            <{if $action.multimedia_obj.comment_flag == _ON}>
+            <{$lang._separator|smarty:nodefaults}>
+            <a class="syslink" href="#" title="<{$lang.multimedia_comment_title|smarty:nodefaults}>" onclick="commonCls.displayChange($('multimedia_comment_area<{$id}>')); return false;">
+                <span id="multimedia_comment_count<{$id}>">
+                    <{$lang.multimedia_comment_count|sprintf:$action.commentCount}>
+                </span>
+            </a>
+            <{/if}>
+            <{*$lang._separator|smarty:nodefaults*}>
+            <!--a class="syslink" href="#" title="<{$lang.multimedia_item_detail_title|smarty:nodefaults}>" onclick="if(Element.hasClassName($('multimedia_item_detail<{$id}>'), 'multimedia_detail_div')){$('multimedia_item_detail<{$id}>').className = ''} else {$('multimedia_item_detail<{$id}>').className = ' multimedia_detail_div ';}commonCls.displayChange($('multimedia_item_detail_info<{$id}>')); return false;">
+				<span id="multimedia_item_detail_link<{$id}>"><{$lang.multimedia_item_detail|smarty:nodefaults}></span>
+              </a-->
+        </div>
+        <div id="multimedia_video_embed<{$id}>" class="display-none">
+            <textarea id="multimedia_embed_code<{$id}>" readonly="readonly" onclick="this.focus();this.select();" name="embed_code" class="multimedia_embed_code"><{$action.embed_code}></textarea>
+        </div>
+        <div id="multimedia_comment_area<{$id}>"></div>
+    </div>
+    <div id="multimedia_item_detail_info<{$id}>" class="multimedia_detail_info multimedia_float_left">
+        <div class="multimedia_detail_post_info multimedia_detail_post_info_top">
+            <div>
+                <div class="multimedia_float_left">
+                    <img height="60" border="0" width="80" alt="" src="<{$smarty.const.BASE_URL}><{$smarty.const.INDEX_FILE_NAME}>?action=multimedia_view_main_item_thumbnail&item_id=<{$action.item_id}>"/>
+                </div>
+                <div class="multimedia_float_left">
+                    <a href="#" title="<{if $smarty.session._login_id == ''}><{$lang.multimedia_upload_user_title|smarty:nodefaults|sprintf:$action.item.insert_user_name}><{else}><{$lang._user_title|smarty:nodefaults|sprintf:$action.item.insert_user_name}><{/if}>" class="syslink" onclick="commonCls.showUserDetail(event, '<{$action.item.insert_user_id}>');return false;">
+                        <{$action.item.insert_user_name}>
+                    </a>
+                </div>
+                <br class="float-clear"/>
+            </div>
+            <ul>
+                <li>
+                    <{$action.item.item_description|nl2br}>
+                </li>
+				<li>
+                    <div class="multimedia_float_left"><{$lang.multimedia_item_album|smarty:nodefaults}></div>
+                    <div class="multimedia_float_left">
+                        <a href="#" onclick="multimediaCls['<{$id}>'].search(this, 'channel', '<{$action.item.album_id}>');return false;">
+                            <{$action.channel.album_name}>(<{$action.channel.item_count}>)
+                        </a>
+                    </div>
+                    <br class="float-clear"/>
+                </li>
+                <{if !empty($action.tags|smarty:nodefaults)}>
+                <li>
+                    <div class="multimedia_float_left"><{$lang.multimedia_tag|smarty:nodefaults}></div>
+                    <div class="multimedia_float_left">
+                        <{foreach item=tag from=$action.tags}>
+                        <a href="#" onclick="multimediaCls['<{$id}>'].search(this, 'tag', '<{$tag.tag_value|escape:"html"}>');return false;">
+                            <{$tag.tag_value}><{$lang.multimedia_tag_use_number|sprintf:$tag.used_number}>
+                        </a>
+                        <{/foreach}>
+                    </div>
+                    <br class="float-clear"/>
+                </li>
+                <{/if}>
+            </ul>
+            <div class="multimedia_detail_post_other">
+                <a href="#" onclick="multimediaCls['<{$id}>'].search(this, 'user', '<{$action.item.insert_user_name|escape:"html"}>');return false;">
+                    <{$lang.multimedia_user_items|sprintf:$action.item.insert_user_name}>
+                </a>
+            </div>
+        </div>
+        <{if !empty($action.item_list|smarty:nodefaults)}>
+        <div class="multimedia_detail_post_info_bottom">
+            <div class="multimedia_detail_tagitem_title">
+                <span><{$lang.multimedia_tag_items|smarty:nodefaults}></span>
+            </div>
+            <div class="multimedia_detail_tagitem_list">
+                <{foreach from=$action.item_list key=key item=item}>
+                <ul>
+                    <li class="multimedia_detail_tagitem_list_li_img">
+                        <a title="<{$item.item_name}>" href="#" onclick="commonCls.sendView('<{$id}>', {'action':'multimedia_view_main_item_detail', 'item_id':'<{$item.item_id}>'}, {'loading_el':$('multimedia_detail_tagitem_img_<{$item.item_id}><{$id}>')});return false;">
+                            <img id="multimedia_detail_tagitem_img_<{$item.item_id}><{$id}>" alt="<{$item.item_name}>" src="<{$smarty.const.BASE_URL}><{$smarty.const.INDEX_FILE_NAME}>?action=multimedia_view_main_item_thumbnail&item_id=<{$item.item_id}>"/>
+                        </a>
+                    </li>
+                    <li class="multimedia_detail_tagitem_list_li_title">
+                        <a title="<{$item.item_name}>" href="#" onclick="commonCls.sendView('<{$id}>', {'action':'multimedia_view_main_item_detail', 'item_id':'<{$item.item_id}>'}, {'loading_el':this});return false;">
+                            <{$item.item_name}>
+                        </a>
+                    </li>
+                    <li class="multimedia_detail_tagitem_list_li_info">
+                        <{$lang.multimedia_play_count_title|sprintf:$item.item_play_count}>
+                    </li>
+                </ul>
+                <{/foreach}>
+                <br class="float-clear"/>
+            </div>
+        </div>
+        <{/if}>
+    </div>
+</div>
+<{include file="../multimedia_script.html"}>
+
+<script type="text/javascript" src="<{$smarty.const.BASE_URL|smarty:nodefaults}>/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="<{$smarty.const.BASE_URL|smarty:nodefaults}>/js/jquery.jplayer.min.js"></script>
+
+<script class="nc_script" type="text/javascript">
+    multimediaCls['<{$id}>'].item_id = "<{$action.item_id}>";
+    multimediaCls['<{$id}>'].showComment('<{$action.item.album_id}>','<{$action.item_id}>');
+</script>
+<{/strip}>

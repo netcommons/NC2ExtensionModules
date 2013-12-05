@@ -38,6 +38,8 @@ class Multimedia_View_Main_List extends Action
     var $item_count = null;
     var $item_list = null;
 
+//	var $script = null;
+
 	//ページ
     var $pager = array();
 	
@@ -155,6 +157,8 @@ class Multimedia_View_Main_List extends Action
     	if($this->item_list === false) {
     		return 'error';
     	}
+
+//$this->script = file_get_contents(BASE_DIR . "/images/multimedia/jquery.jplayer.js");
     	
     	return 'success';
 	}

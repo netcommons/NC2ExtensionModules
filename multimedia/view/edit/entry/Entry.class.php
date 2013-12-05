@@ -30,12 +30,6 @@ class Multimedia_View_Edit_Entry extends Action
 	 */
 	function execute()
 	{
-		//ffmpeg拡張のチェック
-    	if(!$this->multimediaAction->hasFfmpegLib()) {
-			$this->extension_fullname = PHP_EXTENSION_DIR . "/" . MULTIMEDIA_EXTENSION.".".PHP_SHLIB_SUFFIX;
-    		$this->ffmpeg_install_flag = false;
-    	}
-    	
 		$this->multimedia =& $this->multimediaView->getMultimedia();
 		if (empty($this->multimedia)) {
 			$this->multimedia =& $this->multimediaView->getDefaultMultimedia();

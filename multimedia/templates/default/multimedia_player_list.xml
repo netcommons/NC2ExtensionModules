@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="<{$smarty.const._CHARSET}>"?>
+<?xml version="1.0" encoding="<{$smarty.const._CHARSET}>"?>
 <{strip}>
 <playlist version="1" xmlns="http://xspf.org/ns/0/">
 	<trackList>
