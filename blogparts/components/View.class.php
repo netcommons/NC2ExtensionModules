@@ -121,7 +121,7 @@ class Blogparts_Components_View
 
 		$sql = "SELECT parts_id, parts_name, insert_time, insert_user_id, insert_user_name ".
 				"FROM {blogparts_parts} ".
-				$this->_db->getOrderSQL($orderParams);
+				$this->_db->getOrderSQL($orderParams, array('parts_id', 'parts_name', 'insert_user_name', 'insert_time'));
 		$blogpartsList = $this->_db->execute($sql);
 		if ($blogpartsList === false) {
 			$this->_db->addError();

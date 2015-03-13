@@ -116,7 +116,7 @@ class Banner_Components_View
 		$sql = $this->_getBannerSelectSql()
 				. $this->getBannerFromSql()
 				. $categoryWhereSql
-				. $this->_db->getOrderSQL($orderParams);
+				. $this->_db->getOrderSQL($orderParams, array('banner_sequence', 'block_click_count', 'all_click_count', 'insert_user_name', 'insert_time'));
 		$banners = $this->_db->execute($sql, $params, $limit, $offset, true, array($this, '_fetchBanner'));
 		if ($banners === false) {
 			$this->_db->addError();
