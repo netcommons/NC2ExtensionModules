@@ -38,8 +38,8 @@ class Multimedia_Action_Main_Search extends Action
     var $session = null;
     
     // 値をセットするため
-    var $where_params = null;
-    var $order_params = null;
+    var $_where_params = null;
+    var $_order_params = null;
     var $item_count = null;
 	var $item_list = null;
 	
@@ -55,13 +55,13 @@ class Multimedia_Action_Main_Search extends Action
     {
     	if($this->keyword != "") { 
 	    	if($this->name_check == _ON) {
-	    		$this->where_params['T.item_name'] = $this->keyword;
+	    		$this->_where_params['T.item_name'] = $this->keyword;
 	    	}
 	   		if($this->description_check == _ON) {
-	    		$this->where_params['T.item_description'] = $this->keyword;
+	    		$this->_where_params['T.item_description'] = $this->keyword;
 	    	}
 	    	if($this->poster_check == _ON) {
-	    		$this->where_params['T.insert_user_name'] = $this->keyword;
+	    		$this->_where_params['T.insert_user_name'] = $this->keyword;
 	    	}
 	    	if($this->tag_check == _ON) {
 	    		$tag_value = $this->multimediaAction->getSynonym($this->keyword);
@@ -71,21 +71,21 @@ class Multimedia_Action_Main_Search extends Action
 	    		}
 	    		if(isset($tag_id[0])) {
 	    			$this->tag_id = $tag_id[0]['tag_id'];
-	    			$this->where_params['G.tag_id'] = $this->tag_id;
+	    			$this->_where_params['G.tag_id'] = $this->tag_id;
 	    		}
 	    	}
     	}
     	
     	if($this->sort == "" || $this->sort == MULTIMEDIA_SORT_DATE_DESC) {
-			$this->order_params = array("T.insert_time" => "DESC");
+			$this->_order_params = array("T.insert_time" => "DESC");
 		}else if($this->sort == MULTIMEDIA_SORT_DATE_ASC) {
-			$this->order_params = array("T.insert_time" => "ASC");
+			$this->_order_params = array("T.insert_time" => "ASC");
 		}else if($this->sort == MULTIMEDIA_SORT_TITLE_ASC) {
-			$this->order_params = array("T.item_name" => "ASC");
+			$this->_order_params = array("T.item_name" => "ASC");
 		}else if($this->sort == MULTIMEDIA_SORT_PLAY_DESC) {
-			$this->order_params = array("T.item_play_count" => "DESC");
+			$this->_order_params = array("T.item_play_count" => "DESC");
 		}else if($this->sort == MULTIMEDIA_SORT_VOTE_DESC) {
-			$this->order_params = array("T.item_vote_count" => "DESC");
+			$this->_order_params = array("T.item_vote_count" => "DESC");
 		}
 
     	$this->_getSearchItems();
@@ -106,8 +106,8 @@ class Multimedia_Action_Main_Search extends Action
     	$where_params = array();
 		$where_str = " WHERE T.multimedia_id=".$this->multimedia_obj['multimedia_id']." ";
 		$where_param_str = "";
-    	if(count($this->where_params) > 0) {
-	    	foreach($this->where_params as $key => $where_param) {
+    	if(count($this->_where_params) > 0) {
+	    	foreach($this->_where_params as $key => $where_param) {
 	    		if($key == "G.tag_id") {
 	    			$from_str .= " ,{multimedia_item_tag} G ";
 	    			$where_param_str .= "(T.item_id=G.item_id AND ".$key." = ?) OR ";
@@ -121,7 +121,7 @@ class Multimedia_Action_Main_Search extends Action
             $where_str .= "AND ".$where_param_str;
     	}
     	if(!empty($this->search_album) && $this->search_album != MULTIMEDIA_ALL) {
-	    	$where_str .= "AND T.album_id=".$this->search_album." ";
+	    	$where_str .= "AND T.album_id=".(int)$this->search_album." ";
     	}
     	
     	if(!empty($this->search_date) && $this->search_date != MULTIMEDIA_ALL) {
@@ -161,7 +161,7 @@ class Multimedia_Action_Main_Search extends Action
     	$sql = "SELECT DISTINCT T.* ";
     	$sql .= $from_str;
     	$sql .= $where_str;
-    	$sql .= $this->db->getOrderSQL($this->order_params);
+    	$sql .= $this->db->getOrderSQL($this->_order_params);
 		//ページャ設定
 		$this->multimediaView->setPageInfo($this->pager, $this->item_count, MULTIMEDIA_SEARCH_VISIBLE_ITEM_CNT, $this->now_page);
     	$result = $this->multimediaView->getSearchItemList($sql, $where_params, $this->pager['disp_begin']);
