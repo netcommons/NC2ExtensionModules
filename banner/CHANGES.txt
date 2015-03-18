@@ -1,5 +1,9 @@
- NetComomns2-banner Changelog
+ NetCommons2-banner Changelog
 ===============================
+
+2015/03/19: Version 2.4.2.1
+- 脆弱性に関する修正
+
 
 2013/05/20: Version 2.4.0.1
 ===============================

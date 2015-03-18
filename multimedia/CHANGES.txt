@@ -1,8 +1,11 @@
- NetComomns2-multimedia Changelog
+ NetCommons2-multimedia Changelog
 ===============================
 
+2015/03/19: Version 2.4.2.1
+- 脆弱性に関する修正
 
-2013/08/28: Version 2.5.0.0
+
+2013/08/28: Version 2.4.0.2
 ===============================
 - スマホ対応（Android、iOS）
 - IE以外で、一覧表示の状態でチャンネル編集リンクをクリックした際にブロックが表示されなくなるバグを修正
