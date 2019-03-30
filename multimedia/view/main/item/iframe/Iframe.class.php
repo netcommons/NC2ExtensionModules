@@ -73,6 +73,11 @@ class Multimedia_View_Main_Item_Iframe extends Action
 					$flash_use_only = true;
 					break;
 
+				//Tridentの場合はFlashでのみ再生
+				case (preg_match('/Trident/', $ua)):
+					$flash_use_only = true;
+					break;
+
 				//Safari判定
 				case (preg_match('/Safari/', $ua)):
 					//Macの場合はFlashでのみ再生

@@ -1,0 +1,79 @@
+<{strip}>
+<{if $action.album_count == 0}>
+	&nbsp;&nbsp;<{$lang.multimedia_no_album|smarty:nodefaults}>
+	<{include file="../multimedia_script.html"}>
+<{else}>
+	<div class="outerdiv">
+		<table id="multimedia_album_list<{$id}>" class="multimedia_album_sequence" summary="">
+			<{foreach from=$action.album_list item=album}>
+				<tr id="multimedia_album_row<{$album.album_id}><{$id}>">
+					<td class="comp_draganddrop">
+					</td>
+					
+					<td class="multimedia_album_sequence_title multimedia_album_sequence">
+						<{$album.album_name}>
+						<input type="hidden" name="album_id_arr[]" value="<{$album.album_id}>" />
+					</td>
+				</tr>
+			<{/foreach}>
+		</table>
+		<div class="btn-bottom">
+			<input class="btn-width" type="button" value="<{$lang._regist|smarty:nodefaults}>" onclick="multimediaCls['<{$id}>'].closeAlbumSeq(this.form); return false;" />
+		</div>
+	</div>
+	<{include file="../multimedia_script.html"}>
+	<script class="nc_script" type="text/javascript">
+		dropZone = Class.create();
+		dropZone.prototype = Object.extend((new compDropzone), {
+			showHover: function(event) {
+				this.showChgSeqHover(event);
+			},
+	
+			hideHover: function(event) {
+				this.hideChgSeqHover(event);
+			},
+	
+			accept: function(draggableObjects) {
+				this.acceptChgSeq(draggableObjects);
+			},
+			
+			save: function(draggableObjects) {
+				if(this.ChgSeqPosition == null) {
+					return false;
+				}
+		    	var drag = draggableObjects[0].getHTMLElement();
+		    	var drop = this.getHTMLElement();
+
+		    	var chgseq_params = new Object();
+		    	chgseq_params["param"] = {"action":"multimedia_action_main_album_sequence",
+		    	    "multimedia_id":"<{$action.multimedia_id}>",
+	    			"drag_album_id":drag.id.match(/\d+/)[0],
+					"drop_album_id":drop.id.match(/\d+/)[0],
+					"position":this.ChgSeqPosition
+				};
+				var top_el = $("<{$id}>");
+				chgseq_params["method"] = "post";
+				chgseq_params["top_el"] = top_el;
+				chgseq_params["loading_el"] = top_el;
+				commonCls.send(chgseq_params);
+
+				return true;
+			}
+		});
+	
+		var dragArea = $("multimedia_album_list<{$id}>");
+		dragDrop = new compDragAndDrop();
+		dragDrop.registerDraggableRange(dragArea);
+		var rows = dragArea.getElementsByTagName("tr");
+		for (var i = 0; i < rows.length; i++) {
+			dragDrop.registerDraggable(new compDraggable(rows[i], rows[i].firstChild));
+			dragDrop.registerDropZone(new dropZone(rows[i], "<{$id}>"));
+		}
+	
+		dropZone = null;
+		dragArea = null;
+		dragDrop = null;
+		rows = null;
+	</script>
+<{/if}>
+<{/strip}>

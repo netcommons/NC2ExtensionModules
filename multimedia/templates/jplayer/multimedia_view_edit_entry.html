@@ -1,0 +1,77 @@
+<{strip}>
+<form id="multimedia_form<{$id}>" action="#" >
+    <input type="hidden" name="multimedia_id" value="<{$action.multimedia.multimedia_id}>">
+    <{if !$action.ffmpeg_install_flag}>
+	    <div class="deadline">
+	        <{$lang.multimedia_item_upload_video_extension_error|sprintf:$action.extension_fullname|smarty:nodefaults}>
+	    </div>
+    <{/if}>
+    <div class="top_description">
+        <{$lang.multimedia_entry_note|smarty:nodefaults}>
+    </div>
+    <div class="hr"></div>
+    <table class="outer" summary="<{$smarty.const._SUMMARY_SETTINGFORM}>">
+        <tr class="row">
+            <th scope="row">
+                <{$lang.multimedia_album_authority|smarty:nodefaults}>
+            </th>
+            <td>
+                <label class="disable_lbl">
+                    <input type="checkbox" disabled="disabled" checked="checked" />
+                    <input type="hidden" name="album_authority[<{$smarty.const._AUTH_CHIEF}>]" value="<{$smarty.const._ON}>" />
+                    <{$smarty.const._AUTH_CHIEF_NAME}>
+                </label>
+                <label for="multimedia_album_authority<{$smarty.const._AUTH_MODERATE}><{$id}>">
+                    <input id="multimedia_album_authority<{$smarty.const._AUTH_MODERATE}><{$id}>" type="checkbox" name="album_authority[<{$smarty.const._AUTH_MODERATE}>]" value="<{$smarty.const._ON}>" onclick="commonCls.changeAuthority(this, '<{$id}>');" <{if $action.multimedia.album_authority <= $smarty.const._AUTH_MODERATE}>checked="checked"<{/if}>/>
+                           <{$smarty.const._AUTH_MODERATE_NAME}>
+                </label>
+                <label for="multimedia_album_authority<{$smarty.const._AUTH_GENERAL}><{$id}>">
+                    <input id="multimedia_album_authority<{$smarty.const._AUTH_GENERAL}><{$id}>" type="checkbox" name="album_authority[<{$smarty.const._AUTH_GENERAL}>]" value="<{$smarty.const._ON}>" onclick="commonCls.changeAuthority(this, '<{$id}>');" <{if $action.multimedia.album_authority <= $smarty.const._AUTH_GENERAL}>checked="checked"<{/if}>/>
+                           <{$smarty.const._AUTH_GENERAL_NAME}>
+                </label>
+            </td>
+        </tr>
+        <tr class="row">
+            <th class="nowrap" scope="row">
+                <{$lang.multimedia_vote_flag|smarty:nodefaults}>
+            </th>
+            <td>
+                <label for="multimedia_vote_flag_on<{$id}>">
+                    <input id="multimedia_vote_flag_on<{$id}>" type="radio" name="vote_flag" value="<{$smarty.const._ON}>" <{if $action.multimedia.vote_flag == _ON || $action.multimedia.vote_flag == ""}>checked="checked"<{/if}>/>
+                           <{$lang.multimedia_flag_on|smarty:nodefaults}>
+                </label>
+                <label for="multimedia_vote_flag_off<{$id}>">
+                    <input id="multimedia_vote_flag_off<{$id}>" type="radio" name="vote_flag" value="<{$smarty.const._OFF}>" <{if $action.multimedia.vote_flag == _OFF}>checked="checked"<{/if}>/>
+                           <{$lang.multimedia_flag_off|smarty:nodefaults}>
+                </label>
+            </td>
+        </tr>
+        <tr class="row">
+            <th class="nowrap" scope="row">
+                <{$lang.multimedia_comment_flag|smarty:nodefaults}>
+            </th>
+            <td>
+                <label for="multimedia_comment_flag_on<{$id}>">
+                    <input id="multimedia_comment_flag_on<{$id}>" type="radio" name="comment_flag" value="<{$smarty.const._ON}>" <{if $action.multimedia.comment_flag == _ON || $action.multimedia.comment_flag == ""}>checked="checked"<{/if}> />
+                           <{$lang.multimedia_flag_on|smarty:nodefaults}>
+                </label>
+                <label for="multimedia_comment_flag_off<{$id}>">
+                    <input id="multimedia_comment_flag_off<{$id}>" type="radio" name="comment_flag" value="<{$smarty.const._OFF}>" <{if $action.multimedia.comment_flag == _OFF}>checked="checked"<{/if}>/>
+                           <{$lang.multimedia_flag_off|smarty:nodefaults}>
+                </label>
+            </td>
+        </tr>
+    </table>
+    <div class="btn-bottom">
+        <input class="btn-width" name="regist" type="button" value="<{$lang._regist|smarty:nodefaults}>" onclick="multimediaCls['<{$id}>'].editMultimedia(this.form); return false;" />
+        <input class="lined_btn btn-width" name="cancel" type="button" value="<{$lang._cancel|smarty:nodefaults}>" onclick="commonCls.sendView('<{$id}>', 'multimedia_view_main_init');" />
+    </div>
+</form>
+<{include file="../multimedia_script.html"}>
+<script class="nc_script" type="text/javascript">
+<{if empty($action.multimedia.multimedia_id|smarty:nodefaults)}>
+	multimediaCls['<{$id}>'].initializeMultimedia();
+<{/if}>
+commonCls.focus("<{$id}>");
+</script>
+<{/strip}>

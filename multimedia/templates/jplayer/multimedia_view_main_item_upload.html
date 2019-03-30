@@ -1,0 +1,107 @@
+<{strip}>
+<div id="multimedia_item_upload<{$id}>">
+	<{if empty($action.album_id|smarty:nodefaults) && empty($action.album_list|smarty:nodefaults)}>
+		<{$lang.multimedia_item_upload_readme|smarty:nodefaults}>
+	<{else}>
+		<form class="multimedia_item_form<{$id}>" action="#" target="multimedia_attachment<{$id}>" enctype="multipart/form-data">
+			<input type="hidden" name="multimedia_id" value="<{$action.multimedia_obj.multimedia_id}>">
+			<{if !empty($action.album_id|smarty:nodefaults)}>
+				<input type="hidden" name="album_id" value="<{$action.album_id}>">
+			<{/if}>
+			<div class="top_description">
+				<{$lang.multimedia_item_upload_description|smarty:nodefaults}>
+			</div>
+			<div id="multimedia_item_upload_success<{$id}>" class="bold multimedia_uploading_block display-none">
+				<{$lang.multimedia_item_upload_success|smarty:nodefaults}>
+			</div>
+			<div id="multimedia_item_upload_loading<{$id}>" class="bold multimedia_uploading_block display-none">
+				<img class="icon" alt="uploading" src="<{""|get_image_url}>/images/common/indicator.gif" />
+				<{$lang.multimedia_item_uploading|smarty:nodefaults}>
+			</div>
+			<div id="multimedia_item_upload_area<{$id}>">
+				<table class="outer" summary="<{$smarty.const._SUMMARY_SETTINGFORM}>">
+					<tr class="row">
+						<th class="nowrap" scope="row">
+							<{$lang.multimedia_item_upload_path|smarty:nodefaults}>
+						</th>
+						<td class="multimedia_upload_table_td">
+							<div id="multimedia_item_upload_input<{$id}>">
+								<input id="multimedia_item_upload<{$id}>" class="multimedia_item_upload" name="upload" type="file" size="35" />
+							</div>
+							<{$lang.multimedia_item_upload_type|smarty:nodefaults}>
+						</td>
+					</tr>
+					<tr class="row">
+						<th class="nowrap" scope="row">
+							<label for="multimedia_item_name<{$id}>">
+								<{$lang.multimedia_item_name|smarty:nodefaults}>
+							</label>
+						</th>
+						<td class="multimedia_upload_table_td">
+			 				<input id="multimedia_item_name<{$id}>" class="text" type="text" name="item_name" />
+						</td>
+					</tr>
+					<tr class="row">
+						<th class="nowrap" scope="row">
+							<label for="multimedia_item_description<{$id}>">
+								<{$lang.multimedia_item_description|smarty:nodefaults}>
+							</label>
+						</th>
+						<td class="multimedia_upload_table_td">
+			 				<textarea id="multimedia_item_description<{$id}>" class="multimedia_item_description" name="item_description"></textarea>
+						</td>
+					</tr>
+					<tr class="row">
+						<th class="nowrap" scope="row">
+							<label for="multimedia_item_tag<{$id}>">
+								<{$lang.multimedia_item_tag|smarty:nodefaults}>
+							</label>
+						</th>
+						<td class="multimedia_upload_table_td">
+							<input id="multimedia_item_tag<{$id}>" class="text" type="text" name="item_tag" /><br />
+							<{$lang.multimedia_item_tag_readme|smarty:nodefaults}>
+						</td>
+					</tr>
+					<{if empty($action.album_id|smarty:nodefaults) && !empty($action.album_list|smarty:nodefaults)}>
+						<tr class="row">
+							<th class="nowrap" scope="row">
+								<label for="multimedia_item_category<{$id}>">
+									<{$lang.multimedia_item_album_select|smarty:nodefaults}>
+								</label>
+							</th>
+							<td class="multimedia_upload_table_td">
+				 				<select id="multimedia_item_category<{$id}>" name="album_id">
+									<{foreach from=$action.album_list item=album}>
+										<option value="<{$album.album_id}>"><{$album.album_name}></option>
+									<{/foreach}>
+								</select>
+							</td>
+						</tr>
+					<{/if}>
+					<tr class="row">
+						<th class="nowrap" scope="row">
+							<label for="multimedia_item_privacy<{$id}>">
+								<{$lang.multimedia_item_privacy|smarty:nodefaults}>
+							</label>
+						</th>
+						<td class="multimedia_upload_table_td">
+			 				<select id="multimedia_item_privacy<{$id}>" name="privacy">
+								<option value="<{$smarty.const._AUTH_GENERAL}>"><{$lang.multimedia_item_privacy_regist|smarty:nodefaults}></option>
+								<option value="<{$smarty.const._AUTH_GUEST}>"><{$lang.multimedia_all|smarty:nodefaults}></option>
+							</select>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="multimedia_item_upload_control<{$id}>" class="btn-bottom">
+				<input class="btn-width" type="button" value="<{$lang._regist|smarty:nodefaults}>" onclick="multimediaCls['<{$id}>'].upload(this.form);return false;"/>
+				<input class="lined_btn btn-width" type="button" value="<{$lang._cancel|smarty:nodefaults}>" onclick="commonCls.removeBlock('<{$id}>');return false;" />
+			</div>
+			<div id="multimedia_item_upload_cancel<{$id}>" class="btn-bottom display-none">
+				<input class="btn-width" type="button" value="<{$lang._cancel|smarty:nodefaults}>" onclick="document.execCommand('Stop');return false;" />
+			</div>
+		</form>
+	<{/if}>
+</div>
+<{include file="../multimedia_script.html"}>
+<{/strip}>

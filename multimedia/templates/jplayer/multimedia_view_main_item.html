@@ -1,0 +1,20 @@
+<{strip}>
+<div id="multimedia_item_cell_<{$item.item_id}><{$id}>" class="multimedia_item_cell" <{if $action.multimedia_obj.album_authority}>onmouseover="multimediaCls['<{$id}>'].itemMouseOver(this);" onmouseout="multimediaCls['<{$id}>'].itemMouseOut(this);"<{/if}>>
+	<{if $dragDrop == $smarty.const._ON && $item.edit_authority}>
+		<div class="multimedia_item_drag"></div>
+		<input type="hidden" name="item_ids[]" value="<{$item.item_id}>" />
+	<{else}>
+		<div class="multimedia_item_not_drag"></div>
+	<{/if}>
+	<div id="multimedia_item_object_<{$item.item_id}><{$id}>" class="multimedia_item_object">
+		<{include file = "multimedia_view_main_item_thumbnail.html"}>
+		<{if $item.agree_flag == _OFF}>
+			<div id="multimedia_item_agree_info_<{$item.item_id}><{$id}>" class="align-center">
+				<span class="deadline"><{$lang.multimedia_wait_agree|smarty:nodefaults}></span>
+			</div>
+		<{else}>
+			<{include file = "multimedia_view_main_item_info.html"}>
+		<{/if}>
+	</div>
+</div>
+<{/strip}>

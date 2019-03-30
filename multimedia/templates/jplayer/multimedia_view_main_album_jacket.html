@@ -1,0 +1,7 @@
+<{strip}>
+<{if empty($action.album_obj.upload_id|smarty:nodefaults)}>
+	<img id="multimedia_album_jacket<{$id}>" class="multimedia_album_jacket" src="<{$smarty.const.MULTIMEDIA_SAMPLR_JACKET_DIR|cat:$action.album_obj.album_jacket|get_modules_image}>" alt="<{$lang.multimedia_album_jacket_preview_title|smarty:nodefaults}>" title="<{$lang.multimedia_album_jacket_preview_title|smarty:nodefaults}>" style="<{$action.album_obj.jacket_style}>" />
+<{else}>
+	<img id="multimedia_album_jacket<{$id}>" class="multimedia_album_jacket" src=".<{$smarty.const.INDEX_FILE_NAME}><{$action.album_obj.album_jacket}>" alt="<{$lang.multimedia_album_jacket_preview_title|smarty:nodefaults}>" title="<{$lang.multimedia_album_jacket_preview_title|smarty:nodefaults}>" style="<{$action.album_obj.jacket_style}>" />
+<{/if}>
+<{/strip}>
