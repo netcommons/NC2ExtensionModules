@@ -1,0 +1,53 @@
+<form id="multimedia_search_form<{$id}>" onsubmit="return false;">
+	<div id="search_top<{$id}>" class="outerdiv">
+		<input type="hidden" name="block_id" value="<{$block_id}>" />
+		<input type="hidden" name="page_id" value="<{$page_id}>" />
+		<input type="hidden" name="sort" value="" />
+		<input id="multimedia_search<{$id}>" onkeydown="if (event.keyCode == 13) {$('multimedia_search_btn<{$id}>').onclick();}" class="multimedia_search" type="text" value="<{$action.default_keyword}>" size="40" name="keyword" />
+		<input id="multimedia_search_btn<{$id}>" type="button" value="<{$lang.multimedia_search_button|smarty:nodefaults}>" onclick="commonCls.sendPost('<{$id}>', 'action=multimedia_action_main_search&amp;' + Form.serialize($('multimedia_search_form<{$id}>')), {'target_el':$('multimedia_top_main<{$id}>')}); return false;" />
+		<a href="#" onclick="commonCls.displayChange($('multimedia_search_option<{$id}>'));return false;">
+			<{$lang.multimedia_search_option|smarty:nodefaults}>
+		</a>
+		<div id="multimedia_search_option<{$id}>" class="display-none">
+				<div class="bold multimedia_search_title multimedia_float_left"><{$lang.multimedia_search_condition|smarty:nodefaults}></div>
+				<div class="multimedia_float_left">
+					<input id="multimedia_search_name_check<{$id}>" type="checkbox" checked="checked" name="name_check" value="<{$smarty.const._ON}>" /><label for="multimedia_search_name_check<{$id}>"><{$lang.multimedia_item_name|smarty:nodefaults}></label>
+					<input id="multimedia_search_description_check<{$id}>" type="checkbox" checked="checked" name="description_check" value="<{$smarty.const._ON}>" /><label for="multimedia_search_description_check<{$id}>"><{$lang.multimedia_item_description|smarty:nodefaults}></label>
+					<input id="multimedia_search_poster_check<{$id}>" type="checkbox" checked="checked" name="poster_check" value="<{$smarty.const._ON}>" /><label for="multimedia_search_poster_check<{$id}>"><{$lang.multimedia_item_poster_title|smarty:nodefaults}></label>
+					<input id="multimedia_search_tag_check<{$id}>" type="checkbox" checked="checked" name="tag_check" value="<{$smarty.const._ON}>" /><label for="multimedia_search_tag_check<{$id}>"><{$lang.multimedia_item_tag|smarty:nodefaults}></label>
+				</div>
+				<br class="float-clear" />
+				<div class="bold multimedia_search_title multimedia_float_left"><{$lang.multimedia_item_album_select|smarty:nodefaults}></div>
+				<div class="multimedia_float_left">
+					<select id="multimedia_search_album<{$id}>" name="search_album">
+						<option <{if $action.search_album==""}>selected='selected'<{/if}> value="<{$smarty.const.MULTIMEDIA_ALL}>"><{$lang.multimedia_all|smarty:nodefaults}></option>
+						<{foreach from=$action.album_list item=album}>
+							<option value="<{$album.album_id}>"><{$album.album_name}></option>
+						<{/foreach}>
+					</select>
+				</div>
+				<br class="float-clear" />
+				<div class="bold multimedia_search_title multimedia_float_left"><{$lang.multimedia_search_date|smarty:nodefaults}></div>
+				<div class="multimedia_float_left">
+					<select id="multimedia_search_date<{$id}>" name="search_date">
+						<option <{if $action.search_date==""}>selected='selected'<{/if}> value="<{$smarty.const.MULTIMEDIA_ALL}>"><{$lang.multimedia_all|smarty:nodefaults}></option>
+						<option value="<{$smarty.const.MULTIMEDIA_DATE_MONTH}>"><{$lang.multimedia_date_month|smarty:nodefaults}></option>
+						<option value="<{$smarty.const.MULTIMEDIA_DATE_WEEK}>"><{$lang.multimedia_date_week|smarty:nodefaults}></option>
+						<option value="<{$smarty.const.MULTIMEDIA_DATE_DAY}>"><{$lang.multimedia_date_day|smarty:nodefaults}></option>
+					</select>
+				</div>
+				<br class="float-clear" />
+				<div class="bold multimedia_search_title multimedia_float_left"><{$lang.multimedia_search_video_time|smarty:nodefaults}></div>
+				<div class="multimedia_float_left">
+					<select id="multimedia_search_duration<{$id}>" name="search_duration">
+						<option <{if $action.search_duration==""}>selected='selected'<{/if}> value="<{$smarty.const.MULTIMEDIA_ALL}>"><{$lang.multimedia_all|smarty:nodefaults}></option>
+						<option value="<{$smarty.const.MULTIMEDIA_MOVIE_SHORT}>"><{$lang.multimedia_movie_short|smarty:nodefaults}></option>
+						<option value="<{$smarty.const.MULTIMEDIA_MOVIE_MEDIUM}>"><{$lang.multimedia_movie_medium|smarty:nodefaults}></option>
+						<option value="<{$smarty.const.MULTIMEDIA_MOVIE_LONG}>"><{$lang.multimedia_movie_long|smarty:nodefaults}></option>
+					</select>
+				</div>
+				<br class="float-clear" />
+		</div>
+	</div>
+</form>
+<br class="float-clear" />

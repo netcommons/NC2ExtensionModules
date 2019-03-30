@@ -1,0 +1,103 @@
+<{strip}>
+<{* 動画配信表示方法変更画面用テンプレート *}>
+<form id="multimedia_form<{$id}>" action="#">
+	<input type="hidden" name="multimedia_id" value="<{$action.multimedia.multimedia_id}>" />
+	<table class="outer" summary="<{$smarty.const._SUMMARY_DISPCHANGE_FORM}>">
+		<tr class="row">
+			<th class="nowrap" scope="row">
+				<{$lang.multimedia_display|smarty:nodefaults}>
+			</th>
+			<td>
+				<label for="multimedia_display_list<{$id}>">
+		 			<input id="multimedia_display_list<{$id}>" type="radio" name="display" value="<{$smarty.const.MULTIMEDIA_DISPLAY_LIST}>" onclick="commonCls.displayNone($('multimedia_album_visible<{$id}>'));" <{if $action.multimedia.display==$smarty.const.MULTIMEDIA_DISPLAY_LIST || $action.multimedia.display==""}>checked='checked'<{/if}>/>
+ 					<{$lang.multimedia_display_list|smarty:nodefaults}>
+	 			</label><br />
+				<label for="multimedia_display_auto<{$id}>">
+		 			<input id="multimedia_display_auto<{$id}>" type="radio" name="display" value="<{$smarty.const.MULTIMEDIA_DISPLAY_ALBUM}>" onclick="commonCls.displayVisible($('multimedia_album_visible<{$id}>'));" <{if $action.multimedia.display==$smarty.const.MULTIMEDIA_DISPLAY_ALBUM}>checked='checked'<{/if}>/>
+ 					<{$lang.multimedia_display_album|smarty:nodefaults}>
+	 			</label>
+			</td>
+		</tr>
+		<tr id="multimedia_album_visible<{$id}>" class="row <{if $action.multimedia.display==$smarty.const.MULTIMEDIA_DISPLAY_LIST || $action.multimedia.display==""}>display-none<{/if}>">
+			<th class="nowrap" scope="row">
+				<label for="multimedia_album_visible_row<{$id}>">
+					<{$lang.multimedia_album_visible_row|smarty:nodefaults}>
+				</label>
+			</th>
+			<td>
+				<select id="multimedia_album_visible_row<{$id}>" name="album_visible_row">
+					<option value="1" <{if $action.multimedia.album_visible_row=="1"}>selected='selected'<{/if}>><{$lang.multimedia_visible_row_unit|sprintf:"1"}></option>
+					<option value="5" <{if $action.multimedia.album_visible_row=="5" || $action.multimedia.album_visible_row==""}>selected='selected'<{/if}>><{$lang.multimedia_visible_row_unit|sprintf:"5"}></option>
+					<option value="10" <{if $action.multimedia.album_visible_row=="10"}>selected='selected'<{/if}>><{$lang.multimedia_visible_row_unit|sprintf:"10"}></option>
+					<option value="20" <{if $action.multimedia.album_visible_row=="20"}>selected='selected'<{/if}>><{$lang.multimedia_visible_row_unit|sprintf:"20"}></option>
+					<option value="50" <{if $action.multimedia.album_visible_row=="50"}>selected='selected'<{/if}>><{$lang.multimedia_visible_row_unit|sprintf:"50"}></option>
+					<option value="100" <{if $action.multimedia.album_visible_row=="100"}>selected='selected'<{/if}>><{$lang.multimedia_visible_row_unit|sprintf:"100"}></option>
+					<{* <option value="0" <{if $action.multimedia.album_visible_row=="0"}>selected='selected'<{/if}>><{$lang.multimedia_all}></option> *}>
+				</select>
+			</td>
+		</tr>
+		<tr class="row">
+			<th class="nowrap" scope="row">
+				<{$lang.multimedia_auto_play|smarty:nodefaults}>
+			</th>
+
+			<td>
+				<label for="multimedia_autoplay_flag_on<{$id}>">
+		 			<input id="multimedia_autoplay_flag_on<{$id}>" type="radio" name="autoplay_flag" value="<{$smarty.const._ON}>" <{if $action.multimedia.autoplay_flag==$smarty.const._ON}>checked='checked'<{/if}>/>
+ 					<{$lang.multimedia_flag_on|smarty:nodefaults}>
+	 			</label>
+ 				<label for="multimedia_autoplay_flag_off<{$id}>">
+		 			<input id="multimedia_autoplay_flag_off<{$id}>" type="radio" name="autoplay_flag" value="<{$smarty.const._OFF}>" <{if $action.multimedia.autoplay_flag==$smarty.const._OFF || $action.multimedia.display==""}>checked='checked'<{/if}>/>
+ 					<{$lang.multimedia_flag_off|smarty:nodefaults}>
+	 			</label>
+	 		</td>
+	 	</tr>
+		<tr class="row">
+			<th class="nowrap" scope="row">
+				<{$lang.multimedia_buffer_time|smarty:nodefaults}>
+			</th>
+			<td>
+ 				<label for="multimedia_buffer_time<{$id}>">
+ 					<select id="multimedia_buffer_time<{$id}>" name="buffer_time">
+ 						<option value="2" <{if $action.multimedia.buffer_time=="2" || $action.multimedia.buffer_time==""}>selected='selected'<{/if}>><{$lang.multimedia_buffer_time_unit|sprintf:"2"}></option>
+ 						<option value="4" <{if $action.multimedia.buffer_time=="4"}>selected='selected'<{/if}>><{$lang.multimedia_buffer_time_unit|sprintf:"4"}></option>
+ 						<option value="6" <{if $action.multimedia.buffer_time=="6"}>selected='selected'<{/if}>><{$lang.multimedia_buffer_time_unit|sprintf:"6"}></option>
+ 						<option value="10" <{if $action.multimedia.buffer_time=="10"}>selected='selected'<{/if}>><{$lang.multimedia_buffer_time_unit|sprintf:"10"}></option>
+ 						<option value="20" <{if $action.multimedia.buffer_time=="20"}>selected='selected'<{/if}>><{$lang.multimedia_buffer_time_unit|sprintf:"20"}></option>
+ 						<option value="45" <{if $action.multimedia.buffer_time=="45"}>selected='selected'<{/if}>><{$lang.multimedia_buffer_time_unit|sprintf:"45"}></option>
+ 						<option value="60" <{if $action.multimedia.buffer_time=="60"}>selected='selected'<{/if}>><{$lang.multimedia_buffer_time_unit|sprintf:"60"}></option>
+ 					</select>
+ 				</label>
+			</td>
+		</tr>
+		<tr class="row">
+			<th class="nowrap" scope="row">
+				<label for="multimedia_album_new_period<{$id}>">
+					<{$lang.multimedia_new_period|smarty:nodefaults}>
+				</label>
+			</th>
+			<td>
+				<select id="multimedia_album_new_period<{$id}>" name="album_new_period">
+					<option value="0" <{if $action.multimedia.new_period=="0" || $action.multimedia.new_period==""}>selected='selected'<{/if}>><{$lang.multimedia_new_period_none}></option>
+					<option value="1" <{if $action.multimedia.new_period=="1"}>selected='selected'<{/if}>><{$lang.multimedia_new_period_unit|sprintf:"1"}></option>
+					<option value="2" <{if $action.multimedia.new_period=="2"}>selected='selected'<{/if}>><{$lang.multimedia_new_period_unit|sprintf:"2"}></option>
+					<option value="5" <{if $action.multimedia.new_period=="5"}>selected='selected'<{/if}>><{$lang.multimedia_new_period_unit|sprintf:"5"}></option>
+					<option value="7" <{if $action.multimedia.new_period=="7"}>selected='selected'<{/if}>><{$lang.multimedia_new_period_unit|sprintf:"7"}></option>
+					<option value="30" <{if $action.multimedia.new_period=="30"}>selected='selected'<{/if}>><{$lang.multimedia_new_period_unit|sprintf:"30"}></option>
+					<option value="90" <{if $action.multimedia.new_period=="90"}>selected='selected'<{/if}>><{$lang.multimedia_new_period_unit|sprintf:"90"}></option>
+				</select>
+			</td>
+		</tr>
+	</table>
+	<div class="btn-bottom">
+		<input class="btn-width" type="button" value="<{$lang._regist|smarty:nodefaults}>" onclick="multimediaCls['<{$id}>'].editDisplay(this.form); return false;" />
+		<input class="lined_btn btn-width" type="button" value="<{$lang._cancel|smarty:nodefaults}>" onclick="commonCls.sendView('<{$id}>', 'multimedia_view_main_init');" />
+	</div>
+</form>
+<{include file="../multimedia_script.html"}>
+<script class="nc_script" type="text/javascript">
+	<{if empty($action.multimedia.multimedia_id|smarty:nodefaults)}>
+		multimediaCls["<{$id}>"].initializeMultimedia();
+	<{/if}>
+</script>
+<{/strip}>

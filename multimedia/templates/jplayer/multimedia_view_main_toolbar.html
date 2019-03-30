@@ -1,0 +1,122 @@
+<{strip}>
+<div class="<{if $from != "search"}>multimedia_video_box<{/if}>">
+	<div class="multimedia_video_toolbar">
+		<{if $from == "list"}>
+			<{if $action.album_count > 0}>
+				<div id="multimedia_toolbar_album<{$id}>" class="multimedia_inline_block"
+					onmouseover="commonCls.displayVisible($('multimedia_toolbar_menu_album<{$id}>'));" onmouseout="commonCls.displayNone($('multimedia_toolbar_menu_album<{$id}>'));">
+					<div class="multimedia_toolbar_button">
+						<div id="multimedia_toolbar_album_text<{$id}>" class="multimedia_inline_block multimedia_toolbar_text align-center">
+							<{$action.album_name|smarty:nodefaults}>
+							<{if $action.album != $smarty.const.MULTIMEDIA_ALL}>
+								(<{$action.album_item_count}>)
+							<{/if}>
+						</div>
+						<div class="multimedia_inline_block_img"><img class="icon" src="<{'down_arrow.gif'|get_themes_image}>" alt="" title="" /></div>
+					</div>
+					<div id="multimedia_toolbar_menu_album<{$id}>" class="multimedia_toolbar_menu display-none">
+						<div class="multimedia_toolbar_menu_item" onmouseover="this.className += ' multimedia_toolbar_menu_item_highlight ';" onmouseout="this.className = this.className.replace('multimedia_toolbar_menu_item_highlight', '')"
+							onclick="multimediaCls['<{$id}>'].setItem('album', '<{$smarty.const.MULTIMEDIA_ALL}>');return false;">
+							<div id="multimedia_toolbar_album<{$id}>_<{$smarty.const.MULTIMEDIA_ALL}>" class="multimedia_toolbar_menu_item_content"><{$smarty.const.MULTIMEDIA_ALBUM_DEFAULT}></div>
+						</div>
+						<{foreach item=album from=$action.album_list}>
+							<div class="multimedia_toolbar_menu_item" onmouseover="this.className += ' multimedia_toolbar_menu_item_highlight ';" onmouseout="this.className = this.className.replace('multimedia_toolbar_menu_item_highlight', '')"
+								onclick="multimediaCls['<{$id}>'].setItem('album', '<{$album.album_id}>');return false;">
+								<div id="multimedia_toolbar_album<{$id}>_<{$album.album_name}>" class="multimedia_toolbar_menu_item_content"><{$album.album_name}>(<{$album.item_count}>)</div>
+							</div>
+						<{/foreach}>
+					</div>
+				</div>
+				<div class="multimedia_toolbar_separator multimedia_inline_block"> </div>
+			<{/if}>
+			<div id="multimedia_toolbar_date<{$id}>" class="multimedia_inline_block"
+				onmouseover="commonCls.displayVisible($('multimedia_toolbar_menu_time<{$id}>'));" onmouseout="commonCls.displayNone($('multimedia_toolbar_menu_time<{$id}>'));">
+				<div class="multimedia_toolbar_button">
+					<div id="multimedia_toolbar_date_text<{$id}>" class="multimedia_inline_block multimedia_toolbar_text align-center" style="width: 38px;">
+						<{if $action.date == $smarty.const.MULTIMEDIA_DATE_DAY}>
+							<{$lang.multimedia_date_day|smarty:nodefaults}>
+						<{elseif $action.date == $smarty.const.MULTIMEDIA_DATE_WEEK}>
+							<{$lang.multimedia_date_week|smarty:nodefaults}>
+						<{elseif $action.date == $smarty.const.MULTIMEDIA_DATE_MONTH}>
+							<{$lang.multimedia_date_month|smarty:nodefaults}>
+						<{elseif $action.date == $smarty.const.MULTIMEDIA_ALL}>
+							<{$lang.multimedia_all|smarty:nodefaults}>
+						<{/if}>
+					</div>
+					<div class="multimedia_inline_block_img"><img class="icon" src="<{'down_arrow.gif'|get_themes_image}>" alt="" title="" /></div>
+				</div>
+				<div id="multimedia_toolbar_menu_time<{$id}>" class="multimedia_toolbar_menu display-none">
+					<div class="multimedia_toolbar_menu_item" onmouseover="this.className += ' multimedia_toolbar_menu_item_highlight ';" onmouseout="this.className = this.className.replace('multimedia_toolbar_menu_item_highlight', '')"
+						onclick="multimediaCls['<{$id}>'].setItem('date', '<{$smarty.const.MULTIMEDIA_DATE_DAY}>', $('multimedia_toolbar_date_day<{$id}>'));return false;">
+						<div id="multimedia_toolbar_date_day<{$id}>" class="multimedia_toolbar_menu_item_content"><{$lang.multimedia_date_day|smarty:nodefaults}></div>
+					</div>
+					<div class="multimedia_toolbar_menu_item" onmouseover="this.className += ' multimedia_toolbar_menu_item_highlight ';" onmouseout="this.className = this.className.replace('multimedia_toolbar_menu_item_highlight', '')"
+						onclick="multimediaCls['<{$id}>'].setItem('date', '<{$smarty.const.MULTIMEDIA_DATE_WEEK}>', $('multimedia_toolbar_date_week<{$id}>'));return false;">
+						<div id="multimedia_toolbar_date_week<{$id}>" class="multimedia_toolbar_menu_item_content"><{$lang.multimedia_date_week|smarty:nodefaults}></div>
+					</div>
+					<div class="multimedia_toolbar_menu_item" onmouseover="this.className += ' multimedia_toolbar_menu_item_highlight ';" onmouseout="this.className = this.className.replace('multimedia_toolbar_menu_item_highlight', '')"
+						onclick="multimediaCls['<{$id}>'].setItem('date', '<{$smarty.const.MULTIMEDIA_DATE_MONTH}>', $('multimedia_toolbar_date_month<{$id}>'));return false;">
+						<div id="multimedia_toolbar_date_month<{$id}>" class="multimedia_toolbar_menu_item_content"><{$lang.multimedia_date_month|smarty:nodefaults}></div>
+					</div>
+					<div class="multimedia_toolbar_menu_item" onmouseover="this.className += ' multimedia_toolbar_menu_item_highlight ';" onmouseout="this.className = this.className.replace('multimedia_toolbar_menu_item_highlight', '')"
+						onclick="multimediaCls['<{$id}>'].setItem('date', '<{$smarty.const.MULTIMEDIA_ALL}>', $('multimedia_toolbar_date_all<{$id}>'));return false;">
+						<div id="multimedia_toolbar_date_all<{$id}>" class="multimedia_toolbar_menu_item_content"><{$lang.multimedia_all|smarty:nodefaults}></div>
+					</div>
+				</div>
+			</div>
+			<div class="multimedia_toolbar_separator multimedia_inline_block"> </div>
+		<{/if}>
+		<{if $position != "foot"}>
+			<{if $from == "search"}>
+				<{assign var="type" value="search"}>
+			<{else}>
+				<{assign var="type" value="sort"}>
+			<{/if}>
+			<div id="multimedia_toolbar_sort<{$id}>" class="multimedia_inline_block" 
+				onmouseover="commonCls.displayVisible($('multimedia_toolbar_menu_sort<{$id}>'));" onmouseout="commonCls.displayNone($('multimedia_toolbar_menu_sort<{$id}>'));">
+				<div class="multimedia_toolbar_button">
+					<div id='multimedia_toolbar_<{$type}>_text<{$id}>' class="multimedia_inline_block multimedia_toolbar_text align-center">
+						<{if $action.sort == "" || $action.sort == $smarty.const.MULTIMEDIA_SORT_DATE_DESC}>
+							<{$lang.multimedia_date_desc|smarty:nodefaults}>
+						<{elseif $action.sort == $smarty.const.MULTIMEDIA_SORT_DATE_ASC}>
+							<{$lang.multimedia_date_asc|smarty:nodefaults}>
+						<{elseif $action.sort == $smarty.const.MULTIMEDIA_SORT_TITLE_ASC}>
+							<{$lang.multimedia_title_asc|smarty:nodefaults}>
+						<{elseif $action.sort == $smarty.const.MULTIMEDIA_SORT_PLAY_DESC && $from == "search"}>
+							<{$lang.multimedia_play_desc|smarty:nodefaults}>
+						<{elseif $action.sort == $smarty.const.MULTIMEDIA_SORT_VOTE_DESC && $from == "search"}>
+							<{$lang.multimedia_vote_desc|smarty:nodefaults}>
+						<{/if}>
+					</div>
+					<div class="multimedia_inline_block_img"><img class="icon" src="<{'down_arrow.gif'|get_themes_image}>" alt="" title="" /></div>
+				</div>
+				<div id="multimedia_toolbar_menu_sort<{$id}>" class="multimedia_toolbar_menu display-none">
+					<div class="multimedia_toolbar_menu_item" onmouseover="this.className += ' multimedia_toolbar_menu_item_highlight ';" onmouseout="this.className = this.className.replace('multimedia_toolbar_menu_item_highlight', '')"
+						onclick="multimediaCls['<{$id}>'].setItem('<{$type}>', '<{$smarty.const.MULTIMEDIA_SORT_DATE_DESC}>', $('multimedia_toolbar_sort_date_desc<{$id}>'));return false;">
+						<div id="multimedia_toolbar_sort_date_desc<{$id}>" class="multimedia_toolbar_menu_item_content"><{$lang.multimedia_date_desc|smarty:nodefaults}></div>
+					</div>
+					<div class="multimedia_toolbar_menu_item" onmouseover="this.className += ' multimedia_toolbar_menu_item_highlight ';" onmouseout="this.className = this.className.replace('multimedia_toolbar_menu_item_highlight', '')"
+						onclick="multimediaCls['<{$id}>'].setItem('<{$type}>', '<{$smarty.const.MULTIMEDIA_SORT_DATE_ASC}>', $('multimedia_toolbar_sort_date_asc<{$id}>'));return false;">
+						<div id="multimedia_toolbar_sort_date_asc<{$id}>" class="multimedia_toolbar_menu_item_content"><{$lang.multimedia_date_asc|smarty:nodefaults}></div>
+					</div>
+					<div class="multimedia_toolbar_menu_item" onmouseover="this.className += ' multimedia_toolbar_menu_item_highlight ';" onmouseout="this.className = this.className.replace('multimedia_toolbar_menu_item_highlight', '')"
+						onclick="multimediaCls['<{$id}>'].setItem('<{$type}>', '<{$smarty.const.MULTIMEDIA_SORT_TITLE_ASC}>', $('multimedia_toolbar_sort_title_asc<{$id}>'));return false;">
+						<div id="multimedia_toolbar_sort_title_asc<{$id}>" class="multimedia_toolbar_menu_item_content"><{$lang.multimedia_title_asc|smarty:nodefaults}></div>
+					</div>
+					<{if $from == "search"}>
+						<div class="multimedia_toolbar_menu_item" onmouseover="this.className += ' multimedia_toolbar_menu_item_highlight ';" onmouseout="this.className = this.className.replace('multimedia_toolbar_menu_item_highlight', '')"
+							onclick="multimediaCls['<{$id}>'].setItem('<{$type}>', '<{$smarty.const.MULTIMEDIA_SORT_PLAY_DESC}>', $('multimedia_toolbar_sort_play_desc<{$id}>'));return false;">
+							<div id="multimedia_toolbar_sort_play_desc<{$id}>" class="multimedia_toolbar_menu_item_content"><{$lang.multimedia_play_desc|smarty:nodefaults}></div>
+						</div>
+						<div class="multimedia_toolbar_menu_item" onmouseover="this.className += ' multimedia_toolbar_menu_item_highlight ';" onmouseout="this.className = this.className.replace('multimedia_toolbar_menu_item_highlight', '')"
+							onclick="multimediaCls['<{$id}>'].setItem('<{$type}>', '<{$smarty.const.MULTIMEDIA_SORT_VOTE_DESC}>', $('multimedia_toolbar_sort_vote_desc<{$id}>'));return false;">
+							<div id="multimedia_toolbar_sort_vote_desc<{$id}>" class="multimedia_toolbar_menu_item_content"><{$lang.multimedia_vote_desc|smarty:nodefaults}></div>
+						</div>
+					<{/if}>
+				</div>
+			</div>
+		<{/if}>
+		<{include file = "multimedia_view_main_pager.html" from=$from}>
+	</div>
+</div>
+<{/strip}>

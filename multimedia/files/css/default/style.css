@@ -210,7 +210,7 @@ div.multimedia_video_facets {
 }
 div.multimedia_item_list {
 	float:left;
-	width:560px;
+	/*width:560px;*/
 }
 div.multimedia_item_not_drag {
 	float:left;

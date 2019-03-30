@@ -1,18 +1,10 @@
-<script class="nc_script" type="text/javascript">
-document.getElementById('video<{$id}>').oncontextmenu = function () {return false;}
-</script>
-
 <{strip}>
 <div id="multimedia_item_detail<{$id}>" style="width:745px;">
     <div id="multimedia_item_detail_main<{$id}>" class="multimedia_float_left">
-
 <{*
         <iframe width="<{$smarty.const.MULTIMEDIA_MOVIE_PLAYER_WIDTH}>" height="<{$smarty.const.MULTIMEDIA_MOVIE_PLAYER_HEIGHT}>" scrolling="no" src="<{$smarty.const.BASE_URL}><{$smarty.const.INDEX_FILE_NAME}>?action=<{$action.iframe_action}>&item_id=<{$action.item_id}>" frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
-        <iframe id="multimedia_video<{$id}>" width="<{$action.iframe_width}>px" height="<{$action.iframe_height}>px" scrolling="no" src="<{$smarty.const.BASE_URL}><{$smarty.const.INDEX_FILE_NAME}>?action=<{$action.iframe_action}>&item_id=<{$action.item_id}>" frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
 *}>
-        <video controls="control" preload="none" style="max-width: 100%; height: auto;" poster="<{$smarty.const.BASE_URL}>?action=multimedia_view_main_item_thumbnail&item_id=<{$action.item_id}>" width="<{$action.iframe_width}>" height="<{$action.iframe_height}>" id="video<{$id}>">
-            <source src="<{$smarty.const.BASE_URL}>?action=multimedia_action_main_item_play&upload_id=<{$action.item.upload_id}>&play_block_id=<{$action.block_id}>" type="video/mp4" />
-        </video>
+        <iframe id="multimedia_video<{$id}>" width="<{$action.iframe_width}>px" height="<{$action.iframe_height}>px" scrolling="no" src="<{$smarty.const.BASE_URL}><{$smarty.const.INDEX_FILE_NAME}>?action=<{$action.iframe_action}>&item_id=<{$action.item_id}>" frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
         <div id="multimedia_video_footer<{$id}>" class="align-right">
             <a class="syslink" onclick="commonCls.displayChange($('multimedia_video_embed<{$id}>'));return false;" title="<{$lang.multimedia_video_object|smarty:nodefaults}>" href="#">
                 <{$lang.multimedia_video_object|smarty:nodefaults}>

@@ -29,6 +29,28 @@ class Multimedia_Action_Main_Item_Play extends Action
 	 */
 	function execute()
 	{
+
+		// カウントアップ制御
+		// 1回、カウントアップしたら、同じ動画で30秒はカウントアップしない。
+		$count_up_time = $this->session->getParameter( "count_up_time" );
+		if ( empty( $count_up_time ) ) {
+			$count_up_time = 0;
+		}
+		$count_up_id = $this->session->getParameter( "count_up_id" );
+		if ( empty( $count_up_id ) ) {
+			$count_up_id = $this->item['upload_id'];
+		}
+
+		if ( ( $count_up_time + 30 ) < mktime() || $count_up_id != $this->item['upload_id'] ) {
+			$this->session->setParameter( "count_up_time", mktime() );
+			$this->session->setParameter( "count_up_id", $this->item['upload_id'] );
+			$this->session->setParameter( "count_up_flag", true );
+			//test_log( date("Y/m/d H:i:s") );
+		}
+
+		$count_up_flag = $this->session->getParameter( "count_up_flag" );
+		// /カウントアップ制御
+
 		list($pathname,$filename,$physical_file_name, $cache_flag) = $this->uploadsView->downloadCheck($this->item['upload_id'], null);
 		if (!isset($pathname)) {
 			exit;
@@ -40,6 +62,121 @@ class Multimedia_Action_Main_Item_Play extends Action
 			$caching = false;
 		}
 
+		if($physical_file_name == null) $physical_file_name = $filename;
+		$pathname = $pathname.$physical_file_name;	//urlencode($filename);
+		if ($pathname != null && file_exists($pathname)) {
+
+//			$mimetype = $this->mimeinfo("type", $filename);
+
+			$fp = @fopen($pathname, 'rb');
+
+			$size   = filesize($pathname); // File size
+			$length = $size;               // Content length
+			$start  = 0;                   // Start byte
+			$end    = $size - 1;           // End byte
+
+			header('Content-type: video/mp4');
+			//header("Content-type: video/mp4 m4v"); // これだと、Safari で動画が再生されない。
+			header("Accept-Ranges: 0-$length");
+
+			if (isset($_SERVER['HTTP_RANGE'])) {
+
+				//動画ファイルサイズ取得
+				$file_size = filesize($pathname);
+
+				//Rangeヘッダを解析
+				list($range_header, $range) = explode('=', $_SERVER['HTTP_RANGE']);
+				list($range_offset, $range_limit) = explode('-', $range);
+
+				//Rangeヘッダが0からファイル終端の場合(ファイル存在確認後、1度のみリクエストされる)
+				//Rangeヘッダのオフセットが0であるため、-1
+				if($range_offset == 0 && $range_limit == $file_size - 1 && $count_up_flag ) {
+
+					$this->session->setParameter( "count_up_flag", false );
+
+					//再生回数更新
+					$params = array(
+						$this->item['item_id']
+					);
+					$sql = "UPDATE {multimedia_item} ".
+							"SET item_play_count = item_play_count + 1 ".
+							"WHERE item_id = ? ";
+					$result = $this->db->execute($sql, $params);
+					if ($result === false) {
+						return 'error';
+					}
+				}
+
+				$c_start = $start;
+				$c_end   = $end;
+
+				list(, $range) = explode('=', $_SERVER['HTTP_RANGE'], 2);
+				if (strpos($range, ',') !== false) {
+					header('HTTP/1.1 416 Requested Range Not Satisfiable');
+					header("Content-Range: bytes $start-$end/$size");
+					exit;
+				}
+				if ($range == '-') {
+					$c_start = $size - substr($range, 1);
+				}else{
+					$range  = explode('-', $range);
+					$c_start = $range[0];
+					$c_end   = (isset($range[1]) && is_numeric($range[1])) ? $range[1] : $size;
+				}
+				$c_end = ($c_end > $end) ? $end : $c_end;
+				if ($c_start > $c_end || $c_start > $size - 1 || $c_end >= $size) {
+					header('HTTP/1.1 416 Requested Range Not Satisfiable');
+					header("Content-Range: bytes $start-$end/$size");
+					exit;
+				}
+				$start  = $c_start;
+				$end    = $c_end;
+				$length = $end - $start + 1;
+				fseek($fp, $start);
+				header('HTTP/1.1 206 Partial Content');
+			}
+			//Rangeヘッダが設定されていない場合
+			else {
+				//HTTP_USER_AGENTが設定されている場合のみ再生数をカウント(Android Chrome対策)
+				if(isset($_SERVER['HTTP_USER_AGENT']) && $count_up_flag ) {
+
+					$this->session->setParameter( "count_up_flag", false );
+
+					//再生回数更新
+					$params = array(
+						$this->item['item_id']
+					);
+					$sql = "UPDATE {multimedia_item} ".
+							"SET item_play_count = item_play_count + 1 ".
+							"WHERE item_id = ? ";
+					$result = $this->db->execute($sql, $params);
+					if ($result === false) {
+						return 'error';
+					}
+				}
+			}
+
+			header("Content-Range: bytes $start-$end/$size");
+			header("Content-Length: ".$length);
+
+			$buffer = 1024 * 8;
+			set_time_limit(0);
+			while(!feof($fp) && ($p = ftell($fp)) <= $end) {
+
+				if ($p + $buffer > $end) {
+				    $buffer = $end - $p + 1;
+				}
+				echo fread($fp, $buffer);
+				ob_flush();
+				flush();
+			}
+			fclose($fp);
+
+		} else {
+			header("HTTP/1.0 404 not found");
+		}
+exit;
+/*
 		//Rangeヘッダが設定されている場合(iOS)
 		if(isset($_SERVER['HTTP_RANGE'])) {
 			//動画ファイルサイズ取得
@@ -147,6 +284,7 @@ class Multimedia_Action_Main_Item_Play extends Action
 			$this->uploadsView->headerOutput($pathname, $filename, $physical_file_name, $caching);
 			exit;
 		}
+*/
 	}
 }
 ?>
