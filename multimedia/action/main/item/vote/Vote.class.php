@@ -35,7 +35,9 @@ class Multimedia_Action_Main_Item_Vote extends Action
 		if (empty($user_id)) {
 			$votes = $this->session->getParameter("multimedia_votes");
 			$votes[] = $this->item_id;
-			$session->setParameter("multimedia_votes", $votes);
+			// bugfix: 未ログインで投票がカウントされないバグ修正
+			//$session->setParameter("multimedia_votes", $votes);
+			$this->session->setParameter("multimedia_votes", $votes);
  		} else {
 			$params = array(
 				"user_id" => $user_id,
